@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="200dp"
+    android:id="@+id/nav_header"
+    android:orientation="vertical"
+    android:background="@color/colorPurple"
+    android:padding="15dp"
+    android:theme="@style/ThemeOverlay.AppCompat.Dark">
+
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_launcher_foreground" />
+
+    <TextView
+        android:id="@+id/headeruname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Bilal Qureshi"
+        android:textSize="20sp"/>
+
+
+
+</androidx.appcompat.widget.LinearLayoutCompat>

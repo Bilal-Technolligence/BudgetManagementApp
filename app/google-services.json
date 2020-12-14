@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "747045090350",
+    "project_id": "bmapp-54e9d",
+    "storage_bucket": "bmapp-54e9d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:747045090350:android:c9e2c581865cbb369a9bbf",
+        "android_client_info": {
+          "package_name": "com.example.budgetmanagementapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "747045090350-h4kns2nlvb473anq8up7e9m5ekfeutd9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCE-WU_p-rP_HfgV4_PldFB_f0prg6INdg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "747045090350-h4kns2nlvb473anq8up7e9m5ekfeutd9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
