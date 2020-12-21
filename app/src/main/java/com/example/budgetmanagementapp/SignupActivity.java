@@ -45,6 +45,13 @@ public class SignupActivity extends AppCompatActivity {
                 finish();
             }
         });
+        btnSignup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+               confirmInput();
+            }
+        });
+
     }
 
     private boolean validateEmail() {
@@ -82,13 +89,13 @@ public class SignupActivity extends AppCompatActivity {
             return true;
         }
     }
-    public void confirmInput(View v) {
+    public void confirmInput() {
         if (!validateEmail() | !validatePassword()) {
             return;
         }
         String Email = email.getText().toString();
         String Password = password.getText().toString();
-        Intent intent=new Intent(SignupActivity.this,LoginActivity.class);
+        Intent intent=new Intent(SignupActivity.this,CompleteProActivity.class);
         intent.putExtra("Email",Email);
         intent.putExtra("Password",Password);
         startActivity(intent);

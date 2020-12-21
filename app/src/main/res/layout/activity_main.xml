@@ -7,6 +7,12 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     tools:openDrawer="start">
-
+<TextView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:text="Hy"
+    android:textSize="30dp"
+    android:gravity="center"
+    android:textColor="@color/black"/>
 
 </androidx.drawerlayout.widget.DrawerLayout>

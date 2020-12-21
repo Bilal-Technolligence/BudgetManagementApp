@@ -12,10 +12,11 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 public class LoginActivity extends AppCompatActivity {
-    Button btnLogin , helperLogin;
+    Button btnLogin ;
     TextView btnSignup,btnRcoverPassword;
     EditText email,password;
     ProgressDialog progressDialog;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,7 +31,7 @@ public class LoginActivity extends AppCompatActivity {
         password=(EditText) findViewById(R.id.password);
         progressDialog=new ProgressDialog(this);
         progressDialog.setMessage("Logging In..... ");
-     //   final FirbaseAuthenticationClass firbaseAuthenticationClass=new FirbaseAuthenticationClass();
+        final FirbaseAuthenticationClass firbaseAuthenticationClass=new FirbaseAuthenticationClass();
         btnSignup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -56,7 +57,7 @@ public class LoginActivity extends AppCompatActivity {
                     email.setFocusable(true);
                 }else {
                     progressDialog.show();
-                  //  firbaseAuthenticationClass.LoginUser(EMAIL,PASSWORD, LoginActivity.this, progressDialog);
+                    //firbaseAuthenticationClass.LoginUser(EMAIL,PASSWORD, LoginActivity.this, progressDialog);
 
                 }
             }
