@@ -28,8 +28,8 @@ public class FirbaseAuthenticationClass extends AppCompatActivity {
 
     private FirebaseAuth mAuth = FirebaseAuth.getInstance();
     FirebaseDatabase database = FirebaseDatabase.getInstance();
-    DatabaseReference myRef = database.getReference("Users");
 
+    final DatabaseReference reference = database.getReference("Users");
 
     public void LoginUser(String EMAIL, String PASSWORD, final Activity activity, final ProgressDialog progressDialog) {
         mAuth = FirebaseAuth.getInstance();
@@ -40,7 +40,7 @@ public class FirbaseAuthenticationClass extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             String uid = mAuth.getCurrentUser().getUid();
 
-                            myRef.child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
+                            reference.child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                     //save session
