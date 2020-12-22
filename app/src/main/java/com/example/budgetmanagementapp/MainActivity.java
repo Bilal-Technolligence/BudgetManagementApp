@@ -34,7 +34,6 @@ public class MainActivity extends AppCompatActivity {
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
        // database = FirebaseDatabase.getInstance();
 
-        databaseReference.child("Testing").setValue("Ok");
 
     }
 }

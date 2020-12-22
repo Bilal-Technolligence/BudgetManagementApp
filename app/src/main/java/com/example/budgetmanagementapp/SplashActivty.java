@@ -24,7 +24,7 @@ public class SplashActivty extends AppCompatActivity {
                 try {
                     sleep( 5000 );
 
-                    Intent intent = new Intent(getApplicationContext(), SignupActivity.class );
+                    Intent intent = new Intent(getApplicationContext(), LoginActivity.class );
                     startActivity( intent );
                     finish();
                     super.run();

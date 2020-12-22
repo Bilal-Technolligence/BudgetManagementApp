@@ -49,6 +49,7 @@ public class CompleteProActivity extends AppCompatActivity {
         profileImage = (ImageView) findViewById(R.id.txtImg);
         name = (EditText) findViewById(R.id.txtName);
         contact = (EditText) findViewById(R.id.txtContact);
+        email = (EditText) findViewById(R.id.txtEmail);
         btnRegister = (CardView) findViewById(R.id.signup);
         progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("Registering..... ");
@@ -83,7 +84,7 @@ public class CompleteProActivity extends AppCompatActivity {
                     Snackbar.make(v, "Please Select Image", Snackbar.LENGTH_LONG).show();
                 } else {
                     progressDialog.show();
-                    RegisterUser(userGmail, userPassword, Contact, Name, imagePath, progressDialog);
+                    RegisterUser(Email, userPassword, Contact, Name, imagePath, progressDialog);
 
                 }
             }
