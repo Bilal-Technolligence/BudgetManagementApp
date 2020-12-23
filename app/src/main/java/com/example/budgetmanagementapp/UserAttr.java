@@ -6,17 +6,27 @@ public class UserAttr {
     String Email;
     String Contact;
     String ImageUrl;
+    String Income;
 
 
     public UserAttr() {
     }
 
-    public UserAttr(String id, String name, String email, String contact, String imageUrl) {
+    public UserAttr(String id, String name, String email, String contact, String imageUrl, String income) {
         Id = id;
         Name = name;
         Email = email;
         Contact = contact;
         ImageUrl = imageUrl;
+        Income = income;
+    }
+
+    public String getIncome() {
+        return Income;
+    }
+
+    public void setIncome(String income) {
+        Income = income;
     }
 
     public String getId() {
