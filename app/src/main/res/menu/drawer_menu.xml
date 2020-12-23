@@ -4,23 +4,23 @@
     tools:showIn="navigation_view">
 
     <item
-        android:id="@+id/spending"
+        android:id="@+id/nav_spending"
         android:icon="@drawable/ic_home"
         android:title="Spending"></item>
     <item
-        android:id="@+id/transaction"
+        android:id="@+id/nav_transaction"
         android:icon="@drawable/ic_home"
         android:title="Transaction"></item>
     <item
-        android:id="@+id/history"
+        android:id="@+id/nav_history"
         android:icon="@drawable/ic_home"
         android:title="History"></item>
     <item
-        android:id="@+id/trip"
+        android:id="@+id/nav_trip"
         android:icon="@drawable/ic_home"
         android:title="Trip"></item>
     <item
-        android:id="@+id/logout"
+        android:id="@+id/nav_logout"
         android:icon="@drawable/ic_logout"
         android:title="Logout"></item>
 

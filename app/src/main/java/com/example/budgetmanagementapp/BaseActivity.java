@@ -41,22 +41,22 @@ public abstract class BaseActivity extends AppCompatActivity implements BottomNa
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         int itemId = item.getItemId();
-        if (itemId == R.id.spending) {
+        if (itemId == R.id.nav_spending) {
             startActivity(new Intent(this, MainActivity.class));
-        } else if (itemId == R.id.transaction) {
-            Intent intent=new Intent(this, LoginActivity.class);
+        } else if (itemId == R.id.nav_transaction) {
+            Intent intent=new Intent(this, AddIncome.class);
             startActivity(intent);
             finish();
-        } else if (itemId == R.id.history) {
+        } else if (itemId == R.id.nav_history) {
             Intent intent=new Intent(this, LoginActivity.class);
             startActivity(intent);
             finish();
         }
-        else if (itemId == R.id.trip) {
+        else if (itemId == R.id.nav_trip) {
             startActivity(new Intent(this, LoginActivity.class));
             finish();
         }
-        else if (itemId == R.id.logout) {
+        else if (itemId == R.id.nav_logout) {
             Intent intent = new Intent(this , LoginActivity.class);
             startActivity(intent);
             finish();
@@ -64,8 +64,24 @@ public abstract class BaseActivity extends AppCompatActivity implements BottomNa
         return true;
     }
 
+    private void updateNavigationBarState(){
+        int actionId = getNavigationMenuItemId();
+        selectBottomNavigationBarItem(actionId);
+    }
 
+    void selectBottomNavigationBarItem(int itemId) {
+        Menu menu = navigationView.getMenu();
+        for (int i = 0, size = menu.size(); i < size; i++) {
+            MenuItem item = menu.getItem(i);
+            boolean shouldBeChecked = item.getItemId() == itemId;
+            if (shouldBeChecked) {
+                item.setChecked(true);
+                break;
+            }
+        }
+    }
     abstract int getContentViewId();
 
+    abstract int getNavigationMenuItemId();
 
 }
