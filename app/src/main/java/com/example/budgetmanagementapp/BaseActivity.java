@@ -44,11 +44,11 @@ public abstract class BaseActivity extends AppCompatActivity implements BottomNa
         if (itemId == R.id.nav_spending) {
             startActivity(new Intent(this, MainActivity.class));
         } else if (itemId == R.id.nav_transaction) {
-            Intent intent=new Intent(this, AddIncome.class);
+            Intent intent=new Intent(this, TransactionActivity.class);
             startActivity(intent);
             finish();
         } else if (itemId == R.id.nav_history) {
-            Intent intent=new Intent(this, LoginActivity.class);
+            Intent intent=new Intent(this, History.class);
             startActivity(intent);
             finish();
         }

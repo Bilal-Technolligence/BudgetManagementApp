@@ -59,7 +59,12 @@ public class AddIncome extends BaseActivity {
             }
         });
     }
-
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        startActivity(new Intent(AddIncome.this ,MainActivity.class ));
+        finish();
+    }
     @Override
     int getContentViewId() {
         return R.layout.activity_add_income;

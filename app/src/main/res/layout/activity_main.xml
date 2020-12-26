@@ -346,25 +346,52 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginTop="20dp"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:layout_weight="2">
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
                 android:layout_weight="1"
+                android:weightSum="2"
                 android:layout_margin="5dp"
                 android:background="@drawable/backgroundlayout">
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Balance"
+                    android:text="Food"
                     android:textSize="10sp"
                     android:layout_weight="1"
                     android:layout_marginLeft="5dp"/>
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/txtBalance"
+                    android:id="@+id/txtFood"
+                    android:text="0"
+                    android:textColor="@color/black"
+                    android:textSize="10sp"
+                    android:layout_weight="1"
+                    android:layout_marginLeft="5dp"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_weight="1"
+                android:weightSum="2"
+                android:layout_margin="5dp"
+                android:background="@drawable/backgroundlayout">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Income"
+                    android:textSize="10sp"
+                    android:layout_weight="1"
+                    android:layout_marginLeft="5dp"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/txtIncome"
                     android:text="0"
                     android:textColor="@color/black"
                     android:textSize="10sp"
@@ -374,6 +401,7 @@
 
 
         </LinearLayout>
+
 
         <LinearLayout
             android:layout_width="match_parent"
