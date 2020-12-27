@@ -57,7 +57,7 @@ public class LoginActivity extends AppCompatActivity {
                     email.setFocusable(true);
                 }else {
                     progressDialog.show();
-                    //firbaseAuthenticationClass.LoginUser(EMAIL,PASSWORD, LoginActivity.this, progressDialog);
+                    firbaseAuthenticationClass.LoginUser(EMAIL,PASSWORD, LoginActivity.this, progressDialog);
 
                 }
             }

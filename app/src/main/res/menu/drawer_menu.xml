@@ -3,18 +3,25 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
 
-    <group android:checkableBehavior="single">
-
-        <item
-            android:id="@+id/nav_home"
-            android:icon="@drawable/ic_home"
-            android:title="Home" />
-
-        <item
-            android:id="@+id/nav_logout"
-            android:icon="@drawable/ic_logout"
-            android:title="LogOut" />
-
-    </group>
+    <item
+        android:id="@+id/nav_spending"
+        android:icon="@drawable/ic_home"
+        android:title="Spending"></item>
+    <item
+        android:id="@+id/nav_transaction"
+        android:icon="@drawable/ic_home"
+        android:title="Transaction"></item>
+    <item
+        android:id="@+id/nav_history"
+        android:icon="@drawable/ic_home"
+        android:title="History"></item>
+    <item
+        android:id="@+id/nav_trip"
+        android:icon="@drawable/ic_home"
+        android:title="Trip"></item>
+    <item
+        android:id="@+id/nav_logout"
+        android:icon="@drawable/ic_logout"
+        android:title="Logout"></item>
 
 </menu>

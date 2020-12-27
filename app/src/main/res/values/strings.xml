@@ -19,4 +19,16 @@
     <string name="invalid_username">Not a valid username</string>
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
+
+    <string-array name="category">
+        <item>Fuel</item>
+        <item>Food</item>
+        <item>Shopping</item>
+        <item>Kids</item>
+        <item>Clothes</item>
+        <item>Gift</item>
+        <item>Sports</item>
+        <item>Entertainment</item>
+        <item>Others</item>
+    </string-array>
 </resources>

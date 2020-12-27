@@ -38,7 +38,7 @@ public class CompleteProActivity extends AppCompatActivity {
     private Uri imagePath;
     int count = 0;
     String userGmail, userPassword;
-    EditText name, contact, email;
+    EditText name, contact, email, income;
 
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     final DatabaseReference reference = database.getReference("Users");
@@ -49,6 +49,8 @@ public class CompleteProActivity extends AppCompatActivity {
         profileImage = (ImageView) findViewById(R.id.txtImg);
         name = (EditText) findViewById(R.id.txtName);
         contact = (EditText) findViewById(R.id.txtContact);
+        email = (EditText) findViewById(R.id.txtEmail);
+        income = (EditText) findViewById(R.id.txtIncome);
         btnRegister = (CardView) findViewById(R.id.signup);
         progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("Registering..... ");
@@ -70,6 +72,7 @@ public class CompleteProActivity extends AppCompatActivity {
                 String Name = name.getText().toString().toUpperCase();
                 String Email = email.getText().toString();
                 String Contact = contact.getText().toString();
+                String Income = income.getText().toString();
                 if (Name.equals("")) {
                     name.setError("Enter Valid Name");
                     name.setFocusable(true);
@@ -79,17 +82,20 @@ public class CompleteProActivity extends AppCompatActivity {
                 } else if (Contact.equals("")) {
                     contact.setError("Enter Valid Contact Number");
                     contact.setFocusable(true);
+                }else if (Income.equals("")) {
+                    income.setError("Enter Valid Income");
+                    income.setFocusable(true);
                 } else if (count == 0) {
                     Snackbar.make(v, "Please Select Image", Snackbar.LENGTH_LONG).show();
                 } else {
                     progressDialog.show();
-                    RegisterUser(userGmail, userPassword, Contact, Name, imagePath, progressDialog);
+                    RegisterUser(Email, userPassword, Contact, Name,Income, imagePath, progressDialog);
 
                 }
             }
         });
     }
-    public void RegisterUser(final String userGmail, String userPassword, final String contact, final String name, final Uri imagePath, final ProgressDialog progressDialog) {
+    public void RegisterUser(final String userGmail, String userPassword, final String contact, final String name,final String income, final Uri imagePath, final ProgressDialog progressDialog) {
         FirebaseAuth.getInstance().createUserWithEmailAndPassword(userGmail, userPassword)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
@@ -109,6 +115,7 @@ public class CompleteProActivity extends AppCompatActivity {
                                     userAttr.setContact(contact);
                                     userAttr.setName(name);
                                     userAttr.setId(uid);
+                                    userAttr.setIncome(income);
                                     userAttr.setImageUrl(downloadUri.toString());
                                     reference.child(uid).setValue(userAttr);
 
