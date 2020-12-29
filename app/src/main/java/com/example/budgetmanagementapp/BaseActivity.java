@@ -37,7 +37,16 @@ public abstract class BaseActivity extends AppCompatActivity implements BottomNa
 
 
     }
-
+    @Override
+    protected void onStart() {
+        super.onStart();
+        updateNavigationBarState();
+    }
+    @Override
+    public void onPause() {
+        super.onPause();
+        overridePendingTransition(0, 0);
+    }
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         int itemId = item.getItemId();
@@ -53,7 +62,7 @@ public abstract class BaseActivity extends AppCompatActivity implements BottomNa
             finish();
         }
         else if (itemId == R.id.nav_trip) {
-            startActivity(new Intent(this, LoginActivity.class));
+            startActivity(new Intent(this, MainActivity.class));
             finish();
         }
         else if (itemId == R.id.nav_logout) {
@@ -68,18 +77,21 @@ public abstract class BaseActivity extends AppCompatActivity implements BottomNa
         int actionId = getNavigationMenuItemId();
         selectBottomNavigationBarItem(actionId);
     }
-
     void selectBottomNavigationBarItem(int itemId) {
-        Menu menu = navigationView.getMenu();
-        for (int i = 0, size = menu.size(); i < size; i++) {
-            MenuItem item = menu.getItem(i);
-            boolean shouldBeChecked = item.getItemId() == itemId;
-            if (shouldBeChecked) {
-                item.setChecked(true);
-                break;
-            }
-        }
+        MenuItem item = navigationView.getMenu().findItem(itemId);
+        item.setChecked(true);
     }
+//    void selectBottomNavigationBarItem(int itemId) {
+//        Menu menu = navigationView.getMenu();
+//        for (int i = 0, size = menu.size(); i < size; i++) {
+//            MenuItem item = menu.getItem(i);
+//            boolean shouldBeChecked = item.getItemId() == itemId;
+//            if (shouldBeChecked) {
+//                item.setChecked(true);
+//                break;
+//            }
+//        }
+//    }
     abstract int getContentViewId();
 
     abstract int getNavigationMenuItemId();

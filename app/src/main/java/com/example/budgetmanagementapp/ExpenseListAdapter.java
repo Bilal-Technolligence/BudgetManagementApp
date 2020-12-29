@@ -37,21 +37,21 @@ public class ExpenseListAdapter extends RecyclerView.Adapter<ExpenseListAdapter.
         holder.date.setText(expenseAttrs.get(position).getDate());
         String category = expenseAttrs.get(position).getCategory();
         if (category.equals("Food")) {
-            holder.img.setBackgroundResource(R.drawable.logo);
+            holder.img.setBackgroundResource(R.drawable.food);
         } else if (category.equals("Fuel")) {
-            holder.img.setBackgroundResource(R.drawable.logo);
+            holder.img.setBackgroundResource(R.drawable.fuel);
         } else if (category.equals("Shopping")) {
-            holder.img.setBackgroundResource(R.drawable.logo);
+            holder.img.setBackgroundResource(R.drawable.shopping);
         }if(category.equals("Kids")) {
-            holder.img.setBackgroundResource(R.drawable.logo);
+            holder.img.setBackgroundResource(R.drawable.kids);
         }if(category.equals("Clothes")) {
-            holder.img.setBackgroundResource(R.drawable.logo);
+            holder.img.setBackgroundResource(R.drawable.cloths);
         }if(category.equals("Gift")) {
-            holder.img.setBackgroundResource(R.drawable.logo);
+            holder.img.setBackgroundResource(R.drawable.gift);
         }if(category.equals("Sports")) {
-            holder.img.setBackgroundResource(R.drawable.logo);
+            holder.img.setBackgroundResource(R.drawable.sports);
         }if(category.equals("Entertainment")) {
-            holder.img.setBackgroundResource(R.drawable.logo);
+            holder.img.setBackgroundResource(R.drawable.entertainment);
         }if(category.equals("Others")) {
             holder.img.setBackgroundResource(R.drawable.logo);
         }
