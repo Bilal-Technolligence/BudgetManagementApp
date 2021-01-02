@@ -48,6 +48,7 @@ public class History extends BaseActivity {
         progressDialog.setMessage("Loading..... ");
         progressDialog.show();
         expenseList.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+        expenseList2.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         expenseAttrs = new ArrayList<ExpenseAttr>();
         expenseAttrs2 = new ArrayList<ExpenseAttr>();
         databaseReference.child("Expense").child(uid).child(String.valueOf(year)).child(String.valueOf(month + 1)).addValueEventListener(new ValueEventListener() {
@@ -76,7 +77,8 @@ public class History extends BaseActivity {
         });
         if(month==0){
             Integer y = year-1;
-            databaseReference.child("Expense").child(uid).child(String.valueOf(y)).child("12").addValueEventListener(new ValueEventListener() {
+            Integer m = month+12;
+            databaseReference.child("Expense").child(uid).child(String.valueOf(y)).child(String.valueOf(m)).addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     if (dataSnapshot.exists()) {
@@ -87,6 +89,7 @@ public class History extends BaseActivity {
                         }
                         Collections.reverse(expenseAttrs2);
                         expenseList2.setAdapter(new ExpenseListAdapter(expenseAttrs2, getApplicationContext()));
+                       // Toast.makeText(getApplicationContext(), "yes", Toast.LENGTH_LONG).show();
                     } else {
                         Toast.makeText(getApplicationContext(), "No expense Found for previous month", Toast.LENGTH_LONG).show();
                         previous.setVisibility(View.GONE);
