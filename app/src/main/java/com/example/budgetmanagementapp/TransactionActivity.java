@@ -54,6 +54,7 @@ public class TransactionActivity extends BaseActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
+                    try{
                     expenseAttrs.clear();
                     //profiledata.clear();
                     for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
@@ -62,8 +63,12 @@ public class TransactionActivity extends BaseActivity {
                     }
                     Collections.reverse(expenseAttrs);
                     expenseList.setAdapter(new ExpenseListAdapter(expenseAttrs, getApplicationContext()));
-                } else
+                    }
+                    catch (Exception e){}
+                    } else {
                     Toast.makeText(getApplicationContext(), "No expense Found", Toast.LENGTH_LONG).show();
+                    progressDialog.dismiss();
+                }
             }
 
             @Override
@@ -75,11 +80,14 @@ public class TransactionActivity extends BaseActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
-                    for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
-                        total = total + Integer.parseInt(dataSnapshot1.child("amount").getValue().toString());
+                    try {
+                        for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+                            total = total + Integer.parseInt(dataSnapshot1.child("amount").getValue().toString());
+                        }
+                        totalAmount.setText(String.valueOf(total));
                     }
-                    totalAmount.setText(String.valueOf(total));
-                } else totalAmount.setText("0");
+                    catch (Exception e){}
+                    } else totalAmount.setText("0");
             }
 
             @Override

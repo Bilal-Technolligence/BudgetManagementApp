@@ -90,21 +90,30 @@ public class MainActivity extends BaseActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()){
                     income = Integer.parseInt(dataSnapshot.child("income").getValue().toString());
+                    incomeTotal.setText(String.valueOf(income));
                     databaseReference.child("Expense").child(uid).child(String.valueOf(year)).child(String.valueOf(month + 1)).addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                             if (dataSnapshot.exists()) {
-                                for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
-                                    total = total + Integer.parseInt(dataSnapshot1.child("amount").getValue().toString());
+                                try {
+                                    for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+                                        total = total + Integer.parseInt(dataSnapshot1.child("amount").getValue().toString());
+                                    }
+                                    spent.setText(String.valueOf(total));
+                                    Integer remain = income - total;
+                                    remaining.setText(String.valueOf(remain));
+                                    int result = (int) Math.round((total * 100) / income);
+                                    String p = String.valueOf(result);
+                                    progressBar.setProgress(result);
+                                    progress.setText(p + "%");
                                 }
-                                spent.setText(String.valueOf(total));
-                                Integer remain = income - total;
-                                remaining.setText(String.valueOf(remain));
-                                incomeTotal.setText(String.valueOf(income));
-                                int result = (int) Math.round ((total * 100) / income);
-                                String p =String.valueOf(result);
-                                progressBar.setProgress(result);
-                                progress.setText(p + "%");
+                                catch (Exception e){}
+                                }
+
+                            else
+                            {
+                                progressBar.setProgress(0);
+                                progress.setText("0 %");
                             }
                         }
 
@@ -114,6 +123,9 @@ public class MainActivity extends BaseActivity {
                         }
                     });
 
+                }
+                else{
+                    progressDialog.dismiss();
                 }
             }
 
@@ -126,26 +138,30 @@ public class MainActivity extends BaseActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
-                    for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
-                        if(dataSnapshot1.child("category").getValue().toString().equals("Shopping"))
-                        shoppingT = shoppingT + Integer.parseInt(dataSnapshot1.child("amount").getValue().toString());
-                        if(dataSnapshot1.child("category").getValue().toString().equals("Fuel"))
-                            fuelT = fuelT + Integer.parseInt(dataSnapshot1.child("amount").getValue().toString());
-                        if(dataSnapshot1.child("category").getValue().toString().equals("Kids"))
-                            kidsT = kidsT + Integer.parseInt(dataSnapshot1.child("amount").getValue().toString());
-                        if(dataSnapshot1.child("category").getValue().toString().equals("Clothes"))
-                            clothesT = clothesT + Integer.parseInt(dataSnapshot1.child("amount").getValue().toString());
-                        if(dataSnapshot1.child("category").getValue().toString().equals("Gift"))
-                            giftT = giftT + Integer.parseInt(dataSnapshot1.child("amount").getValue().toString());
-                        if(dataSnapshot1.child("category").getValue().toString().equals("Sports"))
-                            sportsT = sportsT + Integer.parseInt(dataSnapshot1.child("amount").getValue().toString());
-                        if(dataSnapshot1.child("category").getValue().toString().equals("Entertainment"))
-                            entertainmentT = entertainmentT + Integer.parseInt(dataSnapshot1.child("amount").getValue().toString());
-                        if(dataSnapshot1.child("category").getValue().toString().equals("Others"))
-                            othersT = othersT + Integer.parseInt(dataSnapshot1.child("amount").getValue().toString());
-                        if(dataSnapshot1.child("category").getValue().toString().equals("Food"))
-                            foodT = foodT + Integer.parseInt(dataSnapshot1.child("amount").getValue().toString());
+                    try {
+                        for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+                            if (dataSnapshot1.child("category").getValue().toString().equals("Shopping"))
+                                shoppingT = shoppingT + Integer.parseInt(dataSnapshot1.child("amount").getValue().toString());
+                            if (dataSnapshot1.child("category").getValue().toString().equals("Fuel"))
+                                fuelT = fuelT + Integer.parseInt(dataSnapshot1.child("amount").getValue().toString());
+                            if (dataSnapshot1.child("category").getValue().toString().equals("Kids"))
+                                kidsT = kidsT + Integer.parseInt(dataSnapshot1.child("amount").getValue().toString());
+                            if (dataSnapshot1.child("category").getValue().toString().equals("Clothes"))
+                                clothesT = clothesT + Integer.parseInt(dataSnapshot1.child("amount").getValue().toString());
+                            if (dataSnapshot1.child("category").getValue().toString().equals("Gift"))
+                                giftT = giftT + Integer.parseInt(dataSnapshot1.child("amount").getValue().toString());
+                            if (dataSnapshot1.child("category").getValue().toString().equals("Sports"))
+                                sportsT = sportsT + Integer.parseInt(dataSnapshot1.child("amount").getValue().toString());
+                            if (dataSnapshot1.child("category").getValue().toString().equals("Entertainment"))
+                                entertainmentT = entertainmentT + Integer.parseInt(dataSnapshot1.child("amount").getValue().toString());
+                            if (dataSnapshot1.child("category").getValue().toString().equals("Others"))
+                                othersT = othersT + Integer.parseInt(dataSnapshot1.child("amount").getValue().toString());
+                            if (dataSnapshot1.child("category").getValue().toString().equals("Food"))
+                                foodT = foodT + Integer.parseInt(dataSnapshot1.child("amount").getValue().toString());
+                        }
                     }
+                    catch (Exception e){}
+
                     shopping.setText(String.valueOf(shoppingT));
                     fuel.setText(String.valueOf(fuelT));
                     kids.setText(String.valueOf(kidsT));
@@ -155,6 +171,18 @@ public class MainActivity extends BaseActivity {
                     entertainment.setText(String.valueOf(entertainmentT));
                     other.setText(String.valueOf(othersT));
                     food.setText(String.valueOf(foodT));
+                    progressDialog.dismiss();
+                }
+                else{
+                    shopping.setText("0");
+                    fuel.setText("0");
+                    kids.setText("0");
+                    clothes.setText("0");
+                    gifts.setText("0");
+                    sports.setText("0");
+                    entertainment.setText("0");
+                    other.setText("0");
+                    food.setText("0");
                     progressDialog.dismiss();
                 }
             }

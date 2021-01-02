@@ -31,4 +31,10 @@
         <item>Entertainment</item>
         <item>Others</item>
     </string-array>
+    <string-array name="categoryTrip">
+        <item>Fuel</item>
+        <item>Food</item>
+        <item>Sports</item>
+        <item>Entertainment</item>
+    </string-array>
 </resources>

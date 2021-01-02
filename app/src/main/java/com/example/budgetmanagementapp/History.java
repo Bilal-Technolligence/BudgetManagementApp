@@ -27,9 +27,9 @@ public class History extends BaseActivity {
     final String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
     FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
     DatabaseReference databaseReference = firebaseDatabase.getReference();
-    ArrayList<ExpenseAttr> expenseAttrs;
+    ArrayList<ExpenseAttr> expenseAttrs ,expenseAttrs2;
     ExpenseListAdapter adapter;
-    TextView previous;
+    TextView previous, current;
     ProgressDialog progressDialog;
 
     @Override
@@ -43,11 +43,13 @@ public class History extends BaseActivity {
         expenseList = findViewById(R.id.recycler);
         expenseList2 = findViewById(R.id.recycler2);
         previous = findViewById(R.id.txtPrevious);
+        current = findViewById(R.id.current);
         progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("Loading..... ");
         progressDialog.show();
         expenseList.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         expenseAttrs = new ArrayList<ExpenseAttr>();
+        expenseAttrs2 = new ArrayList<ExpenseAttr>();
         databaseReference.child("Expense").child(uid).child(String.valueOf(year)).child(String.valueOf(month + 1)).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -60,30 +62,10 @@ public class History extends BaseActivity {
                     }
                     Collections.reverse(expenseAttrs);
                     expenseList.setAdapter(new ExpenseListAdapter(expenseAttrs, getApplicationContext()));
-                } else
-                    Toast.makeText(getApplicationContext(), "No expense Found", Toast.LENGTH_LONG).show();
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-        databaseReference.child("Expense").child(uid).child(String.valueOf(year)).child(String.valueOf(month)).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot.exists()) {
-                    expenseAttrs.clear();
-                    //profiledata.clear();
-                    for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
-                        ExpenseAttr p = dataSnapshot1.getValue(ExpenseAttr.class);
-                        expenseAttrs.add(p);
-                    }
-                    Collections.reverse(expenseAttrs);
-                    expenseList2.setAdapter(new ExpenseListAdapter(expenseAttrs, getApplicationContext()));
                 } else {
-                    Toast.makeText(getApplicationContext(), "No expense Found for previous month", Toast.LENGTH_LONG).show();
-                    //previous.setVisibility(View.GONE);
+                    progressDialog.dismiss();
+                    Toast.makeText(getApplicationContext(), "No expense Found for this month", Toast.LENGTH_LONG).show();
+                    current.setVisibility(View.GONE);
                 }
             }
 
@@ -92,6 +74,57 @@ public class History extends BaseActivity {
 
             }
         });
+        if(month==0){
+            Integer y = year-1;
+            databaseReference.child("Expense").child(uid).child(String.valueOf(y)).child("12").addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    if (dataSnapshot.exists()) {
+                        expenseAttrs2.clear();
+                        for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+                            ExpenseAttr p = dataSnapshot1.getValue(ExpenseAttr.class);
+                            expenseAttrs2.add(p);
+                        }
+                        Collections.reverse(expenseAttrs2);
+                        expenseList2.setAdapter(new ExpenseListAdapter(expenseAttrs2, getApplicationContext()));
+                    } else {
+                        Toast.makeText(getApplicationContext(), "No expense Found for previous month", Toast.LENGTH_LONG).show();
+                        previous.setVisibility(View.GONE);
+                        progressDialog.dismiss();
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
+        }
+        else{
+        databaseReference.child("Expense").child(uid).child(String.valueOf(year)).child(String.valueOf(month)).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    expenseAttrs2.clear();
+                    for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+                        ExpenseAttr p = dataSnapshot1.getValue(ExpenseAttr.class);
+                        expenseAttrs2.add(p);
+                    }
+                    Collections.reverse(expenseAttrs2);
+                    expenseList2.setAdapter(new ExpenseListAdapter(expenseAttrs2, getApplicationContext()));
+                } else {
+                    Toast.makeText(getApplicationContext(), "No expense Found for previous month", Toast.LENGTH_LONG).show();
+                    previous.setVisibility(View.GONE);
+                    progressDialog.dismiss();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+        }
         progressDialog.dismiss();
     }
 

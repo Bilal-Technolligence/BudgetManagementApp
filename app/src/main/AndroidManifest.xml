@@ -11,26 +11,29 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.BudgetManagementApp">
-        <activity android:name=".History"></activity>
+        <activity android:name=".AddMember"></activity>
+        <activity android:name=".AddTripExpense" />
+        <activity android:name=".CreateTrip" />
+        <activity android:name=".Trips" />
+        <activity android:name=".History" />
         <activity android:name=".TransactionActivity" />
         <activity android:name=".AddIncome" />
         <activity android:name=".AddExpense" />
         <activity android:name=".LoginActivity" />
         <activity android:name=".CompleteProActivity" />
         <activity android:name=".SignupActivity" />
-        <activity android:name=".SplashActivty"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+        <activity
+            android:name=".SplashActivty"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <activity
+            android:name=".MainActivity"
+            android:label="@string/app_name"
+            android:theme="@style/Theme.BudgetManagementApp.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-        <activity
-            android:name=".MainActivity"
-            android:label="@string/app_name"
-            android:theme="@style/Theme.BudgetManagementApp.NoActionBar">
-
         </activity>
     </application>
 
