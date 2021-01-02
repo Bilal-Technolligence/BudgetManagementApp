@@ -104,7 +104,27 @@ public class Trips extends BaseActivity {
 
                                             }
                                         });
+                                        databaseReference.child("Trip").child(tripId).addValueEventListener(new ValueEventListener() {
+                                            @Override
+                                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                                try{
+                                                    if(dataSnapshot.exists()){
+                                                        String user = dataSnapshot.child("Admin").getValue().toString();
+                                                        if(!user.equals(uid)){
+                                                            addExpense.setVisibility(View.GONE);
+                                                            addMember.setVisibility(View.GONE);
+                                                            endTrip.setVisibility(View.GONE);
+                                                        }
+                                                    }
+                                                }
+                                                catch (Exception e){}
+                                            }
 
+                                            @Override
+                                            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                            }
+                                        });
                                         addExpense.setOnClickListener(new View.OnClickListener() {
                                             @Override
                                             public void onClick(View view) {
@@ -144,8 +164,28 @@ public class Trips extends BaseActivity {
                                                     UserAttr p = dataSnapshot1.getValue(UserAttr.class);
                                                     userAttrs.add(p);
                                                 }
+                                                databaseReference.child("Trip").child(tripId).addValueEventListener(new ValueEventListener() {
+                                                    @Override
+                                                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                                        try{
+                                                            if(dataSnapshot.exists()){
+                                                                String user = dataSnapshot.child("Admin").getValue().toString();
+                                                                if(!user.equals(uid)){
+                                                                    memberList.setAdapter(new MemberAdapter(userAttrs , getApplicationContext() , Trips.this , tripId,"no"));
+                                                                }
+                                                                else
+                                                                    memberList.setAdapter(new MemberAdapter(userAttrs , getApplicationContext() , Trips.this , tripId,"yes"));
+                                                            }
+                                                        }
+                                                        catch (Exception e){}
+                                                    }
 
-                                                memberList.setAdapter(new MemberAdapter(userAttrs , getApplicationContext() , Trips.this , tripId));
+                                                    @Override
+                                                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                                    }
+                                                });
+
 
 
                                             }

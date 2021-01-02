@@ -23,6 +23,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text=""
+                android:layout_marginLeft="5dp"
                 android:id="@+id/txtTrip"
                 android:textColor="@color/colorPurple"
                 android:textSize="30dp" />
@@ -170,8 +171,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Members"
+                android:layout_marginLeft="5dp"
                 android:textColor="@color/colorPurple"
-                android:textSize="30dp" />
+                android:textSize="20dp" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycler"
@@ -211,6 +213,13 @@
 
 
             </LinearLayout>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="History"
+                android:layout_marginLeft="5dp"
+                android:textColor="@color/colorPurple"
+                android:textSize="20dp" />
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerExpense"
                 android:layout_width="match_parent"

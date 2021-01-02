@@ -89,7 +89,6 @@ public class History extends BaseActivity {
                         }
                         Collections.reverse(expenseAttrs2);
                         expenseList2.setAdapter(new ExpenseListAdapter(expenseAttrs2, getApplicationContext()));
-                       // Toast.makeText(getApplicationContext(), "yes", Toast.LENGTH_LONG).show();
                     } else {
                         Toast.makeText(getApplicationContext(), "No expense Found for previous month", Toast.LENGTH_LONG).show();
                         previous.setVisibility(View.GONE);

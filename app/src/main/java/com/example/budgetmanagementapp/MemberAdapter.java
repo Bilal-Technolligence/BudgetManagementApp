@@ -24,12 +24,14 @@ public class MemberAdapter extends RecyclerView.Adapter<MemberAdapter.ViewHolder
     private Context context;
     Activity trips;
     String tripId;
+    String admin;
 
-    public MemberAdapter(ArrayList<UserAttr> userAttrs, Context context, Trips trips, String tripId) {
+    public MemberAdapter(ArrayList<UserAttr> userAttrs, Context context, Trips trips, String tripId, String admin) {
         this.context = context;
         this.trips = trips;
         this.userAttrs = userAttrs;
         this.tripId = tripId;
+        this.admin = admin;
     }
 
     @NonNull
@@ -41,6 +43,8 @@ public class MemberAdapter extends RecyclerView.Adapter<MemberAdapter.ViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
+        if(admin.equals("no"))
+            holder.deleteBtn.setVisibility(View.GONE);
         holder.name.setText(userAttrs.get(position).getName());
 
         final String id = userAttrs.get(position).getId();

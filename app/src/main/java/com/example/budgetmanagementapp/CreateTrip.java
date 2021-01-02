@@ -47,6 +47,7 @@ public class CreateTrip extends BaseActivity {
                                     String name = dataSnapshot.child("name").getValue().toString();
                                     final String push = FirebaseDatabase.getInstance().getReference().child("Trip").push().getKey();
                                     reference.child("Trip").child(push).child("Title").setValue(Title);
+                                    reference.child("Trip").child(push).child("Admin").setValue(uid);
                                     reference.child("Trip").child(push).child("Members").child(uid).child("id").setValue(uid);
                                     reference.child("Trip").child(push).child("Members").child(uid).child("name").setValue(name);
                                     Toast.makeText(getApplicationContext(), "Trip Created", Toast.LENGTH_LONG).show();
