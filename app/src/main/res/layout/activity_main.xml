@@ -9,7 +9,8 @@
     tools:openDrawer="start">
 <ScrollView
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:layout_marginBottom="55dp">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -47,6 +48,39 @@
             app:layout_constraintTop_toTopOf="@+id/progress_bar"
             tools:text="0%" />
     </androidx.constraintlayout.widget.ConstraintLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:orientation="horizontal"
+            android:layout_weight="2">
+            <com.google.android.material.button.MaterialButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/btnIncome"
+                android:backgroundTint="@color/colorPurple"
+                android:text="+ income"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_weight="1"
+                android:textAllCaps="true">
+
+            </com.google.android.material.button.MaterialButton>
+            <com.google.android.material.button.MaterialButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/btnExpense"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:backgroundTint="@color/colorPurple"
+                android:text="+ expense"
+                android:layout_weight="1"
+                android:textAllCaps="true">
+
+            </com.google.android.material.button.MaterialButton>
+
+
+        </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="50dp"
@@ -403,40 +437,7 @@
         </LinearLayout>
 
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:orientation="horizontal"
-            android:layout_weight="2"
-            android:layout_marginBottom="60dp">
-            <com.google.android.material.button.MaterialButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/btnIncome"
-                android:backgroundTint="@color/colorPurple"
-                android:text="+ income"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_weight="1"
-                android:textAllCaps="true">
 
-            </com.google.android.material.button.MaterialButton>
-            <com.google.android.material.button.MaterialButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/btnExpense"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:backgroundTint="@color/colorPurple"
-                android:text="+ expense"
-                android:layout_weight="1"
-                android:textAllCaps="true">
-
-            </com.google.android.material.button.MaterialButton>
-
-
-        </LinearLayout>
     </LinearLayout>
 </ScrollView>
     <com.google.android.material.bottomnavigation.BottomNavigationView

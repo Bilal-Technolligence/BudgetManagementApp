@@ -123,6 +123,16 @@ public class Trips extends BaseActivity {
                                                 finish();
                                             }
                                         });
+                                        endTrip.setOnClickListener(new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View view) {
+//                                                Intent intent=new Intent(Trips.this,AddMember.class);
+//                                                intent.putExtra("Trip",tripId);
+//                                                startActivity(intent);
+//                                                finish();
+                                                Toast.makeText(getApplicationContext() , "not Working" ,Toast.LENGTH_SHORT).show();
+                                            }
+                                        });
                                         userAttrs = new ArrayList<UserAttr>();
                                         memberList.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
                                         databaseReference.child("Trip").child(tripId).child("Members").orderByChild("name").addValueEventListener(new ValueEventListener() {
