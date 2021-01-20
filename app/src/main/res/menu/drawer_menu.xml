@@ -5,20 +5,24 @@
 
     <item
         android:id="@+id/nav_spending"
-        android:icon="@drawable/ic_home"
+        android:icon="@drawable/expense"
         android:title="Spending"></item>
     <item
         android:id="@+id/nav_transaction"
-        android:icon="@drawable/ic_home"
+        android:icon="@drawable/spend"
         android:title="Transaction"></item>
     <item
         android:id="@+id/nav_history"
-        android:icon="@drawable/ic_home"
+        android:icon="@drawable/history"
         android:title="History"></item>
     <item
         android:id="@+id/nav_trip"
-        android:icon="@drawable/ic_home"
+        android:icon="@drawable/trip"
         android:title="Trip"></item>
+    <item
+        android:id="@+id/nav_setting"
+        android:icon="@drawable/ic_home"
+        android:title="Setting"></item>
     <item
         android:id="@+id/nav_logout"
         android:icon="@drawable/ic_logout"

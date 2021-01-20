@@ -45,6 +45,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-auth:19.2.0'
     implementation 'com.google.firebase:firebase-storage:19.2.1'
     implementation 'com.google.firebase:firebase-firestore:22.0.1'
+    implementation 'androidx.preference:preference:1.1.1'
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
@@ -55,4 +56,5 @@ dependencies {
     implementation 'com.jjoe64:graphview:4.2.2'
     implementation 'com.google.firebase:firebase-auth'
    // implementation platform('com.google.firebase:firebase-bom:26.1.1')
+    implementation 'org.adw.library:discrete-seekbar:1.0.1'
 }

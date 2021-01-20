@@ -11,7 +11,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.BudgetManagementApp">
-        <activity android:name=".AddMember"></activity>
+        <activity
+            android:name=".SettingsActivity"
+            android:label="@string/title_activity_settings"></activity>
+        <activity android:name=".AddMember" />
         <activity android:name=".AddTripExpense" />
         <activity android:name=".CreateTrip" />
         <activity android:name=".Trips" />
