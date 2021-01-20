@@ -28,7 +28,7 @@ public class History extends BaseActivity {
     FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
     DatabaseReference databaseReference = firebaseDatabase.getReference();
     ArrayList<ExpenseAttr> expenseAttrs ,expenseAttrs2;
-    ExpenseListAdapter adapter;
+
     TextView previous, current;
     ProgressDialog progressDialog;
 

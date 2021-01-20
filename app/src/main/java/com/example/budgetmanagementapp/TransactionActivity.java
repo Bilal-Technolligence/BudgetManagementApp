@@ -31,7 +31,6 @@ public class TransactionActivity extends BaseActivity {
     FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
     DatabaseReference databaseReference = firebaseDatabase.getReference();
     ArrayList<ExpenseAttr> expenseAttrs;
-    ExpenseListAdapter adapter;
     TextView totalAmount;
     int total = 0;
     ProgressDialog progressDialog;
