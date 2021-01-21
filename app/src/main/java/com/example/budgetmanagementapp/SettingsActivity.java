@@ -25,7 +25,7 @@ public class SettingsActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.settings_activity);
+       // setContentView(R.layout.settings_activity);
         btn = findViewById(R.id.btnSelRingtone);
         txtView = findViewById(R.id.tvRingtone);
         am = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
@@ -71,6 +71,13 @@ public class SettingsActivity extends BaseActivity {
             Uri uri = data.getParcelableExtra(RingtoneManager.EXTRA_RINGTONE_PICKED_URI);
             txtView.setText("From :" + uri.getPath());
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        startActivity(new Intent(SettingsActivity.this ,MainActivity.class ));
+        finish();
     }
 
     @Override

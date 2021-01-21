@@ -1,21 +1,15 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-
     android:background="@color/colorlightPurple"
     android:orientation="vertical">
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="579dp"
-        android:layout_marginBottom="60dp"
-        android:scrollbarThumbHorizontal="@null"
-        android:scrollbarThumbVertical="@null">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:padding="15dp"
+            android:layout_marginBottom="60dp"
             android:orientation="vertical">
 
             <TextView
@@ -28,13 +22,12 @@
                 android:textColor="@color/colorPurple"
                 android:textSize="22dp"
                 android:textStyle="bold"
-
                 />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingTop="15dp"
+                android:layout_marginTop="25dp"
                 android:text="Chnage Ringtone"
                 android:textAllCaps="true"
                 android:textColor="#141414"
@@ -160,42 +153,7 @@
 
                 </Switch>
             </LinearLayout>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="Community"
-                android:textAllCaps="true"
-                android:textColor="#141414"
-                android:textSize="16sp"
-                android:textStyle="bold" />
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="70dp"
-                android:padding="10dp"
-                android:orientation="vertical">
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="45dp"
-                    android:layout_weight="1"
-                    android:gravity="center|left"
-                    android:text="FEEDBACK"
-                    android:textColor="@color/white"
-                    android:textStyle="bold" />
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="45dp"
-                    android:layout_weight="1"
-                    android:gravity="center|left"
-                    android:text="RATE US"
-                    android:textColor="@color/white"
-                    android:textStyle="bold" />
-            </LinearLayout>
-
-
         </LinearLayout>
-    </ScrollView>
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/navigationView"
         android:layout_width="match_parent"
@@ -210,4 +168,4 @@
         app:layout_constraintRight_toRightOf="parent"
         android:layout_alignParentBottom="true"
         app:menu="@menu/drawer_menu"/>
-</LinearLayout>
+</RelativeLayout>
