@@ -21,11 +21,7 @@
         android:title="Trip"></item>
     <item
         android:id="@+id/nav_setting"
-        android:icon="@drawable/ic_home"
+        android:icon="@drawable/setting"
         android:title="Setting"></item>
-    <item
-        android:id="@+id/nav_logout"
-        android:icon="@drawable/ic_logout"
-        android:title="Logout"></item>
 
 </menu>
