@@ -6,11 +6,18 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.ProgressDialog;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.components.YAxis;
+import com.github.mikephil.charting.data.BarData;
+import com.github.mikephil.charting.data.BarDataSet;
+import com.github.mikephil.charting.data.BarEntry;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -34,12 +41,16 @@ public class TransactionActivity extends BaseActivity {
     ExpenseListAdapter adapter;
     TextView totalAmount;
     int total = 0;
+    int abc=100;
     ProgressDialog progressDialog;
+    BarChart barChart;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //setContentView(R.layout.activity_transaction);
+
+
         final Calendar cldr = Calendar.getInstance();
         int month = cldr.get(Calendar.MONTH);
         int year = cldr.get(Calendar.YEAR);
@@ -85,6 +96,7 @@ public class TransactionActivity extends BaseActivity {
                             total = total + Integer.parseInt(dataSnapshot1.child("amount").getValue().toString());
                         }
                         totalAmount.setText(String.valueOf(total));
+                       // abc =total;
                     }
                     catch (Exception e){}
                     } else totalAmount.setText("0");
@@ -95,22 +107,89 @@ public class TransactionActivity extends BaseActivity {
 
             }
         });
-        GraphView graph = (GraphView) findViewById(R.id.graph);
-        try {
-            LineGraphSeries<DataPoint> series = new LineGraphSeries<>(new DataPoint[]{
-                    new DataPoint(0, 0),
-                    new DataPoint(Integer.valueOf(1), Integer.valueOf(10000)),
-                    new DataPoint(Integer.valueOf(2), Integer.valueOf(20000)),
-                    new DataPoint(Integer.valueOf(3), Integer.valueOf(30000)),
-                    new DataPoint(Integer.valueOf(4), Integer.valueOf(40000)),
-                    new DataPoint(Integer.valueOf(5), Integer.valueOf(10000)),
-                    new DataPoint(Integer.valueOf(6), Integer.valueOf(20000)),
-            });
-            graph.addSeries(series);
-        } catch (IllegalArgumentException e) {
-            Toast.makeText(TransactionActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
-        }
+
+
+
+     //   GraphView graph = (GraphView) findViewById(R.id.graph);
+//        try {
+//            LineGraphSeries<DataPoint> series = new LineGraphSeries<>(new DataPoint[]{
+//                    new DataPoint(0, 0),
+//                    new DataPoint(Integer.valueOf(1), Integer.valueOf(10000)),
+//                    new DataPoint(Integer.valueOf(2), Integer.valueOf(20000)),
+//                    new DataPoint(Integer.valueOf(3), Integer.valueOf(30000)),
+//                    new DataPoint(Integer.valueOf(4), Integer.valueOf(40000)),
+//                    new DataPoint(Integer.valueOf(5), Integer.valueOf(10000)),
+//                    new DataPoint(Integer.valueOf(6), Integer.valueOf(20000)),
+//            });
+//            graph.addSeries(series);
+//        } catch (IllegalArgumentException e) {
+//            Toast.makeText(TransactionActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
+//        }
         progressDialog.dismiss();
+
+
+
+        //graph////
+        barChart = (BarChart) findViewById(R.id.bargraph);
+
+        YAxis leftAxis = barChart.getAxisLeft();
+        YAxis rightAxis = barChart.getAxisRight();
+        XAxis xAxis = barChart.getXAxis();
+
+        xAxis.setPosition( XAxis.XAxisPosition.BOTTOM);
+        xAxis.setTextSize(12f);
+        xAxis.setDrawAxisLine(true);
+        xAxis.setLabelCount(7);
+        xAxis.setDrawGridLines(false);
+
+
+        leftAxis.setTextSize(12f);
+        leftAxis.setDrawLabels(true);
+        leftAxis.setDrawAxisLine(true);
+        leftAxis.setDrawGridLines(true);
+
+        rightAxis.setDrawAxisLine(true);
+        rightAxis.setDrawGridLines(true);
+        rightAxis.setDrawLabels(true);
+
+
+       // int abc=total;
+        // int abc=Integer.parseInt(xyz);
+        // String abc=txtUsed.getText();
+        BarDataSet barDataSet1 = new BarDataSet(dataValues1(abc),"Monthly Expense ");
+
+        BarData barData = new BarData();
+        barData.addDataSet(barDataSet1);
+        barData.setBarWidth(0.3f); // set custom bar width
+        barChart.setData(barData);
+        barChart.setData(barData);
+        barChart.setFitBars(true); // make the x-axis fit exactly all bars
+        barChart.invalidate();
+        barChart.setScaleEnabled(false);
+        barChart.setDoubleTapToZoomEnabled(false);
+        barChart.setBackgroundColor(Color.rgb(255, 255, 255));
+        barChart.animateXY(2000, 2000);
+        barChart.setDrawBorders(false);
+        //   barChart.setDescription(desc);
+        barChart.setDrawValueAboveBar(true);
+        barData.notifyDataChanged(); // let the data know a dataSet changed
+        barDataSet1.notifyDataSetChanged();
+        return ;
+    }
+
+
+    ///Graph Values
+    private ArrayList<BarEntry> dataValues1(int abc) {
+        ArrayList<BarEntry> dataVals = new ArrayList<BarEntry>();
+        dataVals.add( new BarEntry(1, abc ));
+        dataVals.add( new BarEntry( 2, 7 ) );
+        dataVals.add( new BarEntry( 3, 9 ) );
+        dataVals.add( new BarEntry( 4, 12 ) );
+        dataVals.add( new BarEntry( 5, 75 ) );
+        dataVals.add( new BarEntry( 6, 50 ) );
+        dataVals.add( new BarEntry( 7, 15 ) );
+
+        return dataVals;
     }
 
     @Override
