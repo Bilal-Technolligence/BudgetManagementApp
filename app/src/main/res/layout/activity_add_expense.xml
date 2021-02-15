@@ -28,7 +28,19 @@
                     android:src="@drawable/logo"/>
 
             </LinearLayout>
-
+            <Spinner
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:layout_marginTop="15dp"
+                android:layout_marginRight="40dp"
+                android:layout_marginLeft="40dp"
+                android:id="@+id/spinnerCategory"
+                android:textColor="#ffffff"
+                android:textSize="23dp"
+                android:textStyle="bold"
+                android:entries="@array/category"/>
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_marginTop="15dp"
@@ -68,19 +80,7 @@
                 </com.google.android.material.textfield.TextInputEditText>
             </com.google.android.material.textfield.TextInputLayout>
 
-                <Spinner
-                    android:layout_width="match_parent"
-                    android:layout_height="55dp"
-                    android:layout_gravity="center"
-                    android:gravity="center"
-                    android:layout_marginTop="15dp"
-                    android:layout_marginRight="40dp"
-                    android:layout_marginLeft="40dp"
-                    android:id="@+id/spinnerCategory"
-                    android:textColor="#ffffff"
-                    android:textSize="23dp"
-                    android:textStyle="bold"
-                    android:entries="@array/category"/>
+
             <com.google.android.material.button.MaterialButton
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
