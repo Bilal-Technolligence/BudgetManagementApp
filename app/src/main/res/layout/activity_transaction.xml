@@ -24,11 +24,20 @@
                 android:textColor="@color/colorPurple"
                 android:textSize="30dp" />
 
-            <com.jjoe64.graphview.GraphView
-                android:id="@+id/graph"
+<!--            <com.jjoe64.graphview.GraphView-->
+<!--                android:id="@+id/graph"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="200dip" />-->
+            <com.github.mikephil.charting.charts.BarChart
                 android:layout_width="match_parent"
-                android:layout_height="200dip" />
+                android:layout_marginTop="20dp"
+                android:layout_below="@+id/middle_layout"
+                android:layout_height="300dp"
+                android:id="@+id/bargraph"
+                tools:ignore="MissingClass">
 
+
+            </com.github.mikephil.charting.charts.BarChart>
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycler"
                 android:layout_width="match_parent"

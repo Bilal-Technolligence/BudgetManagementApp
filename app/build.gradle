@@ -55,6 +55,8 @@ dependencies {
     implementation 'com.squareup.picasso:picasso:2.71828'
     implementation 'com.jjoe64:graphview:4.2.2'
     implementation 'com.google.firebase:firebase-auth'
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0-alpha'
+
    // implementation platform('com.google.firebase:firebase-bom:26.1.1')
-    implementation 'org.adw.library:discrete-seekbar:1.0.1'
+//    implementation project(':MPChartLib')
 }
