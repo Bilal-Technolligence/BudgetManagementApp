@@ -14,8 +14,11 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
@@ -25,6 +28,9 @@ public class MemberAdapter extends RecyclerView.Adapter<MemberAdapter.ViewHolder
     Activity trips;
     String tripId;
     String admin;
+    String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+    FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+    DatabaseReference databaseReference = firebaseDatabase.getReference();
 
     public MemberAdapter(ArrayList<UserAttr> userAttrs, Context context, Trips trips, String tripId, String admin) {
         this.context = context;
@@ -43,11 +49,11 @@ public class MemberAdapter extends RecyclerView.Adapter<MemberAdapter.ViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
-        if(admin.equals("no"))
+        if (admin.equals("no"))
             holder.deleteBtn.setVisibility(View.GONE);
         holder.name.setText(userAttrs.get(position).getName());
-
         final String id = userAttrs.get(position).getId();
+
         holder.deleteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -56,9 +62,6 @@ public class MemberAdapter extends RecyclerView.Adapter<MemberAdapter.ViewHolder
                 alertDialogBuilder.setMessage("Are you sure to remove from trip?").setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
 
-                        String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
-                        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
-                        DatabaseReference databaseReference = firebaseDatabase.getReference();
                         databaseReference.child("Trip").child(tripId).child("Members").child(id).setValue(null);
                         dialog.dismiss();
                     }

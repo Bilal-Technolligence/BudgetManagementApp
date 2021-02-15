@@ -72,7 +72,7 @@ public class AddIncome extends BaseActivity {
 
     @Override
     int getNavigationMenuItemId() {
-        return R.id.nav_history;
+        return R.id.nav_transaction;
     }
 
 

@@ -11,21 +11,21 @@
         android:id="@+id/nav_transaction"
         android:icon="@drawable/spend"
         android:title="Transaction"></item>
-    <item
-        android:id="@+id/nav_history"
-        android:icon="@drawable/history"
-        android:title="History"></item>
+<!--    <item-->
+<!--        android:id="@+id/nav_history"-->
+<!--        android:icon="@drawable/history"-->
+<!--        android:title="History"></item>-->
     <item
         android:id="@+id/nav_trip"
         android:icon="@drawable/trip"
-        android:title="Trip"></item>
+        android:title="Shared Expense"></item>
     <item
         android:id="@+id/nav_setting"
         android:icon="@drawable/setting"
         android:title="Setting"></item>
-<!--    <item-->
-<!--        android:id="@+id/nav_logout"-->
-<!--        android:icon="@drawable/ic_logout"-->
-<!--        android:title="Logout"></item>-->
+    <item
+        android:id="@+id/nav_logout"
+        android:icon="@drawable/ic_logout"
+        android:title="Logout"></item>
 
 </menu>

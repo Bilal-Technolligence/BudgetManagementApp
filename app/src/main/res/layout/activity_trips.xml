@@ -32,6 +32,40 @@
                 android:layout_height="50dp"
                 android:layout_marginTop="20dp"
                 android:orientation="horizontal"
+                android:layout_weight="1">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:layout_weight="1"
+                    android:weightSum="2"
+                    android:layout_margin="5dp"
+                    android:background="@drawable/backgroundlayout">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Shared Expense Budget"
+                        android:textSize="10sp"
+                        android:layout_weight="1"
+                        android:layout_marginLeft="5dp"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/txtBudget"
+                        android:text="0"
+                        android:textColor="@color/black"
+                        android:textSize="10sp"
+                        android:layout_weight="1"
+                        android:layout_marginLeft="5dp"/>
+                </LinearLayout>
+
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="20dp"
+                android:orientation="horizontal"
                 android:layout_weight="2">
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -213,6 +247,28 @@
 
 
             </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:orientation="horizontal"
+                android:layout_weight="2">
+
+                <com.google.android.material.button.MaterialButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/btnExitTrip"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:backgroundTint="@color/colorPurple"
+                    android:text="Exit Shared Expense"
+                    android:layout_weight="1"
+                    android:textAllCaps="true">
+
+                </com.google.android.material.button.MaterialButton>
+
+
+            </LinearLayout>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -234,7 +290,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="No trip found"
+                android:text="No shared expense found"
                 android:textAllCaps="true"
                 android:textColor="@color/colorPurple"
                 android:textSize="20dp" />
@@ -246,7 +302,7 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:backgroundTint="@color/colorPurple"
-                android:text="Create trip"
+                android:text="Create Shared Expense"
                 android:layout_weight="1"
                 android:textAllCaps="true">
             </com.google.android.material.button.MaterialButton>

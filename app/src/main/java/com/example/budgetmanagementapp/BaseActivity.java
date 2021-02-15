@@ -56,24 +56,25 @@ public abstract class BaseActivity extends AppCompatActivity implements BottomNa
             Intent intent=new Intent(this, TransactionActivity.class);
             startActivity(intent);
             finish();
-        } else if (itemId == R.id.nav_history) {
-            Intent intent=new Intent(this, History.class);
-            startActivity(intent);
-            finish();
         }
+//        else if (itemId == R.id.nav_history) {
+//            Intent intent=new Intent(this, History.class);
+//            startActivity(intent);
+//            finish();
+//        }
         else if (itemId == R.id.nav_setting) {
             startActivity(new Intent(this, SettingsActivity.class));
             finish();
         }
         else if (itemId == R.id.nav_trip) {
-            startActivity(new Intent(this, Trips.class));
+            startActivity(new Intent(this, TripsList.class));
             finish();
         }
-//        else if (itemId == R.id.nav_logout) {
-//            Intent intent = new Intent(this , LoginActivity.class);
-//            startActivity(intent);
-//            finish();
-//        }
+        else if (itemId == R.id.nav_logout) {
+            Intent intent = new Intent(this , LoginActivity.class);
+            startActivity(intent);
+            finish();
+        }
         return true;
     }
 

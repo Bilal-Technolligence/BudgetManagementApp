@@ -19,7 +19,7 @@ import com.google.firebase.database.ValueEventListener;
 
 public class CreateTrip extends BaseActivity {
     CardView create;
-    EditText title;
+    EditText title , budget;
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     final DatabaseReference reference = database.getReference();
 
@@ -29,14 +29,19 @@ public class CreateTrip extends BaseActivity {
         //setContentView(R.layout.activity_create_trip);
         create = (CardView) findViewById(R.id.create);
         title = (EditText) findViewById(R.id.txtTripTitled);
+        budget = (EditText) findViewById(R.id.txtTripAmount);
         String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
         create.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String Title = title.getText().toString();
+                String Budget = budget.getText().toString();
                 if (Title.equals("")) {
                     title.setError("Enter Valid Title");
                     title.setFocusable(true);
+                }else if (Budget.equals("")) {
+                    budget.setError("Enter Valid Budget");
+                    budget.setFocusable(true);
                 } else {
                     String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
                     reference.child("Users").child(uid).addValueEventListener(new ValueEventListener() {
@@ -47,11 +52,15 @@ public class CreateTrip extends BaseActivity {
                                     String name = dataSnapshot.child("name").getValue().toString();
                                     final String push = FirebaseDatabase.getInstance().getReference().child("Trip").push().getKey();
                                     reference.child("Trip").child(push).child("Title").setValue(Title);
+                                    reference.child("Trip").child(push).child("Id").setValue(push);
+                                    reference.child("Trip").child(push).child("Budget").setValue(Budget);
                                     reference.child("Trip").child(push).child("Admin").setValue(uid);
                                     reference.child("Trip").child(push).child("Members").child(uid).child("id").setValue(uid);
                                     reference.child("Trip").child(push).child("Members").child(uid).child("name").setValue(name);
                                     Toast.makeText(getApplicationContext(), "Trip Created", Toast.LENGTH_LONG).show();
-                                    startActivity(new Intent(CreateTrip.this, Trips.class));
+                                    Intent intent=new Intent(CreateTrip.this,Trips.class);
+                                    intent.putExtra("id",push);
+                                    startActivity(intent);
                                     finish();
                                 }
                             }

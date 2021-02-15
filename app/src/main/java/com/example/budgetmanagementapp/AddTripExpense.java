@@ -78,8 +78,9 @@ public class AddTripExpense extends BaseActivity {
                     progressDialog.dismiss();
                     Toast.makeText(getApplicationContext(),
                             "Expense created.", Toast.LENGTH_SHORT).show();
-
-                    startActivity(new Intent(AddTripExpense.this ,Trips.class ));
+                    Intent intent=new Intent(AddTripExpense.this,Trips.class);
+                    intent.putExtra("id",tripId);
+                    startActivity(intent);
                     finish();
 
                 }

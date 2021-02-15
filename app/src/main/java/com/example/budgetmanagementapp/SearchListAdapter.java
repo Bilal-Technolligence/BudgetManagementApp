@@ -27,16 +27,18 @@ public class SearchListAdapter extends RecyclerView.Adapter<com.example.budgetma
     private Context context;
     Activity AddMember;
     String tripId;
-    public SearchListAdapter(ArrayList<UserAttr> userAttrs, Context context, AddMember addMember , String tripId){
-        this.context=context;
+
+    public SearchListAdapter(ArrayList<UserAttr> userAttrs, Context context, AddMember addMember, String tripId) {
+        this.context = context;
         this.userAttrs = userAttrs;
         this.AddMember = addMember;
         this.tripId = tripId;
     }
+
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.search,parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.search, parent, false);
         return new ViewHolder(view);
     }
 
@@ -61,11 +63,11 @@ public class SearchListAdapter extends RecyclerView.Adapter<com.example.budgetma
                         DatabaseReference databaseReference = firebaseDatabase.getReference();
                         databaseReference.child("Trip").child(tripId).child("Members").child(Id).child("id").setValue(Id);
                         databaseReference.child("Trip").child(tripId).child("Members").child(Id).child("name").setValue(userAttrs.get(position).getName());
-                        Toast.makeText(context , "Member added" , Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, "Member added", Toast.LENGTH_SHORT).show();
                         dialog.dismiss();
-
-                            Intent i = new Intent(AddMember, Trips.class);
-                            AddMember.startActivity(i);
+                        Intent intent = new Intent(AddMember, Trips.class);
+                        intent.putExtra("id", tripId);
+                        AddMember.startActivity(intent);
                     }
                 }).setNegativeButton("No", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
@@ -86,6 +88,7 @@ public class SearchListAdapter extends RecyclerView.Adapter<com.example.budgetma
     public class ViewHolder extends RecyclerView.ViewHolder {
         ImageView profileImage;
         TextView name;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             profileImage = itemView.findViewById(R.id.imgProfile);
