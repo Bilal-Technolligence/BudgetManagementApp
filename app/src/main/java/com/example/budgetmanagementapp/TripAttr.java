@@ -5,6 +5,7 @@ public class TripAttr {
     String Budget;
     String Title;
     String Admin;
+    String Status;
 
 
     public TripAttr() {
@@ -42,10 +43,19 @@ public class TripAttr {
         Admin = admin;
     }
 
-    public TripAttr(String id, String budget, String title, String admin) {
+    public String getStatus() {
+        return Status;
+    }
+
+    public void setStatus(String status) {
+        Status = status;
+    }
+
+    public TripAttr(String id, String budget, String title, String admin, String status) {
         Id = id;
         Budget = budget;
         Title = title;
         Admin = admin;
+        Status = status;
     }
 }

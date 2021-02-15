@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -14,14 +13,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
-public class TripListAdapter extends RecyclerView.Adapter<TripListAdapter.ViewHolder> {
-    ArrayList<TripAttr> tripAttrs;
+public class PaymentListAdapter extends RecyclerView.Adapter<PaymentListAdapter.ViewHolder> {
+    ArrayList<PaymentAttr> paymentAttrs;
     private Context context;
     Activity activity;
 
-    public TripListAdapter(ArrayList<TripAttr> tripAttrs, Context context ,Activity activity) {
+    public PaymentListAdapter(ArrayList<PaymentAttr> paymentAttrs, Context context , Activity activity) {
         this.context = context;
-        this.tripAttrs = tripAttrs;
+        this.paymentAttrs = paymentAttrs;
         this.activity = activity;
     }
 
@@ -34,36 +33,23 @@ public class TripListAdapter extends RecyclerView.Adapter<TripListAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
-        holder.name.setText(tripAttrs.get(position).getTitle());
-        holder.end.setVisibility(View.GONE);
-        String end = tripAttrs.get(position).getStatus();
-        if(!end.equals("going"))
-            holder.end.setVisibility(View.VISIBLE);
-        String id = tripAttrs.get(position).getId();
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent=new Intent(activity,Trips.class);
-                intent.putExtra("id",id);
-                activity.startActivity(intent);
-            }
-        });
-
+        holder.name.setText(paymentAttrs.get(position).getName());
+        holder.amount.setText(paymentAttrs.get(position).getAmount());
 
     }
 
     @Override
     public int getItemCount() {
-        return tripAttrs.size();
+        return paymentAttrs.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView  name ,end;
+        TextView  name ,amount;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             name = (TextView) itemView.findViewById(R.id.txtName);
-            end = (TextView) itemView.findViewById(R.id.txtEnded);
+            amount = (TextView) itemView.findViewById(R.id.txtEnded);
         }
     }
 }

@@ -54,6 +54,7 @@ public class CreateTrip extends BaseActivity {
                                     reference.child("Trip").child(push).child("Title").setValue(Title);
                                     reference.child("Trip").child(push).child("Id").setValue(push);
                                     reference.child("Trip").child(push).child("Budget").setValue(Budget);
+                                    reference.child("Trip").child(push).child("Status").setValue("going");
                                     reference.child("Trip").child(push).child("Admin").setValue(uid);
                                     reference.child("Trip").child(push).child("Members").child(uid).child("id").setValue(uid);
                                     reference.child("Trip").child(push).child("Members").child(uid).child("name").setValue(name);
