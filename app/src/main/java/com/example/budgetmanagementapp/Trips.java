@@ -119,8 +119,15 @@ public class Trips extends BaseActivity {
                                         }
 
                                        if(total>=b){
-                                           
-                                           Toast.makeText(getApplicationContext() , "Budget Exeed" , Toast.LENGTH_SHORT).show();
+//                                           Intent notificationIntent = new Intent(this, MainActivity.class);
+//                                           PendingIntent contentIntent = PendingIntent.getActivity(this, 0, notificationIntent,
+//                                                   PendingIntent.FLAG_UPDATE_CURRENT);
+//                                           builder.setContentIntent(contentIntent);
+//
+//                                           // Add as notification
+//                                           NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+//                                           manager.notify(0, builder.build());
+                                           Toast.makeText(getApplicationContext() , "Budget Exceed" , Toast.LENGTH_SHORT).show();
                                        }
                                     }
                                     catch (Exception e){}
