@@ -4,6 +4,7 @@
     package="com.example.budgetmanagementapp">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name = "android.permission.VIBRATE" />
     <uses-permission
         android:name="android.permission.WRITE_SETTINGS"
         tools:ignore="ProtectedPermissions" />
@@ -15,7 +16,8 @@
         android:roundIcon="@drawable/logo"
         android:supportsRtl="true"
         android:theme="@style/Theme.BudgetManagementApp">
-        <activity android:name=".PaymentActivity"></activity>
+        <activity android:name=".NotificationActivity"></activity>
+        <activity android:name=".PaymentActivity" />
         <activity android:name=".TripsList">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -46,11 +48,12 @@
             android:theme="@style/Theme.BudgetManagementApp.NoActionBar" />
         <activity
             android:name=".SplashActivty"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"></activity>
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
             android:theme="@style/Theme.BudgetManagementApp.NoActionBar" />
+        <receiver android:name = ".NotificationGernetor" />
     </application>
 
 </manifest>

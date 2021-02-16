@@ -21,6 +21,11 @@
             android:text="Income Spent"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
             android:layout_gravity="center"/>
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Send Notification"
+            android:id="@+id/btnSendNotifications"/>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
