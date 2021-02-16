@@ -16,7 +16,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-public class NotificationActivity extends AppCompatActivity {
+public class NotificationActivity extends BaseActivity {
     FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
     DatabaseReference databaseReference = firebaseDatabase.getReference();
     ArrayList<notificationAttr> pacakgeAttrs;
@@ -25,7 +25,7 @@ public class NotificationActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_notification);
+       // setContentView(R.layout.activity_notification);
 
         recyclerView=findViewById(R.id.nList);
         pacakgeAttrs = new ArrayList<notificationAttr>();
@@ -53,5 +53,15 @@ public class NotificationActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    @Override
+    int getContentViewId() {
+        return R.layout.activity_notification;
+    }
+
+    @Override
+    int getNavigationMenuItemId() {
+        return R.id.nav_notification;
     }
 }

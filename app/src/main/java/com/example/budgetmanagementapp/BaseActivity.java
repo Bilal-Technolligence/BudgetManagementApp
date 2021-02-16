@@ -63,15 +63,15 @@ public abstract class BaseActivity extends AppCompatActivity implements BottomNa
 //            finish();
 //        }
         else if (itemId == R.id.nav_setting) {
-            startActivity(new Intent(this, NotificationActivity.class));
+            startActivity(new Intent(this, SettingsActivity.class));
             finish();
         }
         else if (itemId == R.id.nav_trip) {
             startActivity(new Intent(this, TripsList.class));
             finish();
         }
-        else if (itemId == R.id.nav_logout) {
-            Intent intent = new Intent(this , LoginActivity.class);
+        else if (itemId == R.id.nav_notification) {
+            Intent intent = new Intent(this , NotificationActivity.class);
             startActivity(intent);
             finish();
         }
