@@ -232,6 +232,7 @@ public class Trips extends BaseActivity {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                     if (dataSnapshot.exists()) {
+                                        total = 0;
                                         try {
                                             for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
                                                 total = total + Integer.parseInt(dataSnapshot1.child("amount").getValue().toString());
