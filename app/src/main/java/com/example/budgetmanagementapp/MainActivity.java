@@ -248,6 +248,9 @@ public class MainActivity extends BaseActivity {
     private Notification getNotification (String content) {
         NotificationCompat.Builder builder = new NotificationCompat.Builder( this, default_notification_channel_id ) ;
         builder.setContentTitle( "Budget Notification" ) ;
+        Intent intent = new Intent(this, NotificationActivity.class);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
+        builder.setContentIntent(pendingIntent);
         builder.setContentText(content) ;
         builder.setSmallIcon(R.drawable. ic_launcher_foreground ) ;
         builder.setAutoCancel( true ) ;
