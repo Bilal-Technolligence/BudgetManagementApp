@@ -15,6 +15,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class NotificationActivity extends BaseActivity {
     FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
@@ -33,7 +34,7 @@ public class NotificationActivity extends BaseActivity {
 
         final String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
-        databaseReference.child("ExpenseNoti").addValueEventListener(new ValueEventListener() {
+        databaseReference.child("ExpenseNoti").orderByChild("senderid").equalTo(uid).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 pacakgeAttrs.clear();
@@ -42,7 +43,7 @@ public class NotificationActivity extends BaseActivity {
                     notificationAttr p = dataSnapshot1.getValue(notificationAttr.class);
                     pacakgeAttrs.add(p);
                 }
-
+                Collections.reverse(pacakgeAttrs);
                 recyclerView.setAdapter(new NotificationAdapter(pacakgeAttrs , NotificationActivity.this));
 
 

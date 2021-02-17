@@ -37,6 +37,10 @@
         <item>Sports</item>
         <item>Entertainment</item>
     </string-array>
+    <string-array name="days">
+        <item>This month</item>
+        <item>Previous month</item>
+    </string-array>
     <string name="title_activity_settings">SettingsActivity</string>
 
     <!-- Preference Titles -->

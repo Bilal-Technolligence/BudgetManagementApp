@@ -16,18 +16,14 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <TextView
+            <Spinner
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="This Month"
-                android:textColor="@color/colorPurple"
-                android:textSize="30dp" />
+                android:layout_height="40dp"
+                android:id="@+id/days"
+                android:layout_margin="10dp"
+                android:entries="@array/days"
+                android:gravity="center"/>
 
-<!--            <com.jjoe64.graphview.GraphView-->
-<!--                android:id="@+id/graph"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="200dip" />-->
             <com.github.mikephil.charting.charts.BarChart
                 android:layout_width="match_parent"
                 android:layout_marginTop="20dp"
