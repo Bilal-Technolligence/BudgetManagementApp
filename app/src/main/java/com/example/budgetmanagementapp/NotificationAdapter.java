@@ -30,7 +30,6 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
     @Override
     public void onBindViewHolder(@NonNull NotificationAdapter.MyViewHolder holder, final int position) {
         holder.desc.setText(notificationAttrs.get(position).getDescription());
-        holder.datetime.setText(notificationAttrs.get(position).getTime());
         holder.title.setText(notificationAttrs.get(position).getTitle());
 
 //        holder.itemView.setOnClickListener( new View.OnClickListener() {
@@ -55,12 +54,11 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        public TextView desc,datetime,title;
+        public TextView desc,title;
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             title = (TextView) itemView.findViewById(R.id.notification_title);
             desc = (TextView) itemView.findViewById(R.id.notification_description);
-            datetime=(TextView) itemView.findViewById( R.id.notification_datetime );
         }
     }
 

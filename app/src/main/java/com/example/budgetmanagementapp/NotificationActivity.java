@@ -53,6 +53,27 @@ public class NotificationActivity extends BaseActivity {
 
             }
         });
+
+        databaseReference.child("ExpenseNoti").orderByChild("senderid").equalTo(uid).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    int a = 0;
+                    try {
+                        for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+                            databaseReference.child("ExpenseNoti").child(dataSnapshot1.getKey()).child("status").setValue("read");
+                        }
+
+                    } catch (Exception e) {
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 
     @Override

@@ -34,19 +34,19 @@ import java.util.List;
 public class Trips extends BaseActivity {
     LinearLayout view, view2;
     ProgressDialog progressDialog;
-    Button addMember, addExpense, endTrip, createTrip ,exitTrip ,pay;
+    Button addMember, addExpense, endTrip, createTrip, exitTrip, pay;
     final String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
     FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
     DatabaseReference databaseReference = firebaseDatabase.getReference();
     String tripId = "";
-    TextView tripTitle , p;
+    TextView tripTitle, p;
     RecyclerView expenseList, memberList, paymentList;
     ArrayList<ExpenseAttr> expenseAttrs;
     ArrayList<UserAttr> userAttrs;
     ArrayList<PaymentAttr> paymentAttrs;
     ExpenseListAdapter adapter;
-    TextView food, fuel, sports, entertainment , budget;
-    int  fuelT = 0 , sportsT = 0,entertainmentT= 0, foodT=0;
+    TextView food, fuel, sports, entertainment, budget;
+    int fuelT = 0, sportsT = 0, entertainmentT = 0, foodT = 0;
     int total = 0;
 
     @Override
@@ -93,13 +93,13 @@ public class Trips extends BaseActivity {
         pay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent=new Intent(Trips.this,PaymentActivity.class);
-                intent.putExtra("Trip",tripId);
+                Intent intent = new Intent(Trips.this, PaymentActivity.class);
+                intent.putExtra("Trip", tripId);
                 startActivity(intent);
                 finish();
             }
         });
-        if(tripId!=null){
+        if (tripId != null) {
             databaseReference.child("Trip").child(tripId).addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -109,37 +109,36 @@ public class Trips extends BaseActivity {
                             budget.setText(dataSnapshot.child("Budget").getValue().toString());
                             String budget = dataSnapshot.child("Budget").getValue().toString();
                             Integer b = Integer.parseInt(budget);
-                        databaseReference.child("Trip").child(tripId).child("Expense").addValueEventListener(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                if (dataSnapshot.exists()) {
-                                    try {
-                                        for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
-                                            total = total + Integer.parseInt(dataSnapshot1.child("amount").getValue().toString());
-                                        }
+                            databaseReference.child("Trip").child(tripId).child("Expense").addValueEventListener(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                    if (dataSnapshot.exists()) {
+                                        try {
+                                            for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+                                                total = total + Integer.parseInt(dataSnapshot1.child("amount").getValue().toString());
+                                            }
 
-                                       if(total>=b){
+                                            if (total >= b) {
+                                                final String push = FirebaseDatabase.getInstance().getReference().child("Notification").push().getKey();
 
-//                                           Intent notificationIntent = new Intent(this, MainActivity.class);
-//                                           PendingIntent contentIntent = PendingIntent.getActivity(this, 0, notificationIntent,
-//                                                   PendingIntent.FLAG_UPDATE_CURRENT);
-//                                           builder.setContentIntent(contentIntent);
+                                                databaseReference.child("ExpenseNoti").child(push).child("description").setValue("Shared Budget Exeed");
+                                                databaseReference.child("ExpenseNoti").child(push).child("status").setValue("unread");
+                                                databaseReference.child("ExpenseNoti").child(push).child("title").setValue("Budget Alert");
+                                                databaseReference.child("ExpenseNoti").child(push).child("senderid").setValue(uid);
+                                                databaseReference.child("ExpenseNoti").child(push).child("id").setValue(push);
 //
-//                                           // Add as notification
-//                                           NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-//                                           manager.notify(0, builder.build());
-                                           Toast.makeText(getApplicationContext() , "Expense Exceed" , Toast.LENGTH_SHORT).show();
-                                       }
+                                                //Toast.makeText(getApplicationContext() , "Expense Exceed" , Toast.LENGTH_SHORT).show();
+                                            }
+                                        } catch (Exception e) {
+                                        }
                                     }
-                                    catch (Exception e){}
                                 }
-                            }
 
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError databaseError) {
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError databaseError) {
 
-                            }
-                        });
+                                }
+                            });
 
                         }
                     } catch (Exception e) {
@@ -155,26 +154,27 @@ public class Trips extends BaseActivity {
             databaseReference.child("Trip").child(tripId).addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    try{
-                        if(dataSnapshot.exists()){
+                    try {
+                        if (dataSnapshot.exists()) {
                             String user = dataSnapshot.child("Admin").getValue().toString();
                             String end = dataSnapshot.child("Status").getValue().toString();
-                            if(!end.equals("going")){
+                            if (!end.equals("going")) {
                                 addExpense.setVisibility(View.GONE);
                                 addMember.setVisibility(View.GONE);
                                 endTrip.setVisibility(View.GONE);
                                 exitTrip.setVisibility(View.GONE);
 
                             }
-                            if(!user.equals(uid)){
+                            if (!user.equals(uid)) {
+                                pay.setVisibility(View.GONE);
                                 addExpense.setVisibility(View.GONE);
                                 addMember.setVisibility(View.GONE);
                                 endTrip.setVisibility(View.GONE);
                                 exitTrip.setVisibility(View.VISIBLE);
                             }
                         }
+                    } catch (Exception e) {
                     }
-                    catch (Exception e){}
                 }
 
                 @Override
@@ -191,7 +191,7 @@ public class Trips extends BaseActivity {
 
                             databaseReference.child("Trip").child(tripId).child("Members").child(uid).setValue(null);
                             dialog.dismiss();
-                            startActivity(new Intent(Trips.this , TripsList.class));
+                            startActivity(new Intent(Trips.this, TripsList.class));
                             finish();
                         }
                     }).setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -204,8 +204,8 @@ public class Trips extends BaseActivity {
             addExpense.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent intent=new Intent(Trips.this,AddTripExpense.class);
-                    intent.putExtra("Trip",tripId);
+                    Intent intent = new Intent(Trips.this, AddTripExpense.class);
+                    intent.putExtra("Trip", tripId);
                     startActivity(intent);
                     finish();
                 }
@@ -213,8 +213,8 @@ public class Trips extends BaseActivity {
             addMember.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent intent=new Intent(Trips.this,AddMember.class);
-                    intent.putExtra("Trip",tripId);
+                    Intent intent = new Intent(Trips.this, AddMember.class);
+                    intent.putExtra("Trip", tripId);
                     startActivity(intent);
                     finish();
                 }
@@ -227,6 +227,54 @@ public class Trips extends BaseActivity {
                         public void onClick(DialogInterface dialog, int which) {
 
                             databaseReference.child("Trip").child(tripId).child("Status").setValue("end");
+
+                            databaseReference.child("Trip").child(tripId).child("Expense").addValueEventListener(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                    if (dataSnapshot.exists()) {
+                                        try {
+                                            for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+                                                total = total + Integer.parseInt(dataSnapshot1.child("amount").getValue().toString());
+                                            }
+
+
+                                        } catch (Exception e) {
+                                        }
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                }
+                            });
+                            try {
+                                databaseReference.child("Trip").child(tripId).child("Members").addValueEventListener(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                        if (dataSnapshot.exists()) {
+                                            for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+                                                long a = dataSnapshot.getChildrenCount();
+                                                long share = total / a;
+                                                String id = dataSnapshot1.getKey();
+                                                final String push = FirebaseDatabase.getInstance().getReference().child("Notification").push().getKey();
+                                                databaseReference.child("ExpenseNoti").child(push).child("status").setValue("unread");
+                                                databaseReference.child("ExpenseNoti").child(push).child("title").setValue("Budget Alert");
+                                                databaseReference.child("ExpenseNoti").child(push).child("senderid").setValue(id);
+                                                databaseReference.child("ExpenseNoti").child(push).child("id").setValue(push);
+                                                databaseReference.child("ExpenseNoti").child(push).child("description").setValue("Your share is " + String.valueOf(share));
+                                            }
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                    }
+                                });
+                            }
+                            catch (Exception e){}
+
                             dialog.dismiss();
                             finish();
                         }
@@ -245,24 +293,23 @@ public class Trips extends BaseActivity {
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     userAttrs.clear();
                     //profiledata.clear();
-                    for(DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()){
+                    for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
                         UserAttr p = dataSnapshot1.getValue(UserAttr.class);
                         userAttrs.add(p);
                     }
                     databaseReference.child("Trip").child(tripId).addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                            try{
-                                if(dataSnapshot.exists()){
+                            try {
+                                if (dataSnapshot.exists()) {
                                     String user = dataSnapshot.child("Admin").getValue().toString();
-                                    if(!user.equals(uid)){
-                                        memberList.setAdapter(new MemberAdapter(userAttrs , getApplicationContext() , Trips.this , tripId,"no"));
-                                    }
-                                    else
-                                        memberList.setAdapter(new MemberAdapter(userAttrs , getApplicationContext() , Trips.this , tripId,"yes"));
+                                    if (!user.equals(uid)) {
+                                        memberList.setAdapter(new MemberAdapter(userAttrs, getApplicationContext(), Trips.this, tripId, "no"));
+                                    } else
+                                        memberList.setAdapter(new MemberAdapter(userAttrs, getApplicationContext(), Trips.this, tripId, "yes"));
                                 }
+                            } catch (Exception e) {
                             }
-                            catch (Exception e){}
                         }
 
                         @Override
@@ -270,7 +317,6 @@ public class Trips extends BaseActivity {
 
                         }
                     });
-
 
 
                 }
@@ -285,7 +331,7 @@ public class Trips extends BaseActivity {
             databaseReference.child("Trip").child(tripId).child("Payment").addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    if(dataSnapshot.exists()) {
+                    if (dataSnapshot.exists()) {
                         paymentAttrs.clear();
                         //profiledata.clear();
                         for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
@@ -294,8 +340,7 @@ public class Trips extends BaseActivity {
                         }
                         Collections.reverse(paymentAttrs);
                         paymentList.setAdapter(new PaymentListAdapter(paymentAttrs, getApplicationContext(), Trips.this));
-                    }
-                    else{
+                    } else {
                         paymentList.setVisibility(View.GONE);
                         p.setVisibility(View.GONE);
                     }
@@ -322,16 +367,15 @@ public class Trips extends BaseActivity {
                                 if (dataSnapshot1.child("category").getValue().toString().equals("Food"))
                                     foodT = foodT + Integer.parseInt(dataSnapshot1.child("amount").getValue().toString());
                             }
+                        } catch (Exception e) {
                         }
-                        catch (Exception e){}
 
                         fuel.setText(String.valueOf(fuelT));
                         sports.setText(String.valueOf(sportsT));
                         entertainment.setText(String.valueOf(entertainmentT));
                         food.setText(String.valueOf(foodT));
 
-                    }
-                    else{
+                    } else {
                         fuel.setText("0");
                         sports.setText("0");
                         entertainment.setText("0");
@@ -351,7 +395,7 @@ public class Trips extends BaseActivity {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     if (dataSnapshot.exists()) {
-                        try{
+                        try {
                             expenseAttrs.clear();
                             //profiledata.clear();
                             for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
@@ -360,8 +404,8 @@ public class Trips extends BaseActivity {
                             }
                             Collections.reverse(expenseAttrs);
                             expenseList.setAdapter(new ExpenseListAdapter(expenseAttrs, getApplicationContext()));
+                        } catch (Exception e) {
                         }
-                        catch (Exception e){}
                     } else {
 //                                                    Toast.makeText(getApplicationContext(), "No expense Found", Toast.LENGTH_LONG).show();
                         progressDialog.dismiss();
@@ -375,9 +419,7 @@ public class Trips extends BaseActivity {
             });
 
 
-
         }
-
 
 
 //        databaseReference.child("Trip").addValueEventListener(new ValueEventListener() {

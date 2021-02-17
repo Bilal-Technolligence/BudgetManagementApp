@@ -38,13 +38,6 @@
                 android:text="Notification Description"
                 android:id="@+id/notification_description"
                 />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:text="datetime"
-                android:textSize="10dp"
-                android:id="@+id/notification_datetime"
-                />
 
         </LinearLayout>
 

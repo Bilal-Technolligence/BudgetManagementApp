@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -75,6 +76,14 @@ public class MemberAdapter extends RecyclerView.Adapter<MemberAdapter.ViewHolder
 //                i.putExtra("Id" , serviceId);
 //                context.startActivity(i);
 
+            }
+        });
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(trips , MemberDetail.class);
+                i.putExtra("id" , id);
+                context.startActivity(i);
             }
         });
 

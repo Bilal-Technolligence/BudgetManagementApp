@@ -99,29 +99,6 @@ public class MainActivity extends BaseActivity {
             }
         });
 
-        ///////Only for notifications
-        btnGenerateNotification.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                final String id = FirebaseAuth.getInstance().getCurrentUser().getUid();
-                final String push = FirebaseDatabase.getInstance().getReference().child("Notification").push().getKey();
-
-                databaseReference.child("ExpenseNoti").child(push).child("description").setValue("testing testing");
-                databaseReference.child("ExpenseNoti").child(push).child("status").setValue("unread");
-                databaseReference.child("ExpenseNoti").child(push).child("senderid").setValue("abc1234");
-                databaseReference.child("ExpenseNoti").child(push).child("title").setValue("Budget Alert");
-                databaseReference.child("ExpenseNoti").child(push).child("date").setValue("25-03-1996");
-                databaseReference.child("ExpenseNoti").child(push).child("time").setValue("10:12:00");
-                databaseReference.child("ExpenseNoti").child(push).child("senderid").setValue(id);
-              //  databaseReference.child("ExpenseNoti").child(push).child("uid").setValue(id);
-                //databaseReference.child("MissingPerson").child(push).child("relation").setValue(relation.getText().toString());
-//
-                Toast.makeText(getApplicationContext(), "Inserted", Toast.LENGTH_LONG).show();
-                scheduleNotification(getNotification( "Smart Budget Alert" ) , 5000 ) ;
-
-
-            }
-        });
 
         //////////////////
         databaseReference.child("Users").child(uid).addValueEventListener(new ValueEventListener() {
@@ -140,6 +117,16 @@ public class MainActivity extends BaseActivity {
                                     }
                                     spent.setText(String.valueOf(total));
                                     Integer remain = income - total;
+                                    if(total>=income){
+                                        final String push = FirebaseDatabase.getInstance().getReference().child("Notification").push().getKey();
+
+                                        databaseReference.child("ExpenseNoti").child(push).child("description").setValue("Budget Exeed from income");
+                                        databaseReference.child("ExpenseNoti").child(push).child("status").setValue("unread");
+                                        databaseReference.child("ExpenseNoti").child(push).child("title").setValue("Budget Alert");
+                                        databaseReference.child("ExpenseNoti").child(push).child("senderid").setValue(uid);
+                                        databaseReference.child("ExpenseNoti").child(push).child("id").setValue(push);
+//
+                                    }
                                     remaining.setText(String.valueOf(remain));
                                     int result = (int) Math.round((total * 100) / income);
                                     String p = String.valueOf(result);
