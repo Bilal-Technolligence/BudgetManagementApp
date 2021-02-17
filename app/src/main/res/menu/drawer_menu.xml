@@ -19,13 +19,15 @@
         android:id="@+id/nav_trip"
         android:icon="@drawable/trip"
         android:title="Shared Expense"></item>
+
+    <item
+        android:id="@+id/nav_notification"
+        android:icon="@drawable/ic_baseline_notifications_24"
+        android:title="Notifications"></item>
     <item
         android:id="@+id/nav_setting"
         android:icon="@drawable/setting"
         android:title="Setting"></item>
-    <item
-        android:id="@+id/nav_logout"
-        android:icon="@drawable/ic_logout"
-        android:title="Logout"></item>
+
 
 </menu>
