@@ -45,7 +45,7 @@ public class FirbaseAuthenticationClass extends AppCompatActivity {
                                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                     //save session
                                     //saving value true for session
-                                    //Save.save(activity,"session","true");
+                                    Save.save(activity,"session","true");
                                     activity.startActivity(new Intent(activity, MainActivity.class));
 
                                     activity.finish();

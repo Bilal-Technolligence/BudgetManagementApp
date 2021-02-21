@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.SystemClock;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Menu;
@@ -78,8 +79,52 @@ public class MainActivity extends BaseActivity {
         progressBar = (ProgressBar) findViewById(R.id.progress_bar);
 
         addExpense = (Button) findViewById(R.id.btnExpense);
-        btnGenerateNotification = (Button) findViewById(R.id.btnSendNotifications);
+       // btnGenerateNotification = (Button) findViewById(R.id.btnSendNotifications);
+        Thread thread=new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while (0<=1){
+                    try {
+                        Thread.sleep(5000);
+                        final String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+//                        Toast.makeText(MainActivity.this, ""+uid, Toast.LENGTH_LONG).show();
+                        final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
+                        databaseReference.child("ExpenseNoti").addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                if(dataSnapshot.exists()){
+                                    for(DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()){
+                                        String status =  dataSnapshot1.child(uid).child("status").getValue().toString();
+                                        String a= status;
+                                        if(status.equals("Unread")){
+                                          String id = dataSnapshot1.child("id").getValue().toString();
+                                           // String name = dataSnapshot1.child("name").getValue().toString();
+                                           // String msg = dataSnapshot1.child("message").getValue().toString();
+                                            databaseReference.child("ExpenseNoti").child(uid).child(id).child("status").setValue("Read");
+                                            scheduleNotification(getNotification( "Smart Budget Alert" ) , 5000 ) ;
 
+                                        }
+                                    }
+
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                            }
+                        });
+
+
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
+        thread.start();
+       // return START_STICKY;
+////////////////////////////////////////////
         addIncome = (Button) findViewById(R.id.btnIncome);
         final Calendar cldr = Calendar.getInstance();
         int month = cldr.get(Calendar.MONTH);

@@ -123,7 +123,7 @@ public class CompleteProActivity extends AppCompatActivity {
 //                                  getApplicationContext().finish();
                                     //save session
                                     //saving value true for session
-                                    //Save.save(getApplicationContext(),"session","true");
+                                    Save.save(getApplicationContext(),"session","true");
                                     Intent intent = new Intent(CompleteProActivity.this, MainActivity.class);
                                     startActivity(intent);
                                     finish();

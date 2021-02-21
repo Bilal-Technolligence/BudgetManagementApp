@@ -3,13 +3,14 @@ package com.example.budgetmanagementapp;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 
 public class SplashActivty extends AppCompatActivity {
-
+    Boolean session;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,11 +24,11 @@ public class SplashActivty extends AppCompatActivity {
             public void run() {
                 try {
                     sleep( 5000 );
+                    SESSION();
 
-                    Intent intent = new Intent(getApplicationContext(), LoginActivity.class );
-                    startActivity( intent );
-                    finish();
                     super.run();
+
+
 
                 } catch (InterruptedException e) {
                     e.printStackTrace();
@@ -36,5 +37,27 @@ public class SplashActivty extends AppCompatActivity {
             }
         };
         timer.start();
+    }
+
+    public void SESSION(){
+        //default value false
+        session = Boolean.valueOf(Save.read(getApplicationContext(),"session","false"));
+        if (!session){
+            //when user first or logout
+            Intent intent = new Intent(getApplicationContext(), LoginActivity.class );
+            startActivity( intent );
+            finish();
+
+
+        }
+        else{
+            //when user loged in
+            //here value true
+            //how the value can change true
+
+            Intent intent = new Intent(SplashActivty.this, MainActivity.class);
+            startActivity(intent);
+            finish();
+        }
     }
 }

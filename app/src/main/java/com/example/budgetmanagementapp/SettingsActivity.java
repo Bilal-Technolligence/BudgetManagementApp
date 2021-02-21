@@ -8,6 +8,7 @@ import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -20,6 +21,7 @@ import androidx.preference.PreferenceFragmentCompat;
 public class SettingsActivity extends BaseActivity {
     CardView btn;
     TextView txtView;
+    Button btnLogout;
     AudioManager am;
     Switch onOff;
     @Override
@@ -31,6 +33,14 @@ public class SettingsActivity extends BaseActivity {
         am = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
         onOff = (Switch) findViewById(R.id.vibswitch);
         onOff.setChecked(false);
+        btnLogout = findViewById(R.id.btnLogout);
+        btnLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Save.save(getApplicationContext(),"session","false");
+                startActivity(new Intent(getApplicationContext(),LoginActivity.class));
+            }
+        });
         onOff.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
