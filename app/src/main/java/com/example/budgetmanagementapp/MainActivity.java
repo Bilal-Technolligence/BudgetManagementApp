@@ -48,12 +48,12 @@ public class MainActivity extends BaseActivity {
     final String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
     FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
     DatabaseReference databaseReference = firebaseDatabase.getReference();
-    int total = 0 , fuelT = 0 , shoppingT= 0 , kidsT = 0, clothesT= 0, giftT = 0;
-    int income = 0 , sportsT = 0,entertainmentT= 0, othersT= 0, foodT=0;
+    int total = 0, fuelT = 0, shoppingT = 0, kidsT = 0, clothesT = 0, giftT = 0;
+    int income = 0, sportsT = 0, entertainmentT = 0, othersT = 0, foodT = 0;
     ProgressDialog progressDialog;
     /////Only for Notification////
-    public static final String NOTIFICATION_CHANNEL_ID = "10001" ;
-    private final static String default_notification_channel_id = "default" ;
+    public static final String NOTIFICATION_CHANNEL_ID = "10001";
+    private final static String default_notification_channel_id = "default";
     /////////
 
     @Override
@@ -79,11 +79,11 @@ public class MainActivity extends BaseActivity {
         progressBar = (ProgressBar) findViewById(R.id.progress_bar);
 
         addExpense = (Button) findViewById(R.id.btnExpense);
-       // btnGenerateNotification = (Button) findViewById(R.id.btnSendNotifications);
-        Thread thread=new Thread(new Runnable() {
+        // btnGenerateNotification = (Button) findViewById(R.id.btnSendNotifications);
+        Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
-                while (0<=1){
+                while (0 <= 1) {
                     try {
                         Thread.sleep(5000);
                         final String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
@@ -92,16 +92,16 @@ public class MainActivity extends BaseActivity {
                         databaseReference.child("ExpenseNoti").addValueEventListener(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                if(dataSnapshot.exists()){
-                                    for(DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()){
-                                        String status =  dataSnapshot1.child("status").getValue().toString();
+                                if (dataSnapshot.exists()) {
+                                    for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+                                        String status = dataSnapshot1.child("status").getValue().toString();
                                         String senderId = dataSnapshot1.child("senderid").getValue().toString();
-                                        if(status.equals("unread") && uid.equals(senderId)){
-                                          String id = dataSnapshot1.child("id").getValue().toString();
-                                           // String name = dataSnapshot1.child("name").getValue().toString();
-                                           // String msg = dataSnapshot1.child("message").getValue().toString();
+                                        if (status.equals("unread") && uid.equals(senderId)) {
+                                            String id = dataSnapshot1.child("id").getValue().toString();
+                                            // String name = dataSnapshot1.child("name").getValue().toString();
+                                            String msg = dataSnapshot1.child("description").getValue().toString();
                                             databaseReference.child("ExpenseNoti").child(id).child("status").setValue("read");
-                                            scheduleNotification(getNotification( "Smart Budget Alert" ) , 5000 ) ;
+                                            scheduleNotification(getNotification(msg), 5000);
 
                                         }
                                     }
@@ -123,7 +123,7 @@ public class MainActivity extends BaseActivity {
             }
         });
         thread.start();
-       // return START_STICKY;
+        // return START_STICKY;
 ////////////////////////////////////////////
         addIncome = (Button) findViewById(R.id.btnIncome);
         final Calendar cldr = Calendar.getInstance();
@@ -149,7 +149,7 @@ public class MainActivity extends BaseActivity {
         databaseReference.child("Users").child(uid).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot.exists()){
+                if (dataSnapshot.exists()) {
                     income = Integer.parseInt(dataSnapshot.child("income").getValue().toString());
                     incomeTotal.setText(String.valueOf(income));
                     databaseReference.child("Expense").child(uid).child(String.valueOf(year)).child(String.valueOf(month + 1)).addValueEventListener(new ValueEventListener() {
@@ -162,7 +162,7 @@ public class MainActivity extends BaseActivity {
                                     }
                                     spent.setText(String.valueOf(total));
                                     Integer remain = income - total;
-                                    if(total>=income){
+                                    if (total >= income) {
                                         final String push = FirebaseDatabase.getInstance().getReference().child("Notification").push().getKey();
 
                                         databaseReference.child("ExpenseNoti").child(uid).child("description").setValue("Budget Exeed from income");
@@ -177,12 +177,9 @@ public class MainActivity extends BaseActivity {
                                     String p = String.valueOf(result);
                                     progressBar.setProgress(result);
                                     progress.setText(p + "%");
+                                } catch (Exception e) {
                                 }
-                                catch (Exception e){}
-                                }
-
-                            else
-                            {
+                            } else {
                                 progressBar.setProgress(0);
                                 progress.setText("0 %");
                             }
@@ -194,8 +191,7 @@ public class MainActivity extends BaseActivity {
                         }
                     });
 
-                }
-                else{
+                } else {
                     progressDialog.dismiss();
                 }
             }
@@ -230,8 +226,8 @@ public class MainActivity extends BaseActivity {
                             if (dataSnapshot1.child("category").getValue().toString().equals("Food"))
                                 foodT = foodT + Integer.parseInt(dataSnapshot1.child("amount").getValue().toString());
                         }
+                    } catch (Exception e) {
                     }
-                    catch (Exception e){}
 
                     shopping.setText(String.valueOf(shoppingT));
                     fuel.setText(String.valueOf(fuelT));
@@ -243,8 +239,7 @@ public class MainActivity extends BaseActivity {
                     other.setText(String.valueOf(othersT));
                     food.setText(String.valueOf(foodT));
                     progressDialog.dismiss();
-                }
-                else{
+                } else {
                     shopping.setText("0");
                     fuel.setText("0");
                     kids.setText("0");
@@ -266,29 +261,31 @@ public class MainActivity extends BaseActivity {
 
     }
 
-    private void scheduleNotification(Notification notification , int delay) {
-        Intent notificationIntent = new Intent( this, NotificationGernetor.class ) ;
-       // Intent notificationIintent = new Intent(this, NotificationActivity.class);
-        notificationIntent.putExtra(NotificationGernetor. NOTIFICATION_ID , 1 ) ;
-        notificationIntent.putExtra(NotificationGernetor. NOTIFICATION , notification) ;
-        PendingIntent pendingIntent = PendingIntent. getBroadcast ( this, 0 , notificationIntent , PendingIntent. FLAG_UPDATE_CURRENT ) ;
-        long futureInMillis = SystemClock. elapsedRealtime () + delay ;
-        AlarmManager alarmManager = (AlarmManager) getSystemService(Context. ALARM_SERVICE ) ;
+    private void scheduleNotification(Notification notification, int delay) {
+        Intent notificationIntent = new Intent(this, NotificationGernetor.class);
+        // Intent notificationIintent = new Intent(this, NotificationActivity.class);
+        notificationIntent.putExtra(NotificationGernetor.NOTIFICATION_ID, 1);
+        notificationIntent.putExtra(NotificationGernetor.NOTIFICATION, notification);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        long futureInMillis = SystemClock.elapsedRealtime() + delay;
+        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         assert alarmManager != null;
-        alarmManager.set(AlarmManager. ELAPSED_REALTIME_WAKEUP , futureInMillis , pendingIntent) ;
+        alarmManager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, futureInMillis, pendingIntent);
     }
-    private Notification getNotification (String content) {
-        NotificationCompat.Builder builder = new NotificationCompat.Builder( this, default_notification_channel_id ) ;
-        builder.setContentTitle( "Budget Notification" ) ;
+
+    private Notification getNotification(String content) {
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, default_notification_channel_id);
+        builder.setContentTitle("Budget Notification");
         Intent intent = new Intent(this, NotificationActivity.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
         builder.setContentIntent(pendingIntent);
-        builder.setContentText(content) ;
-        builder.setSmallIcon(R.drawable. ic_launcher_foreground ) ;
-        builder.setAutoCancel( true ) ;
-        builder.setChannelId( NOTIFICATION_CHANNEL_ID ) ;
-        return builder.build() ;
+        builder.setContentText(content);
+        builder.setSmallIcon(R.drawable.ic_launcher_foreground);
+        builder.setAutoCancel(true);
+        builder.setChannelId(NOTIFICATION_CHANNEL_ID);
+        return builder.build();
     }
+
     @Override
     int getContentViewId() {
         return R.layout.activity_main;
