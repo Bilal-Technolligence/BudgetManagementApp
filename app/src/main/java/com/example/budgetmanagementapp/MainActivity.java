@@ -165,11 +165,11 @@ public class MainActivity extends BaseActivity {
                                     if(total>=income){
                                         final String push = FirebaseDatabase.getInstance().getReference().child("Notification").push().getKey();
 
-                                        databaseReference.child("ExpenseNoti").child(push).child("description").setValue("Budget Exeed from income");
-                                        databaseReference.child("ExpenseNoti").child(push).child("status").setValue("unread");
-                                        databaseReference.child("ExpenseNoti").child(push).child("title").setValue("Budget Alert");
-                                        databaseReference.child("ExpenseNoti").child(push).child("senderid").setValue(uid);
-                                        databaseReference.child("ExpenseNoti").child(push).child("id").setValue(push);
+                                        databaseReference.child("ExpenseNoti").child(uid).child("description").setValue("Budget Exeed from income");
+                                        databaseReference.child("ExpenseNoti").child(uid).child("status").setValue("unread");
+                                        databaseReference.child("ExpenseNoti").child(uid).child("title").setValue("Budget Alert");
+                                        databaseReference.child("ExpenseNoti").child(uid).child("senderid").setValue(uid);
+                                        databaseReference.child("ExpenseNoti").child(uid).child("id").setValue(uid);
 //
                                     }
                                     remaining.setText(String.valueOf(remain));
