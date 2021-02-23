@@ -112,6 +112,7 @@ public class TransactionActivity extends BaseActivity {
                             } else {
                                 Toast.makeText(getApplicationContext(), "No expense Found", Toast.LENGTH_LONG).show();
                                 progressDialog.dismiss();
+                                expenseAttrs.clear();
                             }
                         }
 
@@ -306,6 +307,55 @@ public class TransactionActivity extends BaseActivity {
                             } else {
                                 Toast.makeText(getApplicationContext(), "No expense Found", Toast.LENGTH_LONG).show();
                                 progressDialog.dismiss();
+                                ArrayList<BarEntry> dataVals = new ArrayList<BarEntry>();
+                                dataVals.add( new BarEntry(1, Integer.valueOf(y1) ));
+                                dataVals.add( new BarEntry( 2, y2 ) );
+                                dataVals.add( new BarEntry( 3, y3 ) );
+                                dataVals.add( new BarEntry( 4, y4 ) );
+                                dataVals.add( new BarEntry( 5, y5 ) );
+                                dataVals.add( new BarEntry( 6, y6 ) );
+                                dataVals.add( new BarEntry( 7, y7 ) );
+                                dataVals.add( new BarEntry(8, y8 ));
+                                dataVals.add( new BarEntry( 9, y9 ) );
+                                dataVals.add( new BarEntry( 10, y10) );
+                                dataVals.add( new BarEntry( 11, y11 ) );
+                                dataVals.add( new BarEntry( 12, y12 ) );
+                                dataVals.add( new BarEntry( 13, y13 ) );
+                                dataVals.add( new BarEntry( 14, y14 ) );
+                                dataVals.add( new BarEntry( 15, y15 ) );
+                                dataVals.add( new BarEntry( 16, y16 ) );
+                                dataVals.add( new BarEntry(17, y17 ));
+                                dataVals.add( new BarEntry( 18, y18 ) );
+                                dataVals.add( new BarEntry( 19, y19 ) );
+                                dataVals.add( new BarEntry( 20, y20 ) );
+                                dataVals.add( new BarEntry( 21, y21 ) );
+                                dataVals.add( new BarEntry( 22, y22 ) );
+                                dataVals.add( new BarEntry( 23, y23 ) );
+                                dataVals.add( new BarEntry(24, y24 ));
+                                dataVals.add( new BarEntry( 25, y25 ) );
+                                dataVals.add( new BarEntry( 26, y26 ) );
+                                dataVals.add( new BarEntry( 27, y27 ) );
+                                dataVals.add( new BarEntry( 28, y28 ) );
+                                dataVals.add( new BarEntry( 29, y29 ) );
+                                dataVals.add( new BarEntry( 30, y30 ) );
+                                dataVals.add( new BarEntry( 31, y31 ) );
+                                BarDataSet barDataSet1 = new BarDataSet(dataVals,"Monthly Expense ");
+                                BarData barData = new BarData();
+                                barData.addDataSet(barDataSet1);
+                                barData.setBarWidth(0.3f); // set custom bar width
+                                barChart.setData(barData);
+                                barChart.setData(barData);
+                                barChart.setFitBars(true); // make the x-axis fit exactly all bars
+                                barChart.invalidate();
+                                barChart.setScaleEnabled(false);
+                                barChart.setDoubleTapToZoomEnabled(false);
+                                barChart.setBackgroundColor(Color.rgb(255, 255, 255));
+                                barChart.animateXY(2000, 2000);
+                                barChart.setDrawBorders(false);
+                                //   barChart.setDescription(desc);
+                                barChart.setDrawValueAboveBar(true);
+                                barData.notifyDataChanged(); // let the data know a dataSet changed
+                                barDataSet1.notifyDataSetChanged();
                             }
                         }
 
@@ -335,6 +385,7 @@ public class TransactionActivity extends BaseActivity {
                             } else {
                                 Toast.makeText(getApplicationContext(), "No expense Found", Toast.LENGTH_LONG).show();
                                 progressDialog.dismiss();
+                                expenseAttrs.clear();
                             }
                         }
 
@@ -529,6 +580,56 @@ public class TransactionActivity extends BaseActivity {
                             } else {
                                 Toast.makeText(getApplicationContext(), "No expense Found", Toast.LENGTH_LONG).show();
                                 progressDialog.dismiss();
+                                ArrayList<BarEntry> dataVals = new ArrayList<BarEntry>();
+                                dataVals.add( new BarEntry(1, Integer.valueOf(y1) ));
+                                dataVals.add( new BarEntry( 2, y2 ) );
+                                dataVals.add( new BarEntry( 3, y3 ) );
+                                dataVals.add( new BarEntry( 4, y4 ) );
+                                dataVals.add( new BarEntry( 5, y5 ) );
+                                dataVals.add( new BarEntry( 6, y6 ) );
+                                dataVals.add( new BarEntry( 7, y7 ) );
+                                dataVals.add( new BarEntry(8, y8 ));
+                                dataVals.add( new BarEntry( 9, y9 ) );
+                                dataVals.add( new BarEntry( 10, y10) );
+                                dataVals.add( new BarEntry( 11, y11 ) );
+                                dataVals.add( new BarEntry( 12, y12 ) );
+                                dataVals.add( new BarEntry( 13, y13 ) );
+                                dataVals.add( new BarEntry( 14, y14 ) );
+                                dataVals.add( new BarEntry( 15, y15 ) );
+                                dataVals.add( new BarEntry( 16, y16 ) );
+                                dataVals.add( new BarEntry(17, y17 ));
+                                dataVals.add( new BarEntry( 18, y18 ) );
+                                dataVals.add( new BarEntry( 19, y19 ) );
+                                dataVals.add( new BarEntry( 20, y20 ) );
+                                dataVals.add( new BarEntry( 21, y21 ) );
+                                dataVals.add( new BarEntry( 22, y22 ) );
+                                dataVals.add( new BarEntry( 23, y23 ) );
+                                dataVals.add( new BarEntry(24, y24 ));
+                                dataVals.add( new BarEntry( 25, y25 ) );
+                                dataVals.add( new BarEntry( 26, y26 ) );
+                                dataVals.add( new BarEntry( 27, y27 ) );
+                                dataVals.add( new BarEntry( 28, y28 ) );
+                                dataVals.add( new BarEntry( 29, y29 ) );
+                                dataVals.add( new BarEntry( 30, y30 ) );
+                                dataVals.add( new BarEntry( 31, y31 ) );
+                                BarDataSet barDataSet1 = new BarDataSet(dataVals,"Monthly Expense ");
+                                BarData barData = new BarData();
+                                barData.addDataSet(barDataSet1);
+                                barData.setBarWidth(0.3f); // set custom bar width
+                                barChart.setData(barData);
+                                barChart.setData(barData);
+                                barChart.setFitBars(true); // make the x-axis fit exactly all bars
+                                barChart.invalidate();
+                                barChart.setScaleEnabled(false);
+                                barChart.setDoubleTapToZoomEnabled(false);
+                                barChart.setBackgroundColor(Color.rgb(255, 255, 255));
+                                barChart.animateXY(2000, 2000);
+                                barChart.setDrawBorders(false);
+                                //   barChart.setDescription(desc);
+                                barChart.setDrawValueAboveBar(true);
+                                barData.notifyDataChanged(); // let the data know a dataSet changed
+                                barDataSet1.notifyDataSetChanged();
+
                             }
                         }
 

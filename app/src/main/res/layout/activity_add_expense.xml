@@ -66,7 +66,7 @@
                 android:layout_marginLeft="40dp"
                 android:layout_height="wrap_content"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:hint="Detail"
+                android:hint="Title"
                 app:boxStrokeColor="@color/black"
                 android:textColorHint="@color/black">
                 <com.google.android.material.textfield.TextInputEditText
