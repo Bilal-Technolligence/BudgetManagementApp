@@ -94,16 +94,19 @@ public class MainActivity extends BaseActivity {
                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                 if (dataSnapshot.exists()) {
                                     for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
-                                        String status = dataSnapshot1.child("status").getValue().toString();
-                                        String senderId = dataSnapshot1.child("senderid").getValue().toString();
-                                        if (status.equals("unread") && uid.equals(senderId)) {
-                                            String id = dataSnapshot1.child("id").getValue().toString();
-                                            // String name = dataSnapshot1.child("name").getValue().toString();
-                                            String msg = dataSnapshot1.child("description").getValue().toString();
-                                            databaseReference.child("ExpenseNoti").child(id).child("status").setValue("read");
-                                            scheduleNotification(getNotification(msg), 5000);
+                                        try {
+                                            String status = dataSnapshot1.child("status").getValue().toString();
+                                            String senderId = dataSnapshot1.child("senderid").getValue().toString();
+                                            if (status.equals("unread") && uid.equals(senderId)) {
+                                                String id = dataSnapshot1.child("id").getValue().toString();
+                                                // String name = dataSnapshot1.child("name").getValue().toString();
+                                                String msg = dataSnapshot1.child("description").getValue().toString();
+                                                databaseReference.child("ExpenseNoti").child(id).child("status").setValue("read");
+                                                scheduleNotification(getNotification(msg), 5000);
 
+                                            }
                                         }
+                                        catch (Exception e){}
                                     }
 
                                 }

@@ -163,10 +163,11 @@ public class Trips extends BaseActivity {
                                 addMember.setVisibility(View.GONE);
                                 endTrip.setVisibility(View.GONE);
                                 exitTrip.setVisibility(View.GONE);
+                                pay.setVisibility(View.GONE);
 
                             }
                             if (!user.equals(uid)) {
-                                pay.setVisibility(View.GONE);
+
                                 addExpense.setVisibility(View.GONE);
                                 addMember.setVisibility(View.GONE);
                                 endTrip.setVisibility(View.GONE);

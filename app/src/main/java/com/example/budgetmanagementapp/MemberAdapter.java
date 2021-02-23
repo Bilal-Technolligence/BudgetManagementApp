@@ -83,7 +83,7 @@ public class MemberAdapter extends RecyclerView.Adapter<MemberAdapter.ViewHolder
             public void onClick(View view) {
                 Intent i = new Intent(trips , MemberDetail.class);
                 i.putExtra("id" , id);
-                context.startActivity(i);
+                trips.startActivity(i);
             }
         });
 
