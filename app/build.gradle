@@ -56,6 +56,7 @@ dependencies {
     implementation 'com.jjoe64:graphview:4.2.2'
     implementation 'com.google.firebase:firebase-auth'
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0-alpha'
+    implementation 'com.amulyakhare:com.amulyakhare.textdrawable:1.0.1'
 
    // implementation platform('com.google.firebase:firebase-bom:26.1.1')
 //    implementation project(':MPChartLib')

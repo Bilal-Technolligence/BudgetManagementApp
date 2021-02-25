@@ -5,6 +5,8 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
+import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,8 +15,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.amulyakhare.textdrawable.TextDrawable;
+import com.amulyakhare.textdrawable.util.ColorGenerator;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -42,9 +47,22 @@ public class SearchListAdapter extends RecyclerView.Adapter<com.example.budgetma
         return new ViewHolder(view);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
-        Picasso.get().load(userAttrs.get(position).getImageUrl()).into(holder.profileImage);
+
+        try {
+            Picasso.get().load(userAttrs.get(position).getImageUrl()).into(holder.profileImage);
+        } catch (Exception e) {
+            String firstLetter = String.valueOf(userAttrs.get(position).getName().charAt(0));
+            ColorGenerator generator = ColorGenerator.MATERIAL; // or use DEFAULT
+            int color = generator.getRandomColor();
+
+            TextDrawable drawable = TextDrawable.builder()
+                    .buildRound(firstLetter, color); // radius in px
+            holder.profileImage.setImageDrawable(drawable);
+        }
+
         holder.name.setText(userAttrs.get(position).getName());
 
 
@@ -61,6 +79,14 @@ public class SearchListAdapter extends RecyclerView.Adapter<com.example.budgetma
                         String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
                         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
                         DatabaseReference databaseReference = firebaseDatabase.getReference();
+                        final String push = FirebaseDatabase.getInstance().getReference().child("Notification").push().getKey();
+
+                        databaseReference.child("ExpenseNoti").child(push).child("description").setValue("Your'e added in a shared budget!");
+                        databaseReference.child("ExpenseNoti").child(push).child("status").setValue("unread");
+                        databaseReference.child("ExpenseNoti").child(push).child("title").setValue("Budget Alert");
+                        databaseReference.child("ExpenseNoti").child(push).child("senderid").setValue(Id);
+                        databaseReference.child("ExpenseNoti").child(push).child("id").setValue(push);
+
                         databaseReference.child("Trip").child(tripId).child("Members").child(Id).child("id").setValue(Id);
                         databaseReference.child("Trip").child(tripId).child("Members").child(Id).child("name").setValue(userAttrs.get(position).getName());
                         Toast.makeText(context, "Member added", Toast.LENGTH_SHORT).show();

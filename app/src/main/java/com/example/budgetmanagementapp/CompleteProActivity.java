@@ -85,8 +85,6 @@ public class CompleteProActivity extends AppCompatActivity {
                 }else if (Income.equals("")) {
                     income.setError("Enter Valid Income");
                     income.setFocusable(true);
-                } else if (count == 0) {
-                    Snackbar.make(v, "Please Select Image", Snackbar.LENGTH_LONG).show();
                 } else {
                     progressDialog.show();
                     RegisterUser(Email, userPassword, Contact, Name,Income, imagePath, progressDialog);
