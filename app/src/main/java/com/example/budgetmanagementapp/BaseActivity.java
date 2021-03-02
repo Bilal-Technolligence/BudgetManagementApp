@@ -86,17 +86,6 @@ public abstract class BaseActivity extends AppCompatActivity implements BottomNa
         MenuItem item = navigationView.getMenu().findItem(itemId);
         item.setChecked(true);
     }
-//    void selectBottomNavigationBarItem(int itemId) {
-//        Menu menu = navigationView.getMenu();
-//        for (int i = 0, size = menu.size(); i < size; i++) {
-//            MenuItem item = menu.getItem(i);
-//            boolean shouldBeChecked = item.getItemId() == itemId;
-//            if (shouldBeChecked) {
-//                item.setChecked(true);
-//                break;
-//            }
-//        }
-//    }
     abstract int getContentViewId();
 
     abstract int getNavigationMenuItemId();
