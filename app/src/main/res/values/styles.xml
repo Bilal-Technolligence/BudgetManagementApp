@@ -1,0 +1,19 @@
+<resources>
+
+<!--    &lt;!&ndash; Base application theme. &ndash;&gt;-->
+<!--    <style name="AppTheme" parent="Theme.AppCompat.Light">-->
+<!--        &lt;!&ndash; Customize your theme here. &ndash;&gt;-->
+<!--        <item name="colorPrimary">#108810</item>-->
+<!--        <item name="colorPrimaryDark">#0B7C0B</item>-->
+<!--        <item name="android:textColorPrimary">@color/colorWhite</item>-->
+<!--        <item name="colorAccent">@color/colorAccent</item>-->
+<!--    </style>-->
+
+    <style name="AlertDialogTheme" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="colorPrimary">#FF3700B3</item>
+        <item name="android:textColorPrimary">@color/white</item>
+    </style>
+
+
+
+</resources>

@@ -26,7 +26,7 @@
         <activity
             android:name=".SettingsActivity"
             android:label="@string/title_activity_settings"
-            android:theme="@style/Theme.BudgetManagementApp.NoActionBar" />
+           />
         <activity android:name=".AddMember" />
         <activity android:name=".AddTripExpense" />
         <activity android:name=".CreateTrip" />
@@ -37,7 +37,9 @@
         <activity android:name=".AddExpense" />
         <activity
             android:name=".LoginActivity"
-            android:theme="@style/Theme.BudgetManagementApp.NoActionBar" />
+            android:theme="@style/Theme.BudgetManagementApp.NoActionBar" >
+
+        </activity>
         <activity
             android:name=".CompleteProActivity"
             android:theme="@style/Theme.BudgetManagementApp.NoActionBar" />
@@ -55,8 +57,7 @@
         </activity>
         <activity
             android:name=".MainActivity"
-            android:label="@string/app_name"
-            android:theme="@style/Theme.BudgetManagementApp.NoActionBar" />
+            android:label="@string/app_name" />
 
         <receiver android:name=".NotificationGernetor" />
     </application>

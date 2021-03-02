@@ -84,6 +84,6 @@ public class NotificationActivity extends BaseActivity {
 
     @Override
     int getNavigationMenuItemId() {
-        return R.id.nav_notification;
+        return R.id.nav_notifications;
     }
 }

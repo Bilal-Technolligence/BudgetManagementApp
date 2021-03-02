@@ -60,6 +60,8 @@ public class MainActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //setContentView(R.layout.activity_main);
+      //  ((AppCompatActivity)this).getSupportActionBar().setTitle("Main");
+      //  ((AppCompatActivity)this).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("Loading..... ");
         progressDialog.show();

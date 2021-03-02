@@ -97,7 +97,7 @@ public class SettingsActivity extends BaseActivity {
 
     @Override
     int getNavigationMenuItemId() {
-        return R.id.nav_setting;
+        return R.id.nav_prediction;
     }
 
 }

@@ -19,15 +19,14 @@
         android:id="@+id/nav_trip"
         android:icon="@drawable/trip"
         android:title="Shared Expense"></item>
-
     <item
-        android:id="@+id/nav_notification"
+        android:id="@+id/nav_notifications"
         android:icon="@drawable/ic_baseline_notifications_24"
-        android:title="Notifications"></item>
-    <item
-        android:id="@+id/nav_setting"
-        android:icon="@drawable/setting"
-        android:title="Setting"></item>
+        android:title="Notifications" />
 
+    <item
+        android:id="@+id/nav_prediction"
+        android:icon="@drawable/prediction"
+        android:title="Prediction"></item>
 
 </menu>
