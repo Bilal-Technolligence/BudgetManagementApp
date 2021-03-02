@@ -3,6 +3,7 @@ package com.example.budgetmanagementapp;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.widget.Toast;
 
@@ -45,7 +46,11 @@ public class FirbaseAuthenticationClass extends AppCompatActivity {
                                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                     //save session
                                     //saving value true for session
-                                    Save.save(activity,"session","true");
+                                   Save.save(activity,"session","true");
+                                 //  SharedPreferences.Editor editor = getSharedPreferences("Log", MODE_PRIVATE).edit();
+                                //   editor.putBoolean("isLoggedIn", true );
+                                 //   editor.putString("id", uid );
+                                  //  editor.commit();
                                     activity.startActivity(new Intent(activity, MainActivity.class));
 
                                     activity.finish();

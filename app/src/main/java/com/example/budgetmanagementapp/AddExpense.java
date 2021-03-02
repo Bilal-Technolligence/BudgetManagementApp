@@ -32,6 +32,7 @@ public class AddExpense extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //setContentView(R.layout.activity_add_expense);
+
         amount = (EditText) findViewById(R.id.amount);
         detail = (EditText) findViewById(R.id.detail);
         category = findViewById(R.id.spinnerCategory);
