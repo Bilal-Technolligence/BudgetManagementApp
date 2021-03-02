@@ -17,16 +17,14 @@
         android:roundIcon="@drawable/logo"
         android:supportsRtl="true"
         android:theme="@style/Theme.BudgetManagementApp">
-        <activity android:name=".MemberDetail"></activity>
+        <activity android:name=".PredictionActivity"></activity>
+        <activity android:name=".MemberDetail" />
         <activity android:name=".NotificationActivity" />
         <activity android:name=".PaymentActivity" />
-        <activity android:name=".TripsList">
-
-        </activity>
+        <activity android:name=".TripsList"></activity>
         <activity
             android:name=".SettingsActivity"
-            android:label="@string/title_activity_settings"
-           />
+            android:label="@string/title_activity_settings" />
         <activity android:name=".AddMember" />
         <activity android:name=".AddTripExpense" />
         <activity android:name=".CreateTrip" />
@@ -37,9 +35,7 @@
         <activity android:name=".AddExpense" />
         <activity
             android:name=".LoginActivity"
-            android:theme="@style/Theme.BudgetManagementApp.NoActionBar" >
-
-        </activity>
+            android:theme="@style/Theme.BudgetManagementApp.NoActionBar"></activity>
         <activity
             android:name=".CompleteProActivity"
             android:theme="@style/Theme.BudgetManagementApp.NoActionBar" />
@@ -48,7 +44,7 @@
             android:theme="@style/Theme.BudgetManagementApp.NoActionBar" />
         <activity
             android:name=".SplashActivty"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar" >
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

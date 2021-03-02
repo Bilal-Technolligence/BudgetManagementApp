@@ -17,6 +17,8 @@ import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import com.amulyakhare.textdrawable.TextDrawable;
+import com.amulyakhare.textdrawable.util.ColorGenerator;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
@@ -73,7 +75,13 @@ public abstract class BaseActivity extends AppCompatActivity implements BottomNa
                     String eName = dataSnapshot.child( "name" ).getValue().toString();
                     textView.setText(String.valueOf( eName ));
                     if(dataSnapshot.child( "imageUrl" ).getValue().toString().equals( " " )) {
-//                        Picasso.get().load( dataSnapshot.child( "imageurl" ).getValue().toString() ).into( imageView );
+                        String firstLetter = eName.substring(0,1);
+                        ColorGenerator generator = ColorGenerator.MATERIAL; // or use DEFAULT
+                        int color = generator.getRandomColor();
+
+                        TextDrawable drawable = TextDrawable.builder()
+                                .buildRound(firstLetter, color); // radius in px
+                        imageView.setImageDrawable(drawable);
                     }
                     else {
                         Picasso.get().load( dataSnapshot.child( "imageUrl" ).getValue().toString() ).into( imageView );
@@ -128,9 +136,9 @@ public abstract class BaseActivity extends AppCompatActivity implements BottomNa
             finish();
         }
         else if (itemId == R.id.nav_prediction) {
-           // startActivity(new Intent(this, TripsList.class));
-            Toast.makeText(this, "Under Development", Toast.LENGTH_SHORT).show();
-           // finish();
+            Intent intent = new Intent(this , PredictionActivity.class);
+            startActivity(intent);
+            finish();
         }
 
         else if (itemId == R.id.nav_setting) {

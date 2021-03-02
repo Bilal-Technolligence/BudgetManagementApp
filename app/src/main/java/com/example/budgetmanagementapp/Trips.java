@@ -48,6 +48,7 @@ public class Trips extends BaseActivity {
     TextView food, fuel, sports, entertainment, budget;
     int fuelT = 0, sportsT = 0, entertainmentT = 0, foodT = 0;
     int total = 0;
+    int i = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -118,17 +119,35 @@ public class Trips extends BaseActivity {
                                                 total = total + Integer.parseInt(dataSnapshot1.child("amount").getValue().toString());
                                             }
 
-                                            if (total >= b) {
-                                                final String push = FirebaseDatabase.getInstance().getReference().child("Notification").push().getKey();
+                                            databaseReference.child("Trip").child(tripId).child("Members").addValueEventListener(new ValueEventListener() {
+                                                @Override
+                                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                                    if (dataSnapshot.exists()) {
+                                                        if (total >= b && i == 0) {
+                                                            for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+                                                                String id = dataSnapshot1.getKey();
 
-                                                databaseReference.child("ExpenseNoti").child(push).child("description").setValue("Shared Budget Exeed");
-                                                databaseReference.child("ExpenseNoti").child(push).child("status").setValue("unread");
-                                                databaseReference.child("ExpenseNoti").child(push).child("title").setValue("Budget Alert");
-                                                databaseReference.child("ExpenseNoti").child(push).child("senderid").setValue(uid);
-                                                databaseReference.child("ExpenseNoti").child(push).child("id").setValue(push);
+                                                                i++;
+                                                                final String push = FirebaseDatabase.getInstance().getReference().child("Notification").push().getKey();
+
+                                                                databaseReference.child("ExpenseNoti").child(id).child("description").setValue("Shared Budget Exeed");
+                                                                databaseReference.child("ExpenseNoti").child(id).child("status").setValue("unread");
+                                                                databaseReference.child("ExpenseNoti").child(id).child("title").setValue("Budget Alert");
+                                                                databaseReference.child("ExpenseNoti").child(id).child("senderid").setValue(id);
+                                                                databaseReference.child("ExpenseNoti").child(id).child("id").setValue(push);
 //
-                                                //Toast.makeText(getApplicationContext() , "Expense Exceed" , Toast.LENGTH_SHORT).show();
-                                            }
+                                                                //Toast.makeText(getApplicationContext() , "Expense Exceed" , Toast.LENGTH_SHORT).show();
+                                                            }
+
+                                                        }
+                                                    }
+                                                }
+
+                                                @Override
+                                                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                                }
+                                            });
                                         } catch (Exception e) {
                                         }
                                     }
@@ -139,6 +158,7 @@ public class Trips extends BaseActivity {
 
                                 }
                             });
+
 
                         }
                     } catch (Exception e) {
@@ -274,8 +294,8 @@ public class Trips extends BaseActivity {
 
                                     }
                                 });
+                            } catch (Exception e) {
                             }
-                            catch (Exception e){}
 
                             dialog.dismiss();
                             finish();
