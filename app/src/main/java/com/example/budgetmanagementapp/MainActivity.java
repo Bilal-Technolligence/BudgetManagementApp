@@ -91,7 +91,7 @@ public class MainActivity extends BaseActivity {
         progress = (TextView) findViewById(R.id.text_view_progress);
         progressBar = (ProgressBar) findViewById(R.id.progress_bar);
         pieChart = findViewById(R.id.pieChart);
-        pieChart .setVisibility(View.GONE);
+        pieChart.setVisibility(View.GONE);
 
         addExpense = (Button) findViewById(R.id.btnExpense);
         // btnGenerateNotification = (Button) findViewById(R.id.btnSendNotifications);
@@ -192,9 +192,15 @@ public class MainActivity extends BaseActivity {
                                     }
                                     remaining.setText(String.valueOf(remain));
                                     int result = (int) Math.round((total * 100) / income);
-                                    String p = String.valueOf(result);
-                                    progressBar.setProgress(result);
-                                    progress.setText(p + "%");
+                                    if (result > 100) {
+                                        String p = "100";
+                                        progressBar.setProgress(100);
+                                        progress.setText(p + "%");
+                                    } else {
+                                        String p = String.valueOf(result);
+                                        progressBar.setProgress(result);
+                                        progress.setText(p + "%");
+                                    }
                                 } catch (Exception e) {
                                 }
                             } else {
@@ -308,23 +314,23 @@ public class MainActivity extends BaseActivity {
                         }
                         pieChart.setUsePercentValues(true);
                         List<PieEntry> pi = new ArrayList<>();
-                       if(!String.valueOf(shoppingT).equals("0"))
-                        pi.add(new PieEntry(Integer.parseInt(String.valueOf(shoppingT)), "Shopping"));
-                        if(!String.valueOf(fuelT).equals("0"))
-                        pi.add(new PieEntry(Integer.parseInt(String.valueOf(fuelT)), "Fuel"));
-                        if(!String.valueOf(kidsT).equals("0"))
-                        pi.add(new PieEntry(Integer.parseInt(String.valueOf(kidsT)), "Kids"));
-                        if(!String.valueOf(clothesT).equals("0"))
+                        if (!String.valueOf(shoppingT).equals("0"))
+                            pi.add(new PieEntry(Integer.parseInt(String.valueOf(shoppingT)), "Shopping"));
+                        if (!String.valueOf(fuelT).equals("0"))
+                            pi.add(new PieEntry(Integer.parseInt(String.valueOf(fuelT)), "Fuel"));
+                        if (!String.valueOf(kidsT).equals("0"))
+                            pi.add(new PieEntry(Integer.parseInt(String.valueOf(kidsT)), "Kids"));
+                        if (!String.valueOf(clothesT).equals("0"))
                             pi.add(new PieEntry(Integer.parseInt(String.valueOf(clothesT)), "Clothes"));
-                        if(!String.valueOf(giftT).equals("0"))
+                        if (!String.valueOf(giftT).equals("0"))
                             pi.add(new PieEntry(Integer.parseInt(String.valueOf(giftT)), "Gift"));
-                        if(!String.valueOf(sportsT).equals("0"))
+                        if (!String.valueOf(sportsT).equals("0"))
                             pi.add(new PieEntry(Integer.parseInt(String.valueOf(sportsT)), "Sports"));
-                        if(!String.valueOf(entertainmentT).equals("0"))
+                        if (!String.valueOf(entertainmentT).equals("0"))
                             pi.add(new PieEntry(Integer.parseInt(String.valueOf(entertainmentT)), "Entertainment"));
-                        if(!String.valueOf(othersT).equals("0"))
+                        if (!String.valueOf(othersT).equals("0"))
                             pi.add(new PieEntry(Integer.parseInt(String.valueOf(othersT)), "Other"));
-                        if(!String.valueOf(foodT).equals("0"))
+                        if (!String.valueOf(foodT).equals("0"))
                             pi.add(new PieEntry(Integer.parseInt(String.valueOf(foodT)), "Food"));
 
                         PieDataSet pieDataSet = new PieDataSet(pi, "");
@@ -343,8 +349,7 @@ public class MainActivity extends BaseActivity {
                     }
 
 
-                }
-                else{
+                } else {
                     pieChart.setVisibility(View.GONE);
                 }
 
