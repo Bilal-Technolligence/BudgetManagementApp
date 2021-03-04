@@ -55,6 +55,10 @@
             app:layout_constraintTop_toTopOf="@+id/progress_bar"
             tools:text="0%" />
     </androidx.constraintlayout.widget.ConstraintLayout>
+        <com.github.mikephil.charting.charts.PieChart
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:id="@+id/pieChart"/>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

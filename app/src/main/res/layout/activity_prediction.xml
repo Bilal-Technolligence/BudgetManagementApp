@@ -21,7 +21,64 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Total"
+                    android:textColor="@color/black"
+                    android:textSize="30dp"
+                    android:textStyle="bold" />
 
+                <com.github.mikephil.charting.charts.LineChart
+                    android:id="@+id/graphTotal"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dip" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginRight="5dp"
+                    android:weightSum="2">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Expected"
+                        android:textSize="15dp"
+                        android:textColor="@color/black"
+                        android:layout_weight="1"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0"
+                        android:layout_weight="1"
+                        android:textSize="15dp"
+                        android:textColor="@color/black"
+                        android:gravity="right"
+                        android:id="@+id/txtTotal"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginRight="5dp"
+                    android:weightSum="2">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="This month"
+                        android:textSize="15dp"
+                        android:textColor="@color/black"
+                        android:layout_weight="1"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0"
+                        android:layout_weight="1"
+                        android:textSize="15dp"
+                        android:textColor="@color/black"
+                        android:gravity="right"
+                        android:id="@+id/txtTotalThis"/>
+                </LinearLayout>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -34,6 +91,52 @@
                     android:id="@+id/graphFuel"
                     android:layout_width="match_parent"
                     android:layout_height="200dip" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginRight="5dp"
+                    android:weightSum="2">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Expected"
+                        android:textSize="15dp"
+                        android:textColor="@color/black"
+                        android:layout_weight="1"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0"
+                        android:layout_weight="1"
+                        android:textSize="15dp"
+                        android:textColor="@color/black"
+                        android:gravity="right"
+                        android:id="@+id/txtFuel"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginRight="5dp"
+                    android:weightSum="2">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="This month"
+                        android:textSize="15dp"
+                        android:textColor="@color/black"
+                        android:layout_weight="1"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0"
+                        android:layout_weight="1"
+                        android:textSize="15dp"
+                        android:textColor="@color/black"
+                        android:gravity="right"
+                        android:id="@+id/txtFuelThis"/>
+                </LinearLayout>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -46,6 +149,52 @@
                     android:id="@+id/graphFood"
                     android:layout_width="match_parent"
                     android:layout_height="200dip" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginRight="5dp"
+                    android:weightSum="2">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Expected"
+                        android:textSize="15dp"
+                        android:textColor="@color/black"
+                        android:layout_weight="1"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0"
+                        android:layout_weight="1"
+                        android:textSize="15dp"
+                        android:textColor="@color/black"
+                        android:gravity="right"
+                        android:id="@+id/txtFood"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginRight="5dp"
+                    android:weightSum="2">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="This month"
+                        android:textSize="15dp"
+                        android:textColor="@color/black"
+                        android:layout_weight="1"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0"
+                        android:layout_weight="1"
+                        android:textSize="15dp"
+                        android:textColor="@color/black"
+                        android:gravity="right"
+                        android:id="@+id/txtFoodThis"/>
+                </LinearLayout>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -58,6 +207,52 @@
                     android:id="@+id/graphShopping"
                     android:layout_width="match_parent"
                     android:layout_height="200dip" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginRight="5dp"
+                    android:weightSum="2">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Expected"
+                        android:textSize="15dp"
+                        android:textColor="@color/black"
+                        android:layout_weight="1"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0"
+                        android:layout_weight="1"
+                        android:textSize="15dp"
+                        android:textColor="@color/black"
+                        android:gravity="right"
+                        android:id="@+id/txtShopping"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginRight="5dp"
+                    android:weightSum="2">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="This month"
+                        android:textSize="15dp"
+                        android:textColor="@color/black"
+                        android:layout_weight="1"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0"
+                        android:layout_weight="1"
+                        android:textSize="15dp"
+                        android:textColor="@color/black"
+                        android:gravity="right"
+                        android:id="@+id/txtShoppingThis"/>
+                </LinearLayout>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -70,6 +265,52 @@
                     android:id="@+id/graphKids"
                     android:layout_width="match_parent"
                     android:layout_height="200dip" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="5dp"
+                    android:orientation="horizontal"
+                    android:weightSum="2">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Expected"
+                        android:textSize="15dp"
+                        android:textColor="@color/black"
+                        android:layout_weight="1"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0"
+                        android:layout_weight="1"
+                        android:textSize="15dp"
+                        android:textColor="@color/black"
+                        android:gravity="right"
+                        android:id="@+id/txtKids"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginRight="5dp"
+                    android:weightSum="2">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="This month"
+                        android:textSize="15dp"
+                        android:textColor="@color/black"
+                        android:layout_weight="1"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0"
+                        android:layout_weight="1"
+                        android:textSize="15dp"
+                        android:textColor="@color/black"
+                        android:gravity="right"
+                        android:id="@+id/txtkidsThis"/>
+                </LinearLayout>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -82,6 +323,52 @@
                     android:id="@+id/graphClothes"
                     android:layout_width="match_parent"
                     android:layout_height="200dip" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginRight="5dp"
+                    android:weightSum="2">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Expected"
+                        android:textSize="15dp"
+                        android:textColor="@color/black"
+                        android:layout_weight="1"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0"
+                        android:layout_weight="1"
+                        android:textSize="15dp"
+                        android:textColor="@color/black"
+                        android:gravity="right"
+                        android:id="@+id/txtClothes"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginRight="5dp"
+                    android:weightSum="2">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="This month"
+                        android:textSize="15dp"
+                        android:textColor="@color/black"
+                        android:layout_weight="1"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0"
+                        android:layout_weight="1"
+                        android:textSize="15dp"
+                        android:textColor="@color/black"
+                        android:gravity="right"
+                        android:id="@+id/txtClothesThis"/>
+                </LinearLayout>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -94,6 +381,52 @@
                     android:id="@+id/graphGift"
                     android:layout_width="match_parent"
                     android:layout_height="200dip" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginRight="5dp"
+                    android:weightSum="2">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Expected"
+                        android:textSize="15dp"
+                        android:textColor="@color/black"
+                        android:layout_weight="1"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0"
+                        android:layout_weight="1"
+                        android:textSize="15dp"
+                        android:textColor="@color/black"
+                        android:gravity="right"
+                        android:id="@+id/txtGift"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginRight="5dp"
+                    android:weightSum="2">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="This month"
+                        android:textSize="15dp"
+                        android:textColor="@color/black"
+                        android:layout_weight="1"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0"
+                        android:layout_weight="1"
+                        android:textSize="15dp"
+                        android:textColor="@color/black"
+                        android:gravity="right"
+                        android:id="@+id/txtGiftThis"/>
+                </LinearLayout>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -106,6 +439,52 @@
                     android:id="@+id/graphSports"
                     android:layout_width="match_parent"
                     android:layout_height="200dip" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginRight="5dp"
+                    android:weightSum="2">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Expected"
+                        android:textSize="15dp"
+                        android:textColor="@color/black"
+                        android:layout_weight="1"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0"
+                        android:layout_weight="1"
+                        android:textSize="15dp"
+                        android:textColor="@color/black"
+                        android:gravity="right"
+                        android:id="@+id/txtSports"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="5dp"
+                    android:orientation="horizontal"
+                    android:weightSum="2">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="This month"
+                        android:textSize="15dp"
+                        android:textColor="@color/black"
+                        android:layout_weight="1"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0"
+                        android:layout_weight="1"
+                        android:textSize="15dp"
+                        android:textColor="@color/black"
+                        android:gravity="right"
+                        android:id="@+id/txtSportsThis"/>
+                </LinearLayout>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -118,6 +497,52 @@
                     android:id="@+id/graphEntertainment"
                     android:layout_width="match_parent"
                     android:layout_height="200dip" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginRight="5dp"
+                    android:weightSum="2">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Expected"
+                        android:textSize="15dp"
+                        android:textColor="@color/black"
+                        android:layout_weight="1"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0"
+                        android:layout_weight="1"
+                        android:textSize="15dp"
+                        android:textColor="@color/black"
+                        android:gravity="right"
+                        android:id="@+id/txtEntertainment"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginRight="5dp"
+                    android:weightSum="2">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="This month"
+                        android:textSize="15dp"
+                        android:textColor="@color/black"
+                        android:layout_weight="1"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0"
+                        android:layout_weight="1"
+                        android:textSize="15dp"
+                        android:textColor="@color/black"
+                        android:gravity="right"
+                        android:id="@+id/txtEntertainmentThis"/>
+                </LinearLayout>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -130,6 +555,52 @@
                     android:id="@+id/graphOther"
                     android:layout_width="match_parent"
                     android:layout_height="200dip" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginRight="5dp"
+                    android:weightSum="2">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Expected"
+                        android:textSize="15dp"
+                        android:textColor="@color/black"
+                        android:layout_weight="1"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0"
+                        android:layout_weight="1"
+                        android:textSize="15dp"
+                        android:textColor="@color/black"
+                        android:gravity="right"
+                        android:id="@+id/txtOther"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginRight="5dp"
+                    android:weightSum="2">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="This month"
+                        android:textSize="15dp"
+                        android:textColor="@color/black"
+                        android:layout_weight="1"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0"
+                        android:layout_weight="1"
+                        android:textSize="15dp"
+                        android:textColor="@color/black"
+                        android:gravity="right"
+                        android:id="@+id/txtOtherThis"/>
+                </LinearLayout>
 
             </LinearLayout>
         </ScrollView>

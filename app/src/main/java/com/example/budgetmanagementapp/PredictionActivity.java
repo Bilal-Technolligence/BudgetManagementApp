@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.data.BarData;
@@ -28,11 +29,15 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 public class PredictionActivity extends BaseActivity {
-    LineChart lineChartFuel ,lineChartFood , lineChartShopping , lineChartKids ,lineChartClothes , lineChartGift ,lineChartSport , lineChartEntertainment ,lineChartOther;
+    LineChart lineChartTotal,lineChartFuel ,lineChartFood , lineChartShopping , lineChartKids ,lineChartClothes , lineChartGift ,lineChartSport , lineChartEntertainment ,lineChartOther;
     final String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
     FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
     DatabaseReference databaseReference = firebaseDatabase.getReference();
     String date;
+    TextView total , totalT , fuel ,fuelT , food, foodT,shop , shopT, kids, kidsT, cloth , clothT , gift , giftT , sport ,sportT , ent , entT , other , othetT;
+    int to= 0, toT= 0 , fu= 0 ,fuT= 0 , fo= 0 , foT= 0 ,sh= 0  , shT= 0 , ki= 0 , kiT= 0 , cl= 0  , clT= 0  , gi = 0 , giT = 0 , sp = 0 ,spT = 0 , en= 0  , enT = 0 , ot= 0  , otT= 0 ;
+
+    int t1 = 0 , t2 = 0,t3= 0;
     int f1 = 0 , f2 = 0,f3= 0;
     int fo1 = 0 , fo2 = 0,fo3= 0;
     int s1 = 0 , s2 = 0,s3= 0;
@@ -47,6 +52,7 @@ public class PredictionActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //setContentView(R.layout.activity_prediction);
+        lineChartTotal = (LineChart) findViewById(R.id.graphTotal);
         lineChartFuel = (LineChart) findViewById(R.id.graphFuel);
         lineChartFood = (LineChart) findViewById(R.id.graphFood);
         lineChartShopping = (LineChart) findViewById(R.id.graphShopping);
@@ -56,10 +62,280 @@ public class PredictionActivity extends BaseActivity {
         lineChartSport = (LineChart) findViewById(R.id.graphSports);
         lineChartEntertainment = (LineChart) findViewById(R.id.graphEntertainment);
         lineChartOther = (LineChart) findViewById(R.id.graphOther);
+        total = findViewById(R.id.txtTotal);
+        totalT = findViewById(R.id.txtTotalThis);
+        fuel = findViewById(R.id.txtFuel);
+        fuelT = findViewById(R.id.txtFuelThis);
+        food = findViewById(R.id.txtFood);
+        foodT = findViewById(R.id.txtFoodThis);
+        shop = findViewById(R.id.txtShopping);
+        shopT = findViewById(R.id.txtShoppingThis);
+        kids = findViewById(R.id.txtKids);
+        kidsT = findViewById(R.id.txtkidsThis);
+        cloth = findViewById(R.id.txtClothes);
+        clothT = findViewById(R.id.txtClothesThis);
+        gift = findViewById(R.id.txtGift);
+        giftT = findViewById(R.id.txtGiftThis);
+        sport = findViewById(R.id.txtSports);
+        sportT = findViewById(R.id.txtSportsThis);
+        ent = findViewById(R.id.txtEntertainment);
+        entT = findViewById(R.id.txtEntertainmentThis);
+        other = findViewById(R.id.txtOther);
+        othetT = findViewById(R.id.txtOtherThis);
+
 
         final Calendar cldr = Calendar.getInstance();
         int month = cldr.get(Calendar.MONTH);
         int year = cldr.get(Calendar.YEAR);
+        databaseReference.child("Expense").child(uid).child(String.valueOf(year)).child(String.valueOf(month)).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    try{
+                        for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+                            date = dataSnapshot1.child("date").getValue().toString();
+                            String newDate = date.substring(0,2);
+                            if(newDate.equals("1-")){
+                                t1 = t1 + Integer.parseInt(dataSnapshot1.child("amount").getValue().toString());
+                            }
+                            if(newDate.equals("2-")){
+                                t1 = t1+ Integer.parseInt(dataSnapshot1.child("amount").getValue().toString());
+                            }
+                            if(newDate.equals("3-")){
+                                t1 = t1 + Integer.parseInt(dataSnapshot1.child("amount").getValue().toString());
+                            }
+                            if(newDate.equals("4-")){
+                                t1 = t1 + Integer.parseInt(dataSnapshot1.child("amount").getValue().toString());
+                            }
+                            if(newDate.equals("5-")){
+                                t1 = t1 + Integer.parseInt(dataSnapshot1.child("amount").getValue().toString());
+                            }
+                            if(newDate.equals("6-")){
+                                t1 = t1 + Integer.parseInt(dataSnapshot1.child("amount").getValue().toString());
+                            }
+                            if(newDate.equals("7-")){
+                                t1 = t1 + Integer.parseInt(dataSnapshot1.child("amount").getValue().toString());
+                            }
+                            if(newDate.equals("8-")){
+                                t1 = t1 + Integer.parseInt(dataSnapshot1.child("amount").getValue().toString());
+                            }
+                            if(newDate.equals("9-")){
+                                t1 = t1 + Integer.parseInt(dataSnapshot1.child("amount").getValue().toString());
+                            }
+                            if(newDate.equals("10")){
+                                t1 = t1 + Integer.parseInt(dataSnapshot1.child("amount").getValue().toString());
+                            }
+                            if(newDate.equals("11")){
+                                t2 = t1 + Integer.parseInt(dataSnapshot1.child("amount").getValue().toString());
+                            }
+                            if(newDate.equals("12")){
+                                t2 = t2 + Integer.parseInt(dataSnapshot1.child("amount").getValue().toString());
+                            }
+                            if(newDate.equals("13")){
+                                t2 = t2 + Integer.parseInt(dataSnapshot1.child("amount").getValue().toString());
+                            }
+                            if(newDate.equals("14")){
+                                t2 = t2 + Integer.parseInt(dataSnapshot1.child("amount").getValue().toString());
+                            }
+                            if(newDate.equals("15")){
+                                t2 = t2 + Integer.parseInt(dataSnapshot1.child("amount").getValue().toString());
+                            }
+                            if(newDate.equals("16")){
+                                t2 = t2 + Integer.parseInt(dataSnapshot1.child("amount").getValue().toString());
+                            }
+                            if(newDate.equals("17")){
+                                t2 = t2 + Integer.parseInt(dataSnapshot1.child("amount").getValue().toString());
+                            }
+                            if(newDate.equals("18")){
+                                t2 = t2 + Integer.parseInt(dataSnapshot1.child("amount").getValue().toString());
+                            }
+                            if(newDate.equals("19")){
+                                t2 = t2 + Integer.parseInt(dataSnapshot1.child("amount").getValue().toString());
+                            }
+                            if(newDate.equals("20")){
+                                t2 = t2 + Integer.parseInt(dataSnapshot1.child("amount").getValue().toString());
+                            }
+                            if(newDate.equals("21")){
+                                t3 = t2 + Integer.parseInt(dataSnapshot1.child("amount").getValue().toString());
+                            }
+                            if(newDate.equals("22")){
+                                t3 = t3 + Integer.parseInt(dataSnapshot1.child("amount").getValue().toString());
+                            }
+                            if(newDate.equals("23")){
+                                t3 = t3 + Integer.parseInt(dataSnapshot1.child("amount").getValue().toString());
+                            }
+                            if(newDate.equals("24")){
+                                t3 = t3 + Integer.parseInt(dataSnapshot1.child("amount").getValue().toString());
+                            }
+                            if(newDate.equals("25")){
+                                t3 = t3 + Integer.parseInt(dataSnapshot1.child("amount").getValue().toString());
+                            }
+                            if(newDate.equals("26")){
+                                t3 = t3 + Integer.parseInt(dataSnapshot1.child("amount").getValue().toString());
+                            }
+                            if(newDate.equals("27")){
+                                t3 = t3 + Integer.parseInt(dataSnapshot1.child("amount").getValue().toString());
+                            }
+                            if(newDate.equals("28")){
+                                t3 = t3 + Integer.parseInt(dataSnapshot1.child("amount").getValue().toString());
+                            }
+                            if(newDate.equals("29")){
+                                t3 = t3 + Integer.parseInt(dataSnapshot1.child("amount").getValue().toString());
+                            }
+                            if(newDate.equals("30")){
+                                t3 = t3 + Integer.parseInt(dataSnapshot1.child("amount").getValue().toString());
+                            }
+                            if(newDate.equals("31")){
+                                t3 = t3 + Integer.parseInt(dataSnapshot1.child("amount").getValue().toString());
+                            }
+                            ArrayList<Entry> dataValsTotal = new ArrayList<>();
+                            dataValsTotal.add(new Entry(0 , 0));
+                            dataValsTotal.add( new Entry(10, t1 ));
+                            dataValsTotal.add( new Entry( 20, t2 ) );
+                            dataValsTotal.add( new Entry( 30, t3 ) );
+                            databaseReference.child("Expense").child(uid).child(String.valueOf(year)).child(String.valueOf(month+1)).addValueEventListener(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                    if (dataSnapshot.exists()) {
+                                        t1= 0;
+                                        t2 = 0;
+                                        t3= 0;
+                                        try{
+                                            for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+                                                date = dataSnapshot1.child("date").getValue().toString();
+                                                String newDate = date.substring(0,2);
+                                                if(newDate.equals("1-")){
+                                                    t1 = t1 + Integer.parseInt(dataSnapshot1.child("amount").getValue().toString());
+                                                }
+                                                if(newDate.equals("2-")){
+                                                    t1 = t1+ Integer.parseInt(dataSnapshot1.child("amount").getValue().toString());
+                                                }
+                                                if(newDate.equals("3-")){
+                                                    t1 = t1 + Integer.parseInt(dataSnapshot1.child("amount").getValue().toString());
+                                                }
+                                                if(newDate.equals("4-")){
+                                                    t1 = t1 + Integer.parseInt(dataSnapshot1.child("amount").getValue().toString());
+                                                }
+                                                if(newDate.equals("5-")){
+                                                    t1 = t1 + Integer.parseInt(dataSnapshot1.child("amount").getValue().toString());
+                                                }
+                                                if(newDate.equals("6-")){
+                                                    t1 = t1 + Integer.parseInt(dataSnapshot1.child("amount").getValue().toString());
+                                                }
+                                                if(newDate.equals("7-")){
+                                                    t1 = t1 + Integer.parseInt(dataSnapshot1.child("amount").getValue().toString());
+                                                }
+                                                if(newDate.equals("8-")){
+                                                    t1 = t1 + Integer.parseInt(dataSnapshot1.child("amount").getValue().toString());
+                                                }
+                                                if(newDate.equals("9-")){
+                                                    t1 = t1 + Integer.parseInt(dataSnapshot1.child("amount").getValue().toString());
+                                                }
+                                                if(newDate.equals("10")){
+                                                    t1 = t1 + Integer.parseInt(dataSnapshot1.child("amount").getValue().toString());
+                                                }
+                                                if(newDate.equals("11")){
+                                                    t2 = t1 + Integer.parseInt(dataSnapshot1.child("amount").getValue().toString());
+                                                }
+                                                if(newDate.equals("12")){
+                                                    t2 = t2 + Integer.parseInt(dataSnapshot1.child("amount").getValue().toString());
+                                                }
+                                                if(newDate.equals("13")){
+                                                    t2 = t2 + Integer.parseInt(dataSnapshot1.child("amount").getValue().toString());
+                                                }
+                                                if(newDate.equals("14")){
+                                                    t2 = t2 + Integer.parseInt(dataSnapshot1.child("amount").getValue().toString());
+                                                }
+                                                if(newDate.equals("15")){
+                                                    t2 = t2 + Integer.parseInt(dataSnapshot1.child("amount").getValue().toString());
+                                                }
+                                                if(newDate.equals("16")){
+                                                    t2 = t2 + Integer.parseInt(dataSnapshot1.child("amount").getValue().toString());
+                                                }
+                                                if(newDate.equals("17")){
+                                                    t2 = t2 + Integer.parseInt(dataSnapshot1.child("amount").getValue().toString());
+                                                }
+                                                if(newDate.equals("18")){
+                                                    t2 = t2 + Integer.parseInt(dataSnapshot1.child("amount").getValue().toString());
+                                                }
+                                                if(newDate.equals("19")){
+                                                    t2 = t2 + Integer.parseInt(dataSnapshot1.child("amount").getValue().toString());
+                                                }
+                                                if(newDate.equals("20")){
+                                                    t2 = t2 + Integer.parseInt(dataSnapshot1.child("amount").getValue().toString());
+                                                }
+                                                if(newDate.equals("21")){
+                                                    t3 = t2 + Integer.parseInt(dataSnapshot1.child("amount").getValue().toString());
+                                                }
+                                                if(newDate.equals("22")){
+                                                    t3 = t3 + Integer.parseInt(dataSnapshot1.child("amount").getValue().toString());
+                                                }
+                                                if(newDate.equals("23")){
+                                                    t3 = t3 + Integer.parseInt(dataSnapshot1.child("amount").getValue().toString());
+                                                }
+                                                if(newDate.equals("24")){
+                                                    t3 = t3 + Integer.parseInt(dataSnapshot1.child("amount").getValue().toString());
+                                                }
+                                                if(newDate.equals("25")){
+                                                    t3 = t3 + Integer.parseInt(dataSnapshot1.child("amount").getValue().toString());
+                                                }
+                                                if(newDate.equals("26")){
+                                                    t3 = t3 + Integer.parseInt(dataSnapshot1.child("amount").getValue().toString());
+                                                }
+                                                if(newDate.equals("27")){
+                                                    t3 = t3 + Integer.parseInt(dataSnapshot1.child("amount").getValue().toString());
+                                                }
+                                                if(newDate.equals("28")){
+                                                    t3 = t3 + Integer.parseInt(dataSnapshot1.child("amount").getValue().toString());
+                                                }
+                                                if(newDate.equals("29")){
+                                                    t3 = t3 + Integer.parseInt(dataSnapshot1.child("amount").getValue().toString());
+                                                }
+                                                if(newDate.equals("30")){
+                                                    t3 = t3 + Integer.parseInt(dataSnapshot1.child("amount").getValue().toString());
+                                                }
+                                                if(newDate.equals("31")){
+                                                    t3 = t3 + Integer.parseInt(dataSnapshot1.child("amount").getValue().toString());
+                                                }
+                                                ArrayList<Entry> dataval2this = new ArrayList<>();
+                                                dataval2this.add(new Entry(0 , 0));
+                                                dataval2this.add(new Entry(10 , t1));
+                                                if(t2!=0)
+                                                    dataval2this.add(new Entry(20 , t2));
+                                                if(t3!=0)
+                                                    dataval2this.add(new Entry(30 , t3));
+                                                LineDataSet lineDataSet = new LineDataSet(dataValsTotal, "Expected");
+                                                lineDataSet.setColor(Color.GREEN);
+                                                LineDataSet lineDataSet2 = new LineDataSet(dataval2this, "This Month");
+                                                lineDataSet2.setColor(Color.RED);
+                                                ArrayList<ILineDataSet> dataSets = new ArrayList<>();
+                                                dataSets.add(lineDataSet);
+                                                dataSets.add(lineDataSet2);
+                                                LineData data = new LineData(dataSets);
+                                                lineChartTotal.setData(data);
+                                                lineChartTotal.invalidate();
+                                            }
+                                        }
+                                        catch (Exception e){}
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                }
+                            });
+                        }
+                    }
+                    catch (Exception e){}
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
         databaseReference.child("Expense").child(uid).child(String.valueOf(year)).child(String.valueOf(month)).orderByChild("category").equalTo("Fuel").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -277,7 +553,7 @@ public class PredictionActivity extends BaseActivity {
                                                 dataval2.add(new Entry(20 , f2));
                                                 if(f3!=0)
                                                 dataval2.add(new Entry(30 , f3));
-                                                LineDataSet lineDataSet = new LineDataSet(dataVals, "Previous data");
+                                                LineDataSet lineDataSet = new LineDataSet(dataVals, "Expected");
                                                 lineDataSet.setColor(Color.GREEN);
                                                 LineDataSet lineDataSet2 = new LineDataSet(dataval2, "This Month");
                                                 lineDataSet2.setColor(Color.RED);
@@ -526,7 +802,7 @@ public class PredictionActivity extends BaseActivity {
                                                     dataval2.add(new Entry(20 , fo2));
                                                 if(fo3!=0)
                                                     dataval2.add(new Entry(30 , fo3));
-                                                LineDataSet lineDataSet = new LineDataSet(dataVals, "Previous data");
+                                                LineDataSet lineDataSet = new LineDataSet(dataVals, "Expected");
                                                 lineDataSet.setColor(Color.GREEN);
                                                 LineDataSet lineDataSet2 = new LineDataSet(dataval2, "This Month");
                                                 lineDataSet2.setColor(Color.RED);
@@ -775,7 +1051,7 @@ public class PredictionActivity extends BaseActivity {
                                                     dataval2.add(new Entry(20 , s2));
                                                 if(s3!=0)
                                                     dataval2.add(new Entry(30 , s3));
-                                                LineDataSet lineDataSet = new LineDataSet(dataVals, "Previous data");
+                                                LineDataSet lineDataSet = new LineDataSet(dataVals, "Expected");
                                                 lineDataSet.setColor(Color.GREEN);
                                                 LineDataSet lineDataSet2 = new LineDataSet(dataval2, "This Month");
                                                 lineDataSet2.setColor(Color.RED);
@@ -1024,7 +1300,7 @@ public class PredictionActivity extends BaseActivity {
                                                     dataval2.add(new Entry(20 , sp2));
                                                 if(sp3!=0)
                                                     dataval2.add(new Entry(30 , sp3));
-                                                LineDataSet lineDataSet = new LineDataSet(dataVals, "Previous data");
+                                                LineDataSet lineDataSet = new LineDataSet(dataVals, "Expected");
                                                 lineDataSet.setColor(Color.GREEN);
                                                 LineDataSet lineDataSet2 = new LineDataSet(dataval2, "This Month");
                                                 lineDataSet2.setColor(Color.RED);
@@ -1273,7 +1549,7 @@ public class PredictionActivity extends BaseActivity {
                                                     dataval2.add(new Entry(20 , k2));
                                                 if(k3!=0)
                                                     dataval2.add(new Entry(30 , k3));
-                                                LineDataSet lineDataSet = new LineDataSet(dataVals, "Previous data");
+                                                LineDataSet lineDataSet = new LineDataSet(dataVals, "Expected");
                                                 lineDataSet.setColor(Color.GREEN);
                                                 LineDataSet lineDataSet2 = new LineDataSet(dataval2, "This Month");
                                                 lineDataSet2.setColor(Color.RED);
@@ -1522,7 +1798,7 @@ public class PredictionActivity extends BaseActivity {
                                                     dataval2.add(new Entry(20 , c2));
                                                 if(c3!=0)
                                                     dataval2.add(new Entry(30 , c3));
-                                                LineDataSet lineDataSet = new LineDataSet(dataVals, "Previous data");
+                                                LineDataSet lineDataSet = new LineDataSet(dataVals, "Expected");
                                                 lineDataSet.setColor(Color.GREEN);
                                                 LineDataSet lineDataSet2 = new LineDataSet(dataval2, "This Month");
                                                 lineDataSet2.setColor(Color.RED);
@@ -1771,7 +2047,7 @@ public class PredictionActivity extends BaseActivity {
                                                     dataval2.add(new Entry(20 , g2));
                                                 if(g3!=0)
                                                     dataval2.add(new Entry(30 , g3));
-                                                LineDataSet lineDataSet = new LineDataSet(dataVals, "Previous data");
+                                                LineDataSet lineDataSet = new LineDataSet(dataVals, "Expected");
                                                 lineDataSet.setColor(Color.GREEN);
                                                 LineDataSet lineDataSet2 = new LineDataSet(dataval2, "This Month");
                                                 lineDataSet2.setColor(Color.RED);
@@ -2020,7 +2296,7 @@ public class PredictionActivity extends BaseActivity {
                                                     dataval2.add(new Entry(20 , e2));
                                                 if(e3!=0)
                                                     dataval2.add(new Entry(30 , e3));
-                                                LineDataSet lineDataSet = new LineDataSet(dataVals, "Previous data");
+                                                LineDataSet lineDataSet = new LineDataSet(dataVals, "Expected");
                                                 lineDataSet.setColor(Color.GREEN);
                                                 LineDataSet lineDataSet2 = new LineDataSet(dataval2, "This Month");
                                                 lineDataSet2.setColor(Color.RED);
@@ -2269,7 +2545,7 @@ public class PredictionActivity extends BaseActivity {
                                                     dataval2.add(new Entry(20 , o2));
                                                 if(o3!=0)
                                                     dataval2.add(new Entry(30 , o3));
-                                                LineDataSet lineDataSet = new LineDataSet(dataVals, "Previous data");
+                                                LineDataSet lineDataSet = new LineDataSet(dataVals, "Expected");
                                                 lineDataSet.setColor(Color.GREEN);
                                                 LineDataSet lineDataSet2 = new LineDataSet(dataval2, "This Month");
                                                 lineDataSet2.setColor(Color.RED);
@@ -2302,7 +2578,426 @@ public class PredictionActivity extends BaseActivity {
             }
         });
 
+        databaseReference.child("Expense").child(uid).child(String.valueOf(year)).child(String.valueOf(month)).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    to = 0;
+                    try {
+                        for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+                            to = to + Integer.parseInt(dataSnapshot1.child("amount").getValue().toString());
+                        }
+                        total.setText(String.valueOf(to));
+                        // abc =total;
+                    }
+                    catch (Exception e){}
+                } else total.setText("0");
+            }
 
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+        databaseReference.child("Expense").child(uid).child(String.valueOf(year)).child(String.valueOf(month+1)).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    toT = 0;
+                    try {
+                        for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+                            toT = toT + Integer.parseInt(dataSnapshot1.child("amount").getValue().toString());
+                        }
+                        totalT.setText(String.valueOf(toT));
+                        // abc =total;
+                    }
+                    catch (Exception e){}
+                } else totalT.setText("0");
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+        databaseReference.child("Expense").child(uid).child(String.valueOf(year)).child(String.valueOf(month)).orderByChild("category").equalTo("Fuel").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    fu = 0;
+                    try {
+                        for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+                            fu = fu + Integer.parseInt(dataSnapshot1.child("amount").getValue().toString());
+                        }
+                        fuel.setText(String.valueOf(fu));
+                        // abc =total;
+                    }
+                    catch (Exception e){}
+                } else fuel.setText("0");
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+        databaseReference.child("Expense").child(uid).child(String.valueOf(year)).child(String.valueOf(month+1)).orderByChild("category").equalTo("Fuel").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    fuT = 0;
+                    try {
+                        for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+                            fuT = fuT + Integer.parseInt(dataSnapshot1.child("amount").getValue().toString());
+                        }
+                        fuelT.setText(String.valueOf(fuT));
+                        // abc =total;
+                    }
+                    catch (Exception e){}
+                } else fuelT.setText("0");
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+        databaseReference.child("Expense").child(uid).child(String.valueOf(year)).child(String.valueOf(month)).orderByChild("category").equalTo("Food").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    fo = 0;
+                    try {
+                        for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+                            fo = fo + Integer.parseInt(dataSnapshot1.child("amount").getValue().toString());
+                        }
+                        fuel.setText(String.valueOf(fo));
+                        // abc =total;
+                    }
+                    catch (Exception e){}
+                } else food.setText("0");
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+        databaseReference.child("Expense").child(uid).child(String.valueOf(year)).child(String.valueOf(month+1)).orderByChild("category").equalTo("Food").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    foT = 0;
+                    try {
+                        for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+                            foT = foT + Integer.parseInt(dataSnapshot1.child("amount").getValue().toString());
+                        }
+                        foodT.setText(String.valueOf(foT));
+                        // abc =total;
+                    }
+                    catch (Exception e){}
+                } else foodT.setText("0");
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+        databaseReference.child("Expense").child(uid).child(String.valueOf(year)).child(String.valueOf(month)).orderByChild("category").equalTo("Shopping").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    sh = 0;
+                    try {
+                        for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+                            sh = sh + Integer.parseInt(dataSnapshot1.child("amount").getValue().toString());
+                        }
+                        shop.setText(String.valueOf(sh));
+                        // abc =total;
+                    }
+                    catch (Exception e){}
+                } else shop.setText("0");
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+        databaseReference.child("Expense").child(uid).child(String.valueOf(year)).child(String.valueOf(month+1)).orderByChild("category").equalTo("Shopping").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    shT = 0;
+                    try {
+                        for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+                            shT = shT + Integer.parseInt(dataSnapshot1.child("amount").getValue().toString());
+                        }
+                        shopT.setText(String.valueOf(shT));
+                        // abc =total;
+                    }
+                    catch (Exception e){}
+                } else shopT.setText("0");
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+        databaseReference.child("Expense").child(uid).child(String.valueOf(year)).child(String.valueOf(month)).orderByChild("category").equalTo("Sports").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    sp = 0;
+                    try {
+                        for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+                            sp = sp + Integer.parseInt(dataSnapshot1.child("amount").getValue().toString());
+                        }
+                        sport.setText(String.valueOf(sp));
+                        // abc =total;
+                    }
+                    catch (Exception e){}
+                } else sport.setText("0");
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+        databaseReference.child("Expense").child(uid).child(String.valueOf(year)).child(String.valueOf(month+1)).orderByChild("category").equalTo("Sports").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    spT = 0;
+                    try {
+                        for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+                            spT = spT + Integer.parseInt(dataSnapshot1.child("amount").getValue().toString());
+                        }
+                        sportT.setText(String.valueOf(spT));
+                        // abc =total;
+                    }
+                    catch (Exception e){}
+                } else sportT.setText("0");
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+        databaseReference.child("Expense").child(uid).child(String.valueOf(year)).child(String.valueOf(month)).orderByChild("category").equalTo("Kids").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    ki = 0;
+                    try {
+                        for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+                            ki = ki + Integer.parseInt(dataSnapshot1.child("amount").getValue().toString());
+                        }
+                        kids.setText(String.valueOf(ki));
+                        // abc =total;
+                    }
+                    catch (Exception e){}
+                } else kids.setText("0");
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+        databaseReference.child("Expense").child(uid).child(String.valueOf(year)).child(String.valueOf(month+1)).orderByChild("category").equalTo("kids").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    kiT = 0;
+                    try {
+                        for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+                            kiT = kiT + Integer.parseInt(dataSnapshot1.child("amount").getValue().toString());
+                        }
+                        kidsT.setText(String.valueOf(kiT));
+                        // abc =total;
+                    }
+                    catch (Exception e){}
+                } else kidsT.setText("0");
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+        databaseReference.child("Expense").child(uid).child(String.valueOf(year)).child(String.valueOf(month)).orderByChild("category").equalTo("Clothes").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    cl = 0;
+                    try {
+                        for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+                            cl = cl + Integer.parseInt(dataSnapshot1.child("amount").getValue().toString());
+                        }
+                        cloth.setText(String.valueOf(cl));
+                        // abc =total;
+                    }
+                    catch (Exception e){}
+                } else cloth.setText("0");
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+        databaseReference.child("Expense").child(uid).child(String.valueOf(year)).child(String.valueOf(month+1)).orderByChild("category").equalTo("Clothes").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    clT = 0;
+                    try {
+                        for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+                            clT = clT + Integer.parseInt(dataSnapshot1.child("amount").getValue().toString());
+                        }
+                        clothT.setText(String.valueOf(clT));
+                        // abc =total;
+                    }
+                    catch (Exception e){}
+                } else clothT.setText("0");
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+        databaseReference.child("Expense").child(uid).child(String.valueOf(year)).child(String.valueOf(month)).orderByChild("category").equalTo("Gift").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    gi = 0;
+                    try {
+                        for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+                            gi = gi + Integer.parseInt(dataSnapshot1.child("amount").getValue().toString());
+                        }
+                        gift.setText(String.valueOf(gi));
+                        // abc =total;
+                    }
+                    catch (Exception e){}
+                } else gift.setText("0");
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+        databaseReference.child("Expense").child(uid).child(String.valueOf(year)).child(String.valueOf(month+1)).orderByChild("category").equalTo("Gift").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    giT = 0;
+                    try {
+                        for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+                            giT = giT + Integer.parseInt(dataSnapshot1.child("amount").getValue().toString());
+                        }
+                        giftT.setText(String.valueOf(giT));
+                        // abc =total;
+                    }
+                    catch (Exception e){}
+                } else giftT.setText("0");
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+        databaseReference.child("Expense").child(uid).child(String.valueOf(year)).child(String.valueOf(month)).orderByChild("category").equalTo("Entertainment").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    en = 0;
+                    try {
+                        for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+                            en = en + Integer.parseInt(dataSnapshot1.child("amount").getValue().toString());
+                        }
+                        ent.setText(String.valueOf(en));
+                        // abc =total;
+                    }
+                    catch (Exception e){}
+                } else ent.setText("0");
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+        databaseReference.child("Expense").child(uid).child(String.valueOf(year)).child(String.valueOf(month+1)).orderByChild("category").equalTo("Entertainment").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    enT = 0;
+                    try {
+                        for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+                            enT = enT + Integer.parseInt(dataSnapshot1.child("amount").getValue().toString());
+                        }
+                        entT.setText(String.valueOf(enT));
+                        // abc =total;
+                    }
+                    catch (Exception e){}
+                } else entT.setText("0");
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+        databaseReference.child("Expense").child(uid).child(String.valueOf(year)).child(String.valueOf(month)).orderByChild("category").equalTo("Other").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    ot = 0;
+                    try {
+                        for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+                            ot = ot + Integer.parseInt(dataSnapshot1.child("amount").getValue().toString());
+                        }
+                        other.setText(String.valueOf(ot));
+                        // abc =total;
+                    }
+                    catch (Exception e){}
+                } else other.setText("0");
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+        databaseReference.child("Expense").child(uid).child(String.valueOf(year)).child(String.valueOf(month+1)).orderByChild("category").equalTo("Other").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    otT = 0;
+                    try {
+                        for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+                            otT = otT + Integer.parseInt(dataSnapshot1.child("amount").getValue().toString());
+                        }
+                        othetT.setText(String.valueOf(otT));
+                        // abc =total;
+                    }
+                    catch (Exception e){}
+                } else othetT.setText("0");
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
 
     }
 

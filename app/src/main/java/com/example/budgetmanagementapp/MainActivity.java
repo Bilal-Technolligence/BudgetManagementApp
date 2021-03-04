@@ -6,6 +6,7 @@ import android.app.PendingIntent;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.util.Log;
@@ -17,6 +18,13 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.PieData;
+import com.github.mikephil.charting.data.PieDataSet;
+import com.github.mikephil.charting.data.PieEntry;
+import com.github.mikephil.charting.interfaces.datasets.IPieDataSet;
+import com.github.mikephil.charting.utils.ColorTemplate;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
@@ -39,7 +47,9 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 public class MainActivity extends BaseActivity {
     TextView food, spent, remaining, fuel, shopping, kids, clothes, gifts, sports, entertainment, other, progress, incomeTotal;
@@ -55,13 +65,14 @@ public class MainActivity extends BaseActivity {
     public static final String NOTIFICATION_CHANNEL_ID = "10001";
     private final static String default_notification_channel_id = "default";
     /////////
+    PieChart pieChart;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //setContentView(R.layout.activity_main);
-      //  ((AppCompatActivity)this).getSupportActionBar().setTitle("Main");
-      //  ((AppCompatActivity)this).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        //  ((AppCompatActivity)this).getSupportActionBar().setTitle("Main");
+        //  ((AppCompatActivity)this).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("Loading..... ");
         progressDialog.show();
@@ -79,6 +90,8 @@ public class MainActivity extends BaseActivity {
         incomeTotal = (TextView) findViewById(R.id.txtIncome);
         progress = (TextView) findViewById(R.id.text_view_progress);
         progressBar = (ProgressBar) findViewById(R.id.progress_bar);
+        pieChart = findViewById(R.id.pieChart);
+        pieChart .setVisibility(View.GONE);
 
         addExpense = (Button) findViewById(R.id.btnExpense);
         // btnGenerateNotification = (Button) findViewById(R.id.btnSendNotifications);
@@ -107,8 +120,8 @@ public class MainActivity extends BaseActivity {
                                                 scheduleNotification(getNotification(msg), 5000);
 
                                             }
+                                        } catch (Exception e) {
                                         }
-                                        catch (Exception e){}
                                     }
 
                                 }
@@ -212,6 +225,7 @@ public class MainActivity extends BaseActivity {
                 if (dataSnapshot.exists()) {
                     try {
                         for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+                            total = total + Integer.parseInt(dataSnapshot1.child("amount").getValue().toString());
                             if (dataSnapshot1.child("category").getValue().toString().equals("Shopping"))
                                 shoppingT = shoppingT + Integer.parseInt(dataSnapshot1.child("amount").getValue().toString());
                             if (dataSnapshot1.child("category").getValue().toString().equals("Fuel"))
@@ -231,6 +245,7 @@ public class MainActivity extends BaseActivity {
                             if (dataSnapshot1.child("category").getValue().toString().equals("Food"))
                                 foodT = foodT + Integer.parseInt(dataSnapshot1.child("amount").getValue().toString());
                         }
+
                     } catch (Exception e) {
                     }
 
@@ -244,7 +259,10 @@ public class MainActivity extends BaseActivity {
                     other.setText(String.valueOf(othersT));
                     food.setText(String.valueOf(foodT));
                     progressDialog.dismiss();
+
+
                 } else {
+                    pieChart.setVisibility(View.GONE);
                     shopping.setText("0");
                     fuel.setText("0");
                     kids.setText("0");
@@ -263,6 +281,81 @@ public class MainActivity extends BaseActivity {
 
             }
         });
+        databaseReference.child("Expense").child(uid).child(String.valueOf(year)).child(String.valueOf(month + 1)).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    try {
+                        for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+                            if (dataSnapshot1.child("category").getValue().toString().equals("Shopping"))
+                                shoppingT = shoppingT + Integer.parseInt(dataSnapshot1.child("amount").getValue().toString());
+                            if (dataSnapshot1.child("category").getValue().toString().equals("Fuel"))
+                                fuelT = fuelT + Integer.parseInt(dataSnapshot1.child("amount").getValue().toString());
+                            if (dataSnapshot1.child("category").getValue().toString().equals("Kids"))
+                                kidsT = kidsT + Integer.parseInt(dataSnapshot1.child("amount").getValue().toString());
+                            if (dataSnapshot1.child("category").getValue().toString().equals("Clothes"))
+                                clothesT = clothesT + Integer.parseInt(dataSnapshot1.child("amount").getValue().toString());
+                            if (dataSnapshot1.child("category").getValue().toString().equals("Gift"))
+                                giftT = giftT + Integer.parseInt(dataSnapshot1.child("amount").getValue().toString());
+                            if (dataSnapshot1.child("category").getValue().toString().equals("Sports"))
+                                sportsT = sportsT + Integer.parseInt(dataSnapshot1.child("amount").getValue().toString());
+                            if (dataSnapshot1.child("category").getValue().toString().equals("Entertainment"))
+                                entertainmentT = entertainmentT + Integer.parseInt(dataSnapshot1.child("amount").getValue().toString());
+                            if (dataSnapshot1.child("category").getValue().toString().equals("Others"))
+                                othersT = othersT + Integer.parseInt(dataSnapshot1.child("amount").getValue().toString());
+                            if (dataSnapshot1.child("category").getValue().toString().equals("Food"))
+                                foodT = foodT + Integer.parseInt(dataSnapshot1.child("amount").getValue().toString());
+                        }
+                        pieChart.setUsePercentValues(true);
+                        List<PieEntry> pi = new ArrayList<>();
+                       if(!String.valueOf(shoppingT).equals("0"))
+                        pi.add(new PieEntry(Integer.parseInt(String.valueOf(shoppingT)), "Shopping"));
+                        if(!String.valueOf(fuelT).equals("0"))
+                        pi.add(new PieEntry(Integer.parseInt(String.valueOf(fuelT)), "Fuel"));
+                        if(!String.valueOf(kidsT).equals("0"))
+                        pi.add(new PieEntry(Integer.parseInt(String.valueOf(kidsT)), "Kids"));
+                        if(!String.valueOf(clothesT).equals("0"))
+                            pi.add(new PieEntry(Integer.parseInt(String.valueOf(clothesT)), "Clothes"));
+                        if(!String.valueOf(giftT).equals("0"))
+                            pi.add(new PieEntry(Integer.parseInt(String.valueOf(giftT)), "Gift"));
+                        if(!String.valueOf(sportsT).equals("0"))
+                            pi.add(new PieEntry(Integer.parseInt(String.valueOf(sportsT)), "Sports"));
+                        if(!String.valueOf(entertainmentT).equals("0"))
+                            pi.add(new PieEntry(Integer.parseInt(String.valueOf(entertainmentT)), "Entertainment"));
+                        if(!String.valueOf(othersT).equals("0"))
+                            pi.add(new PieEntry(Integer.parseInt(String.valueOf(othersT)), "Other"));
+                        if(!String.valueOf(foodT).equals("0"))
+                            pi.add(new PieEntry(Integer.parseInt(String.valueOf(foodT)), "Food"));
+
+                        PieDataSet pieDataSet = new PieDataSet(pi, "");
+                        pieDataSet.setColors(ColorTemplate.COLORFUL_COLORS);
+                        pieDataSet.setValueTextColor(Color.BLACK);
+                        pieDataSet.setValueTextSize(10f);
+
+                        PieData pieData = new PieData(pieDataSet);
+
+                        pieChart.setData(pieData);
+                        pieChart.getDescription().setEnabled(false);
+                        pieChart.setCenterText("Total");
+                        pieChart.animate();
+                        pieChart.setVisibility(View.VISIBLE);
+                    } catch (Exception e) {
+                    }
+
+
+                }
+                else{
+                    pieChart.setVisibility(View.GONE);
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
 
     }
 
