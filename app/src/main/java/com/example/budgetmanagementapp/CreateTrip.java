@@ -86,7 +86,7 @@ public class CreateTrip extends BaseActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        startActivity(new Intent(CreateTrip.this, Trips.class));
+        startActivity(new Intent(CreateTrip.this, TripsList.class));
         finish();
     }
 

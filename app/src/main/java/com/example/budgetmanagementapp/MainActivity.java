@@ -52,7 +52,7 @@ import java.util.Calendar;
 import java.util.List;
 
 public class MainActivity extends BaseActivity {
-    TextView food, spent, remaining, fuel, shopping, kids, clothes, gifts, sports, entertainment, other, progress, incomeTotal;
+    TextView food, spent, remaining, fuel, shopping, kids, clothes, gifts, sports, entertainment, other, progress, incomeTotal , pie;
     ProgressBar progressBar;
     Button addExpense, addIncome, btnGenerateNotification;
     final String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
@@ -89,10 +89,11 @@ public class MainActivity extends BaseActivity {
         food = (TextView) findViewById(R.id.txtFood);
         incomeTotal = (TextView) findViewById(R.id.txtIncome);
         progress = (TextView) findViewById(R.id.text_view_progress);
+        pie = (TextView) findViewById(R.id.txtPiechart);
         progressBar = (ProgressBar) findViewById(R.id.progress_bar);
         pieChart = findViewById(R.id.pieChart);
         pieChart.setVisibility(View.GONE);
-
+        pie.setVisibility(View.VISIBLE);
         addExpense = (Button) findViewById(R.id.btnExpense);
         // btnGenerateNotification = (Button) findViewById(R.id.btnSendNotifications);
         Thread thread = new Thread(new Runnable() {
@@ -345,12 +346,14 @@ public class MainActivity extends BaseActivity {
                         pieChart.setCenterText("Total");
                         pieChart.animate();
                         pieChart.setVisibility(View.VISIBLE);
+                        pie.setVisibility(View.VISIBLE);
                     } catch (Exception e) {
                     }
 
 
                 } else {
                     pieChart.setVisibility(View.GONE);
+                    pie.setVisibility(View.GONE);
                 }
 
             }

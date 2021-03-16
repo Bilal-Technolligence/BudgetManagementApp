@@ -59,6 +59,14 @@
             android:layout_width="match_parent"
             android:layout_height="300dp"
             android:id="@+id/pieChart"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="No expense found"
+            android:textSize="20dp"
+            android:textColor="@color/black"
+            android:gravity="center"
+            android:id="@+id/txtPiechart"/>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

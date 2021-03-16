@@ -55,6 +55,7 @@ public abstract class BaseActivity extends AppCompatActivity implements BottomNa
         drawerLayout.addDrawerListener(drawerToggle);
         drawerToggle.syncState();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
       //  ((AppCompatActivity)this).getSupportActionBar().setTitle("Add Expense");
       //  ((AppCompatActivity)this).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         //drawer navbar item click
