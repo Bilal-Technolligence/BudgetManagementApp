@@ -17,11 +17,12 @@
         android:roundIcon="@drawable/logo"
         android:supportsRtl="true"
         android:theme="@style/Theme.BudgetManagementApp">
-        <activity android:name=".PredictionActivity"></activity>
+        <activity android:name=".ForgetPassword"></activity>
+        <activity android:name=".PredictionActivity" />
         <activity android:name=".MemberDetail" />
         <activity android:name=".NotificationActivity" />
         <activity android:name=".PaymentActivity" />
-        <activity android:name=".TripsList"></activity>
+        <activity android:name=".TripsList" />
         <activity
             android:name=".SettingsActivity"
             android:label="@string/title_activity_settings" />
@@ -35,7 +36,7 @@
         <activity android:name=".AddExpense" />
         <activity
             android:name=".LoginActivity"
-            android:theme="@style/Theme.BudgetManagementApp.NoActionBar"></activity>
+            android:theme="@style/Theme.BudgetManagementApp.NoActionBar" />
         <activity
             android:name=".CompleteProActivity"
             android:theme="@style/Theme.BudgetManagementApp.NoActionBar" />

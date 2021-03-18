@@ -13,14 +13,19 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Menu;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -42,9 +47,12 @@ import androidx.appcompat.widget.Toolbar;
 import java.util.Calendar;
 
 public class MainActivity extends BaseActivity {
-    TextView food, spent, remaining, fuel, shopping, kids, clothes, gifts, sports, entertainment, other, progress, incomeTotal;
+    TextView food, spent, remaining, fuel, shopping, kids, clothes, gifts, sports, entertainment, other, progress, incomeTotal,verifyEmail;
     ProgressBar progressBar;
-    Button addExpense, addIncome, btnGenerateNotification;
+    protected BottomNavigationView navigationView;
+    protected DrawerLayout drawerLayout;
+    protected LinearLayout verificationLayout;
+    Button addExpense, addIncome, btnGenerateNotification,btnResendVerificationCode;
     final String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
     FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
     DatabaseReference databaseReference = firebaseDatabase.getReference();
@@ -54,6 +62,7 @@ public class MainActivity extends BaseActivity {
     /////Only for Notification////
     public static final String NOTIFICATION_CHANNEL_ID = "10001";
     private final static String default_notification_channel_id = "default";
+    FirebaseAuth firebaseAuth;
     /////////
 
     @Override
@@ -79,9 +88,48 @@ public class MainActivity extends BaseActivity {
         incomeTotal = (TextView) findViewById(R.id.txtIncome);
         progress = (TextView) findViewById(R.id.text_view_progress);
         progressBar = (ProgressBar) findViewById(R.id.progress_bar);
-
         addExpense = (Button) findViewById(R.id.btnExpense);
+
+        verifyEmail =(TextView) findViewById(R.id.txtEmailVerify);
+        btnResendVerificationCode =(Button) findViewById(R.id.btnVerifyEmail);
+
+        navigationView = (BottomNavigationView) findViewById(R.id.navigationView);
+        drawerLayout = (DrawerLayout) findViewById(R.id.drawarLayout);
+        verificationLayout =(LinearLayout) findViewById(R.id.emailVerificationLayout);
         // btnGenerateNotification = (Button) findViewById(R.id.btnSendNotifications);
+        firebaseAuth = FirebaseAuth.getInstance();
+        final String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+        if(!firebaseUser.isEmailVerified()){
+
+            verificationLayout.setVisibility(View.VISIBLE);
+            drawerLayout.setVisibility(View.GONE);
+            navigationView.setVisibility(View.GONE);
+            btnResendVerificationCode.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                   // FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+                    firebaseUser.sendEmailVerification().addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            Toast.makeText(MainActivity.this, "Verification Email has been Sent", Toast.LENGTH_SHORT).show();
+
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            String Tag="";
+                            Log.e(Tag, "on Failure:Email not sent"+ e.getMessage());
+
+                        }
+                    });
+                }
+            });
+        }
+
+
+
+
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {

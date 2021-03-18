@@ -46,15 +46,18 @@ public abstract class BaseActivity extends AppCompatActivity implements BottomNa
         setContentView(getContentViewId());
 
 ///Buttom Navigation
-        navigationView = (BottomNavigationView) findViewById(R.id.navigationView);
+
         navigationView.setOnNavigationItemSelectedListener(this);
         //drawer navigation
+        navigationView = (BottomNavigationView) findViewById(R.id.navigationView);
         drawerLayout = (DrawerLayout) findViewById(R.id.drawarLayout);
         //adding drawar button
         drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.open, R.string.close);
         drawerLayout.addDrawerListener(drawerToggle);
         drawerToggle.syncState();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+
       //  ((AppCompatActivity)this).getSupportActionBar().setTitle("Add Expense");
       //  ((AppCompatActivity)this).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         //drawer navbar item click
@@ -175,6 +178,16 @@ public abstract class BaseActivity extends AppCompatActivity implements BottomNa
 
 
         return true;
+    }
+
+
+    //drawer open close click
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (drawerToggle.onOptionsItemSelected(item)) {
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private void updateNavigationBarState(){

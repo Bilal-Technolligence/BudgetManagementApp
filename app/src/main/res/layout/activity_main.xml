@@ -6,11 +6,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context=".MainActivity"
-    >
+    tools:context=".MainActivity">
     <androidx.drawerlayout.widget.DrawerLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:visibility="visible"
         android:layout_marginBottom="3dp"
         android:id="@+id/drawarLayout">
 <ScrollView
@@ -458,13 +458,45 @@
             android:layout_gravity="start"
             ></com.google.android.material.navigation.NavigationView>
     </androidx.drawerlayout.widget.DrawerLayout>
+<LinearLayout
+    android:id="@+id/emailVerificationLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:visibility="gone"
+    android:orientation="vertical"
+    android:gravity="center"
+    >
+    <ImageView
+        android:id="@+id/imagelogo"
+        android:layout_width="100sp"
+        android:layout_height="100sp"
+        android:layout_centerInParent="true"
+        android:src="@drawable/logo"/>
+    <TextView
+        android:id="@+id/txtEmailVerify"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:textColor="@color/colorRed"
+        android:gravity="center"
+        android:textSize="25sp"
+        android:text="Email Not Verified"/>
+    <Button
+        android:id="@+id/btnVerifyEmail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Resend Code"
+        android:backgroundTint="@color/colorPurple"
+        android:layout_marginTop="5dp"/>
 
+</LinearLayout>
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/navigationView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
         android:layout_marginStart="0dp"
+        android:visibility="visible"
         android:layout_marginEnd="0dp"
         android:background="?android:attr/windowBackground"
         app:itemIconTint="@drawable/bottomnavigationcolor"

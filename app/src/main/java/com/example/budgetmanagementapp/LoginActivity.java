@@ -43,8 +43,8 @@ public class LoginActivity extends AppCompatActivity {
         btnRcoverPassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               // Intent intent = new Intent(LoginActivity.this,ForgetPassword.class);
-             //   startActivity(intent);
+                Intent intent = new Intent(LoginActivity.this,ForgetPassword.class);
+                startActivity(intent);
             }
         });
         btnLogin.setOnClickListener(new View.OnClickListener() {
