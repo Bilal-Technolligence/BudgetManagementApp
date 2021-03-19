@@ -11,6 +11,7 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -23,6 +24,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
@@ -39,6 +41,7 @@ public class CompleteProActivity extends AppCompatActivity {
     int count = 0;
     String userGmail, userPassword;
     EditText name, contact, email, income;
+    FirebaseAuth firebaseAuth;
 
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     final DatabaseReference reference = database.getReference("Users");
@@ -94,11 +97,30 @@ public class CompleteProActivity extends AppCompatActivity {
         });
     }
     public void RegisterUser(final String userGmail, String userPassword, final String contact, final String name,final String income, final Uri imagePath, final ProgressDialog progressDialog) {
-        FirebaseAuth.getInstance().createUserWithEmailAndPassword(userGmail, userPassword)
+        firebaseAuth.getInstance().createUserWithEmailAndPassword(userGmail, userPassword)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
+
+                            FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+                            firebaseUser.sendEmailVerification().addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+                                    Toast.makeText(CompleteProActivity.this, "Verification Email has been Sent", Toast.LENGTH_SHORT).show();
+
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    String Tag="";
+                                    Log.e(Tag, "on Failure:Email not sent"+ e.getMessage());
+
+                                }
+                            });
+
+
+
                             StorageReference storageReference = FirebaseStorage.getInstance().getReference().child("images/" + FirebaseDatabase.getInstance().getReference().child("Users").push().getKey());
                             storageReference.putFile(imagePath).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                                 @Override

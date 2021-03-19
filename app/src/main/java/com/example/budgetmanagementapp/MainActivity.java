@@ -6,7 +6,6 @@ import android.app.PendingIntent;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.util.Log;
@@ -14,21 +13,19 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Menu;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.github.mikephil.charting.charts.PieChart;
-import com.github.mikephil.charting.data.Entry;
-import com.github.mikephil.charting.data.PieData;
-import com.github.mikephil.charting.data.PieDataSet;
-import com.github.mikephil.charting.data.PieEntry;
-import com.github.mikephil.charting.interfaces.datasets.IPieDataSet;
-import com.github.mikephil.charting.utils.ColorTemplate;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -47,14 +44,15 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
 
 public class MainActivity extends BaseActivity {
-    TextView food, spent, remaining, fuel, shopping, kids, clothes, gifts, sports, entertainment, other, progress, incomeTotal , pie;
+    TextView food, spent, remaining, fuel, shopping, kids, clothes, gifts, sports, entertainment, other, progress, incomeTotal,verifyEmail;
     ProgressBar progressBar;
-    Button addExpense, addIncome, btnGenerateNotification;
+    protected BottomNavigationView navigationView;
+    protected DrawerLayout drawerLayout;
+    protected LinearLayout verificationLayout;
+    Button addExpense, addIncome, btnGenerateNotification,btnResendVerificationCode;
     final String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
     FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
     DatabaseReference databaseReference = firebaseDatabase.getReference();
@@ -64,15 +62,15 @@ public class MainActivity extends BaseActivity {
     /////Only for Notification////
     public static final String NOTIFICATION_CHANNEL_ID = "10001";
     private final static String default_notification_channel_id = "default";
+    FirebaseAuth firebaseAuth;
     /////////
-    PieChart pieChart;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //setContentView(R.layout.activity_main);
-        //  ((AppCompatActivity)this).getSupportActionBar().setTitle("Main");
-        //  ((AppCompatActivity)this).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+      //  ((AppCompatActivity)this).getSupportActionBar().setTitle("Main");
+      //  ((AppCompatActivity)this).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("Loading..... ");
         progressDialog.show();
@@ -89,13 +87,49 @@ public class MainActivity extends BaseActivity {
         food = (TextView) findViewById(R.id.txtFood);
         incomeTotal = (TextView) findViewById(R.id.txtIncome);
         progress = (TextView) findViewById(R.id.text_view_progress);
-        pie = (TextView) findViewById(R.id.txtPiechart);
         progressBar = (ProgressBar) findViewById(R.id.progress_bar);
-        pieChart = findViewById(R.id.pieChart);
-        pieChart.setVisibility(View.GONE);
-        pie.setVisibility(View.VISIBLE);
         addExpense = (Button) findViewById(R.id.btnExpense);
+
+        verifyEmail =(TextView) findViewById(R.id.txtEmailVerify);
+        btnResendVerificationCode =(Button) findViewById(R.id.btnVerifyEmail);
+
+        navigationView = (BottomNavigationView) findViewById(R.id.navigationView);
+        drawerLayout = (DrawerLayout) findViewById(R.id.drawarLayout);
+        verificationLayout =(LinearLayout) findViewById(R.id.emailVerificationLayout);
         // btnGenerateNotification = (Button) findViewById(R.id.btnSendNotifications);
+        firebaseAuth = FirebaseAuth.getInstance();
+        final String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+        if(!firebaseUser.isEmailVerified()){
+
+            verificationLayout.setVisibility(View.VISIBLE);
+            drawerLayout.setVisibility(View.GONE);
+            navigationView.setVisibility(View.GONE);
+            btnResendVerificationCode.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                   // FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+                    firebaseUser.sendEmailVerification().addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            Toast.makeText(MainActivity.this, "Verification Email has been Sent", Toast.LENGTH_SHORT).show();
+
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            String Tag="";
+                            Log.e(Tag, "on Failure:Email not sent"+ e.getMessage());
+
+                        }
+                    });
+                }
+            });
+        }
+
+
+
+
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -121,8 +155,8 @@ public class MainActivity extends BaseActivity {
                                                 scheduleNotification(getNotification(msg), 5000);
 
                                             }
-                                        } catch (Exception e) {
                                         }
+                                        catch (Exception e){}
                                     }
 
                                 }
@@ -193,15 +227,9 @@ public class MainActivity extends BaseActivity {
                                     }
                                     remaining.setText(String.valueOf(remain));
                                     int result = (int) Math.round((total * 100) / income);
-                                    if (result > 100) {
-                                        String p = "100";
-                                        progressBar.setProgress(100);
-                                        progress.setText(p + "%");
-                                    } else {
-                                        String p = String.valueOf(result);
-                                        progressBar.setProgress(result);
-                                        progress.setText(p + "%");
-                                    }
+                                    String p = String.valueOf(result);
+                                    progressBar.setProgress(result);
+                                    progress.setText(p + "%");
                                 } catch (Exception e) {
                                 }
                             } else {
@@ -232,7 +260,6 @@ public class MainActivity extends BaseActivity {
                 if (dataSnapshot.exists()) {
                     try {
                         for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
-                            total = total + Integer.parseInt(dataSnapshot1.child("amount").getValue().toString());
                             if (dataSnapshot1.child("category").getValue().toString().equals("Shopping"))
                                 shoppingT = shoppingT + Integer.parseInt(dataSnapshot1.child("amount").getValue().toString());
                             if (dataSnapshot1.child("category").getValue().toString().equals("Fuel"))
@@ -252,7 +279,6 @@ public class MainActivity extends BaseActivity {
                             if (dataSnapshot1.child("category").getValue().toString().equals("Food"))
                                 foodT = foodT + Integer.parseInt(dataSnapshot1.child("amount").getValue().toString());
                         }
-
                     } catch (Exception e) {
                     }
 
@@ -266,10 +292,7 @@ public class MainActivity extends BaseActivity {
                     other.setText(String.valueOf(othersT));
                     food.setText(String.valueOf(foodT));
                     progressDialog.dismiss();
-
-
                 } else {
-                    pieChart.setVisibility(View.GONE);
                     shopping.setText("0");
                     fuel.setText("0");
                     kids.setText("0");
@@ -288,82 +311,6 @@ public class MainActivity extends BaseActivity {
 
             }
         });
-        databaseReference.child("Expense").child(uid).child(String.valueOf(year)).child(String.valueOf(month + 1)).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot.exists()) {
-                    try {
-                        for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
-                            if (dataSnapshot1.child("category").getValue().toString().equals("Shopping"))
-                                shoppingT = shoppingT + Integer.parseInt(dataSnapshot1.child("amount").getValue().toString());
-                            if (dataSnapshot1.child("category").getValue().toString().equals("Fuel"))
-                                fuelT = fuelT + Integer.parseInt(dataSnapshot1.child("amount").getValue().toString());
-                            if (dataSnapshot1.child("category").getValue().toString().equals("Kids"))
-                                kidsT = kidsT + Integer.parseInt(dataSnapshot1.child("amount").getValue().toString());
-                            if (dataSnapshot1.child("category").getValue().toString().equals("Clothes"))
-                                clothesT = clothesT + Integer.parseInt(dataSnapshot1.child("amount").getValue().toString());
-                            if (dataSnapshot1.child("category").getValue().toString().equals("Gift"))
-                                giftT = giftT + Integer.parseInt(dataSnapshot1.child("amount").getValue().toString());
-                            if (dataSnapshot1.child("category").getValue().toString().equals("Sports"))
-                                sportsT = sportsT + Integer.parseInt(dataSnapshot1.child("amount").getValue().toString());
-                            if (dataSnapshot1.child("category").getValue().toString().equals("Entertainment"))
-                                entertainmentT = entertainmentT + Integer.parseInt(dataSnapshot1.child("amount").getValue().toString());
-                            if (dataSnapshot1.child("category").getValue().toString().equals("Others"))
-                                othersT = othersT + Integer.parseInt(dataSnapshot1.child("amount").getValue().toString());
-                            if (dataSnapshot1.child("category").getValue().toString().equals("Food"))
-                                foodT = foodT + Integer.parseInt(dataSnapshot1.child("amount").getValue().toString());
-                        }
-                        pieChart.setUsePercentValues(true);
-                        List<PieEntry> pi = new ArrayList<>();
-                        if (!String.valueOf(shoppingT).equals("0"))
-                            pi.add(new PieEntry(Integer.parseInt(String.valueOf(shoppingT)), "Shopping"));
-                        if (!String.valueOf(fuelT).equals("0"))
-                            pi.add(new PieEntry(Integer.parseInt(String.valueOf(fuelT)), "Fuel"));
-                        if (!String.valueOf(kidsT).equals("0"))
-                            pi.add(new PieEntry(Integer.parseInt(String.valueOf(kidsT)), "Kids"));
-                        if (!String.valueOf(clothesT).equals("0"))
-                            pi.add(new PieEntry(Integer.parseInt(String.valueOf(clothesT)), "Clothes"));
-                        if (!String.valueOf(giftT).equals("0"))
-                            pi.add(new PieEntry(Integer.parseInt(String.valueOf(giftT)), "Gift"));
-                        if (!String.valueOf(sportsT).equals("0"))
-                            pi.add(new PieEntry(Integer.parseInt(String.valueOf(sportsT)), "Sports"));
-                        if (!String.valueOf(entertainmentT).equals("0"))
-                            pi.add(new PieEntry(Integer.parseInt(String.valueOf(entertainmentT)), "Entertainment"));
-                        if (!String.valueOf(othersT).equals("0"))
-                            pi.add(new PieEntry(Integer.parseInt(String.valueOf(othersT)), "Other"));
-                        if (!String.valueOf(foodT).equals("0"))
-                            pi.add(new PieEntry(Integer.parseInt(String.valueOf(foodT)), "Food"));
-
-                        PieDataSet pieDataSet = new PieDataSet(pi, "");
-                        pieDataSet.setColors(ColorTemplate.COLORFUL_COLORS);
-                        pieDataSet.setValueTextColor(Color.BLACK);
-                        pieDataSet.setValueTextSize(10f);
-
-                        PieData pieData = new PieData(pieDataSet);
-
-                        pieChart.setData(pieData);
-                        pieChart.getDescription().setEnabled(false);
-                        pieChart.setCenterText("Total");
-                        pieChart.animate();
-                        pieChart.setVisibility(View.VISIBLE);
-                        pie.setVisibility(View.VISIBLE);
-                    } catch (Exception e) {
-                    }
-
-
-                } else {
-                    pieChart.setVisibility(View.GONE);
-                    pie.setVisibility(View.GONE);
-                }
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-
 
     }
 
