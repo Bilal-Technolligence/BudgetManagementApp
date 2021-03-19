@@ -18,6 +18,11 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.PieData;
+import com.github.mikephil.charting.data.PieDataSet;
+import com.github.mikephil.charting.utils.ColorTemplate;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -44,6 +49,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 
 public class MainActivity extends BaseActivity {
@@ -64,6 +70,8 @@ public class MainActivity extends BaseActivity {
     private final static String default_notification_channel_id = "default";
     FirebaseAuth firebaseAuth;
     int show = 0;
+    TextView txt;
+    PieChart pieChart;
     /////////
 
     @Override
@@ -90,7 +98,8 @@ public class MainActivity extends BaseActivity {
         progress = (TextView) findViewById(R.id.text_view_progress);
         progressBar = (ProgressBar) findViewById(R.id.progress_bar);
         addExpense = (Button) findViewById(R.id.btnExpense);
-
+        txt = findViewById(R.id.txtPiechart);
+        pieChart = findViewById(R.id.pieChart);
         verifyEmail = (TextView) findViewById(R.id.txtEmailVerify);
         btnResendVerificationCode = (Button) findViewById(R.id.btnVerifyEmail);
         btnVerifyLogin = (Button) findViewById(R.id.btnVerifyLogin);
@@ -300,6 +309,7 @@ public class MainActivity extends BaseActivity {
                     other.setText(String.valueOf(othersT));
                     food.setText(String.valueOf(foodT));
                     progressDialog.dismiss();
+
                 } else {
                     shopping.setText("0");
                     fuel.setText("0");
@@ -311,6 +321,7 @@ public class MainActivity extends BaseActivity {
                     other.setText("0");
                     food.setText("0");
                     progressDialog.dismiss();
+                    txt.setVisibility(View.VISIBLE);
                 }
             }
 
