@@ -6,6 +6,7 @@ import android.app.PendingIntent;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.util.Log;
@@ -22,6 +23,7 @@ import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
+import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.utils.ColorTemplate;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -51,6 +53,7 @@ import androidx.appcompat.widget.Toolbar;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 public class MainActivity extends BaseActivity {
     TextView food, spent, remaining, fuel, shopping, kids, clothes, gifts, sports, entertainment, other, progress, incomeTotal, verifyEmail;
@@ -100,6 +103,7 @@ public class MainActivity extends BaseActivity {
         addExpense = (Button) findViewById(R.id.btnExpense);
         txt = findViewById(R.id.txtPiechart);
         pieChart = findViewById(R.id.pieChart);
+        pieChart.setVisibility(View.GONE);
         verifyEmail = (TextView) findViewById(R.id.txtEmailVerify);
         btnResendVerificationCode = (Button) findViewById(R.id.btnVerifyEmail);
         btnVerifyLogin = (Button) findViewById(R.id.btnVerifyLogin);
@@ -226,6 +230,7 @@ public class MainActivity extends BaseActivity {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                             if (dataSnapshot.exists()) {
+                                total = 0;
                                 try {
                                     for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
                                         total = total + Integer.parseInt(dataSnapshot1.child("amount").getValue().toString());
@@ -244,9 +249,15 @@ public class MainActivity extends BaseActivity {
                                     }
                                     remaining.setText(String.valueOf(remain));
                                     int result = (int) Math.round((total * 100) / income);
-                                    String p = String.valueOf(result);
-                                    progressBar.setProgress(result);
-                                    progress.setText(p + "%");
+                                    if (result > 100) {
+                                        String p = "100";
+                                        progressBar.setProgress(100);
+                                        progress.setText(p + "%");
+                                    } else {
+                                        String p = String.valueOf(result);
+                                        progressBar.setProgress(result);
+                                        progress.setText(p + "%");
+                                    }
                                 } catch (Exception e) {
                                 }
                             } else {
@@ -296,6 +307,38 @@ public class MainActivity extends BaseActivity {
                             if (dataSnapshot1.child("category").getValue().toString().equals("Food"))
                                 foodT = foodT + Integer.parseInt(dataSnapshot1.child("amount").getValue().toString());
                         }
+                        pieChart.setUsePercentValues(true);
+                        List<PieEntry> pi = new ArrayList<>();
+                        if (!String.valueOf(shoppingT).equals("0"))
+                            pi.add(new PieEntry(Integer.parseInt(String.valueOf(shoppingT)), "Shopping"));
+                        if (!String.valueOf(fuelT).equals("0"))
+                            pi.add(new PieEntry(Integer.parseInt(String.valueOf(fuelT)), "Fuel"));
+                        if (!String.valueOf(kidsT).equals("0"))
+                            pi.add(new PieEntry(Integer.parseInt(String.valueOf(kidsT)), "Kids"));
+                        if (!String.valueOf(clothesT).equals("0"))
+                            pi.add(new PieEntry(Integer.parseInt(String.valueOf(clothesT)), "Clothes"));
+                        if (!String.valueOf(giftT).equals("0"))
+                            pi.add(new PieEntry(Integer.parseInt(String.valueOf(giftT)), "Gift"));
+                        if (!String.valueOf(sportsT).equals("0"))
+                            pi.add(new PieEntry(Integer.parseInt(String.valueOf(sportsT)), "Sports"));
+                        if (!String.valueOf(entertainmentT).equals("0"))
+                            pi.add(new PieEntry(Integer.parseInt(String.valueOf(entertainmentT)), "Entertainment"));
+                        if (!String.valueOf(othersT).equals("0"))
+                            pi.add(new PieEntry(Integer.parseInt(String.valueOf(othersT)), "Other"));
+                        if (!String.valueOf(foodT).equals("0"))
+                            pi.add(new PieEntry(Integer.parseInt(String.valueOf(foodT)), "Food"));
+
+                        PieDataSet pieDataSet = new PieDataSet(pi, "");
+                        pieDataSet.setColors(ColorTemplate.COLORFUL_COLORS);
+                        pieDataSet.setValueTextColor(Color.BLACK);
+                        pieDataSet.setValueTextSize(10f);
+                        PieData pieData = new PieData(pieDataSet);
+                        pieChart.setData(pieData);
+                        pieChart.getDescription().setEnabled(false);
+                        pieChart.setCenterText("Total");
+                        pieChart.animate();
+                        pieChart.setVisibility(View.VISIBLE);
+                        txt.setVisibility(View.GONE);
                     } catch (Exception e) {
                     }
 
@@ -322,8 +365,12 @@ public class MainActivity extends BaseActivity {
                     food.setText("0");
                     progressDialog.dismiss();
                     txt.setVisibility(View.VISIBLE);
+                    pieChart.setVisibility(View.GONE);
                 }
             }
+
+
+
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
