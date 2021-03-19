@@ -47,9 +47,10 @@ public abstract class BaseActivity extends AppCompatActivity implements BottomNa
 
 ///Buttom Navigation
 
-        navigationView.setOnNavigationItemSelectedListener(this);
+
         //drawer navigation
         navigationView = (BottomNavigationView) findViewById(R.id.navigationView);
+        navigationView.setOnNavigationItemSelectedListener(this);
         drawerLayout = (DrawerLayout) findViewById(R.id.drawarLayout);
         //adding drawar button
         drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.open, R.string.close);
@@ -161,7 +162,7 @@ public abstract class BaseActivity extends AppCompatActivity implements BottomNa
                             Snackbar.make(drawerLayout, "Logout ok", Snackbar.LENGTH_LONG).show();
                             Save.save(getApplicationContext(),"session","false");
                             startActivity(new Intent(getApplicationContext(),LoginActivity.class));
-                            recreate();
+                            finish();
                         }
                     }).setNegativeButton("No", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {

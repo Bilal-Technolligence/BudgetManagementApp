@@ -47,12 +47,12 @@ import androidx.appcompat.widget.Toolbar;
 import java.util.Calendar;
 
 public class MainActivity extends BaseActivity {
-    TextView food, spent, remaining, fuel, shopping, kids, clothes, gifts, sports, entertainment, other, progress, incomeTotal,verifyEmail;
+    TextView food, spent, remaining, fuel, shopping, kids, clothes, gifts, sports, entertainment, other, progress, incomeTotal, verifyEmail;
     ProgressBar progressBar;
     protected BottomNavigationView navigationView;
     protected DrawerLayout drawerLayout;
     protected LinearLayout verificationLayout;
-    Button addExpense, addIncome, btnGenerateNotification,btnResendVerificationCode;
+    Button addExpense, addIncome, btnGenerateNotification, btnResendVerificationCode,btnVerifyLogin;
     final String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
     FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
     DatabaseReference databaseReference = firebaseDatabase.getReference();
@@ -63,17 +63,18 @@ public class MainActivity extends BaseActivity {
     public static final String NOTIFICATION_CHANNEL_ID = "10001";
     private final static String default_notification_channel_id = "default";
     FirebaseAuth firebaseAuth;
+    int show = 0;
     /////////
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //setContentView(R.layout.activity_main);
-      //  ((AppCompatActivity)this).getSupportActionBar().setTitle("Main");
-      //  ((AppCompatActivity)this).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        //  ((AppCompatActivity)this).getSupportActionBar().setTitle("Main");
+        //  ((AppCompatActivity)this).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("Loading..... ");
-        progressDialog.show();
+//        progressDialog.show();
         spent = (TextView) findViewById(R.id.txtIncomeSpent);
         remaining = (TextView) findViewById(R.id.txtRemainingSpent);
         fuel = (TextView) findViewById(R.id.txtFuel);
@@ -90,25 +91,26 @@ public class MainActivity extends BaseActivity {
         progressBar = (ProgressBar) findViewById(R.id.progress_bar);
         addExpense = (Button) findViewById(R.id.btnExpense);
 
-        verifyEmail =(TextView) findViewById(R.id.txtEmailVerify);
-        btnResendVerificationCode =(Button) findViewById(R.id.btnVerifyEmail);
+        verifyEmail = (TextView) findViewById(R.id.txtEmailVerify);
+        btnResendVerificationCode = (Button) findViewById(R.id.btnVerifyEmail);
+        btnVerifyLogin = (Button) findViewById(R.id.btnVerifyLogin);
 
         navigationView = (BottomNavigationView) findViewById(R.id.navigationView);
         drawerLayout = (DrawerLayout) findViewById(R.id.drawarLayout);
-        verificationLayout =(LinearLayout) findViewById(R.id.emailVerificationLayout);
+        verificationLayout = (LinearLayout) findViewById(R.id.emailVerificationLayout);
         // btnGenerateNotification = (Button) findViewById(R.id.btnSendNotifications);
         firebaseAuth = FirebaseAuth.getInstance();
         final String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
-        if(!firebaseUser.isEmailVerified()){
 
+        FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+        if (!firebaseUser.isEmailVerified()) {
             verificationLayout.setVisibility(View.VISIBLE);
             drawerLayout.setVisibility(View.GONE);
             navigationView.setVisibility(View.GONE);
             btnResendVerificationCode.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                   // FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+                    // FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
                     firebaseUser.sendEmailVerification().addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
@@ -118,16 +120,22 @@ public class MainActivity extends BaseActivity {
                     }).addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
-                            String Tag="";
-                            Log.e(Tag, "on Failure:Email not sent"+ e.getMessage());
+                            String Tag = "";
+                            Log.e(Tag, "on Failure:Email not sent" + e.getMessage());
 
                         }
                     });
                 }
             });
+            btnVerifyLogin.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Save.save(getApplicationContext(),"session","false");
+                    startActivity(new Intent(MainActivity.this , LoginActivity.class));
+                    finish();
+                }
+            });
         }
-
-
 
 
         Thread thread = new Thread(new Runnable() {
@@ -155,8 +163,8 @@ public class MainActivity extends BaseActivity {
                                                 scheduleNotification(getNotification(msg), 5000);
 
                                             }
+                                        } catch (Exception e) {
                                         }
-                                        catch (Exception e){}
                                     }
 
                                 }
@@ -349,4 +357,9 @@ public class MainActivity extends BaseActivity {
         return R.id.nav_spending;
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        //recreate();
+    }
 }
