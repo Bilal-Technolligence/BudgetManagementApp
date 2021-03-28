@@ -45,6 +45,7 @@ public class CompleteProActivity extends AppCompatActivity {
 
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     final DatabaseReference reference = database.getReference("Users");
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -85,72 +86,108 @@ public class CompleteProActivity extends AppCompatActivity {
                 } else if (Contact.equals("")) {
                     contact.setError("Enter Valid Contact Number");
                     contact.setFocusable(true);
-                }else if (Income.equals("")) {
+                } else if (Income.equals("")) {
                     income.setError("Enter Valid Income");
                     income.setFocusable(true);
                 } else {
                     progressDialog.show();
-                    RegisterUser(Email, userPassword, Contact, Name,Income, imagePath, progressDialog);
+                    RegisterUser(Email, userPassword, Contact, Name, Income, imagePath, progressDialog);
 
                 }
             }
         });
     }
-    public void RegisterUser(final String userGmail, String userPassword, final String contact, final String name,final String income, final Uri imagePath, final ProgressDialog progressDialog) {
+
+    public void RegisterUser(final String userGmail, String userPassword, final String contact, final String name, final String income, final Uri imagePath, final ProgressDialog progressDialog) {
         firebaseAuth.getInstance().createUserWithEmailAndPassword(userGmail, userPassword)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
 
-                            FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
-                            firebaseUser.sendEmailVerification().addOnSuccessListener(new OnSuccessListener<Void>() {
-                                @Override
-                                public void onSuccess(Void aVoid) {
-                                    Toast.makeText(CompleteProActivity.this, "Verification Email has been Sent", Toast.LENGTH_SHORT).show();
+                            if (count == 1) {
+                                StorageReference storageReference = FirebaseStorage.getInstance().getReference().child("images/" + FirebaseDatabase.getInstance().getReference().child("Users").push().getKey());
+                                storageReference.putFile(imagePath).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                                    @Override
+                                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                        Task<Uri> uriTask = taskSnapshot.getStorage().getDownloadUrl();
+                                        while (!uriTask.isSuccessful()) ;
+                                        Uri downloadUri = uriTask.getResult();
 
-                                }
-                            }).addOnFailureListener(new OnFailureListener() {
-                                @Override
-                                public void onFailure(@NonNull Exception e) {
-                                    String Tag="";
-                                    Log.e(Tag, "on Failure:Email not sent"+ e.getMessage());
+                                        final String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                                        UserAttr userAttr = new UserAttr();
+                                        userAttr.setEmail(userGmail);
+                                        userAttr.setContact(contact);
+                                        userAttr.setName(name);
+                                        userAttr.setId(uid);
+                                        userAttr.setIncome(income);
+                                        userAttr.setImageUrl(downloadUri.toString());
+                                        reference.child(uid).setValue(userAttr);
 
-                                }
-                            });
-
-
-
-                            StorageReference storageReference = FirebaseStorage.getInstance().getReference().child("images/" + FirebaseDatabase.getInstance().getReference().child("Users").push().getKey());
-                            storageReference.putFile(imagePath).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                                @Override
-                                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                                    Task<Uri> uriTask = taskSnapshot.getStorage().getDownloadUrl();
-                                    while (!uriTask.isSuccessful()) ;
-                                    Uri downloadUri = uriTask.getResult();
-
-                                    final String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
-                                    UserAttr userAttr = new UserAttr();
-                                    userAttr.setEmail(userGmail);
-                                    userAttr.setContact(contact);
-                                    userAttr.setName(name);
-                                    userAttr.setId(uid);
-                                    userAttr.setIncome(income);
-                                    userAttr.setImageUrl(downloadUri.toString());
-                                    reference.child(uid).setValue(userAttr);
-
-                                    Toast.makeText(getApplicationContext(), "Account Created", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(getApplicationContext(), "Account Created", Toast.LENGTH_SHORT).show();
 //                                  getApplicationContext().finish();
-                                    //save session
-                                    //saving value true for session
-                                    Save.save(getApplicationContext(),"session","true");
-                                    Intent intent = new Intent(CompleteProActivity.this, MainActivity.class);
-                                    startActivity(intent);
-                                    finish();
-                                    progressDialog.dismiss();
+                                        //save session
+                                        //saving value true for session
+                                        Save.save(getApplicationContext(), "session", "true");
+//                                    FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+//                                    firebaseUser.sendEmailVerification().addOnSuccessListener(new OnSuccessListener<Void>() {
+//                                        @Override
+//                                        public void onSuccess(Void aVoid) {
+//                                            Toast.makeText(CompleteProActivity.this, "Verification Email has been Sent", Toast.LENGTH_SHORT).show();
+//
+//                                        }
+//                                    }).addOnFailureListener(new OnFailureListener() {
+//                                        @Override
+//                                        public void onFailure(@NonNull Exception e) {
+//                                            String Tag="";
+//                                            Log.e(Tag, "on Failure:Email not sent"+ e.getMessage());
+//
+//                                        }
+//                                    });
+                                        Intent intent = new Intent(CompleteProActivity.this, MainActivity.class);
+                                        startActivity(intent);
+                                        finish();
+                                        progressDialog.dismiss();
 
-                                }
-                            });
+                                    }
+                                });
+                            }
+                            else{
+                                final String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                                UserAttr userAttr = new UserAttr();
+                                userAttr.setEmail(userGmail);
+                                userAttr.setContact(contact);
+                                userAttr.setName(name);
+                                userAttr.setId(uid);
+                                userAttr.setIncome(income);
+                                userAttr.setImageUrl(" ");
+                                reference.child(uid).setValue(userAttr);
+
+                                Toast.makeText(getApplicationContext(), "Account Created", Toast.LENGTH_SHORT).show();
+//                                  getApplicationContext().finish();
+                                //save session
+                                //saving value true for session
+                                Save.save(getApplicationContext(), "session", "true");
+//                                    FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+//                                    firebaseUser.sendEmailVerification().addOnSuccessListener(new OnSuccessListener<Void>() {
+//                                        @Override
+//                                        public void onSuccess(Void aVoid) {
+//                                            Toast.makeText(CompleteProActivity.this, "Verification Email has been Sent", Toast.LENGTH_SHORT).show();
+//
+//                                        }
+//                                    }).addOnFailureListener(new OnFailureListener() {
+//                                        @Override
+//                                        public void onFailure(@NonNull Exception e) {
+//                                            String Tag="";
+//                                            Log.e(Tag, "on Failure:Email not sent"+ e.getMessage());
+//
+//                                        }
+//                                    });
+                                Intent intent = new Intent(CompleteProActivity.this, MainActivity.class);
+                                startActivity(intent);
+                                finish();
+                                progressDialog.dismiss();
+                            }
                         }
                     }
                 }).addOnFailureListener(new OnFailureListener() {
@@ -161,6 +198,7 @@ public class CompleteProActivity extends AppCompatActivity {
             }
         });
     }
+
     @Override
     public void onBackPressed() {
         Intent intent = new Intent(CompleteProActivity.this, SignupActivity.class);

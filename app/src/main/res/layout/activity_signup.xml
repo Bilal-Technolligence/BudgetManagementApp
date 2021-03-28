@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bmabackground"
     android:gravity="center_horizontal"
     android:orientation="vertical"
     android:rotationX="-360"
@@ -36,15 +35,15 @@
                 android:layout_marginTop="40dp"
                 android:layout_marginRight="40dp"
                 android:hint="Enter Email"
-                android:textColorHint="@color/white"
-                app:boxStrokeColor="@color/white">
+                android:textColorHint="@color/black"
+                app:boxStrokeColor="@color/black">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/email"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textEmailAddress"
-                    android:textColor="@color/white"
+                    android:textColor="@color/black"
                     app:errorEnabled="true">
 
                 </com.google.android.material.textfield.TextInputEditText>
@@ -59,15 +58,15 @@
                 android:layout_marginRight="40dp"
                 android:hint="Enter Password"
                 app:passwordToggleEnabled="true"
-                android:textColorHint="@color/white"
-                app:boxStrokeColor="@color/white">
+                android:textColorHint="@color/black"
+                app:boxStrokeColor="@color/black">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/password"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textPassword"
-                    android:textColor="@color/white"
+                    android:textColor="@color/black"
                     app:errorEnabled="true"
                     app:passwordToggleEnabled="true">
 
@@ -116,7 +115,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="center_horizontal"
                     android:text="Already Have Account? "
-                    android:textColor="@color/white"
+                    android:textColor="@color/black"
                     android:textSize="20sp" />
 
                 <TextView
@@ -126,7 +125,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="center_horizontal"
                     android:text="Login"
-                    android:textColor="#ffffff"
+                    android:textColor="#000"
                     android:textSize="25sp" />
             </LinearLayout>
         </LinearLayout>

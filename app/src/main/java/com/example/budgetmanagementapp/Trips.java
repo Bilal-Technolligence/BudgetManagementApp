@@ -109,6 +109,7 @@ public class Trips extends BaseActivity {
                             tripTitle.setText(dataSnapshot.child("Title").getValue().toString());
                             budget.setText(dataSnapshot.child("Budget").getValue().toString());
                             String budget = dataSnapshot.child("Budget").getValue().toString();
+                            String end = dataSnapshot.child("Status").getValue().toString();
                             Integer b = Integer.parseInt(budget);
                             databaseReference.child("Trip").child(tripId).child("Expense").addValueEventListener(new ValueEventListener() {
                                 @Override
@@ -124,6 +125,7 @@ public class Trips extends BaseActivity {
                                                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                                     if (dataSnapshot.exists()) {
                                                         if (total >= b && i == 0) {
+                                                            if (end.equals("going")) {
                                                             for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
                                                                 String id = dataSnapshot1.getKey();
 
@@ -138,8 +140,8 @@ public class Trips extends BaseActivity {
 //
                                                                 //Toast.makeText(getApplicationContext() , "Expense Exceed" , Toast.LENGTH_SHORT).show();
                                                             }
-
                                                         }
+                                                    }
                                                     }
                                                 }
 

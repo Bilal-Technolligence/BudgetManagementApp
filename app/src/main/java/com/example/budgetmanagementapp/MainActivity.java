@@ -6,6 +6,7 @@ import android.app.PendingIntent;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.util.Log;
@@ -18,6 +19,12 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.PieData;
+import com.github.mikephil.charting.data.PieDataSet;
+import com.github.mikephil.charting.data.PieEntry;
+import com.github.mikephil.charting.utils.ColorTemplate;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -44,15 +51,17 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 public class MainActivity extends BaseActivity {
-    TextView food, spent, remaining, fuel, shopping, kids, clothes, gifts, sports, entertainment, other, progress, incomeTotal,verifyEmail;
+    TextView food, spent, remaining, fuel, shopping, kids, clothes, gifts, sports, entertainment, other, progress, incomeTotal, verifyEmail;
     ProgressBar progressBar;
     protected BottomNavigationView navigationView;
     protected DrawerLayout drawerLayout;
     protected LinearLayout verificationLayout;
-    Button addExpense, addIncome, btnGenerateNotification,btnResendVerificationCode;
+    Button addExpense, addIncome, btnGenerateNotification, btnResendVerificationCode,btnVerifyLogin;
     final String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
     FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
     DatabaseReference databaseReference = firebaseDatabase.getReference();
@@ -63,17 +72,20 @@ public class MainActivity extends BaseActivity {
     public static final String NOTIFICATION_CHANNEL_ID = "10001";
     private final static String default_notification_channel_id = "default";
     FirebaseAuth firebaseAuth;
+    int show = 0;
+    TextView txt;
+    PieChart pieChart;
     /////////
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //setContentView(R.layout.activity_main);
-      //  ((AppCompatActivity)this).getSupportActionBar().setTitle("Main");
-      //  ((AppCompatActivity)this).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        //  ((AppCompatActivity)this).getSupportActionBar().setTitle("Main");
+        //  ((AppCompatActivity)this).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("Loading..... ");
-        progressDialog.show();
+//        progressDialog.show();
         spent = (TextView) findViewById(R.id.txtIncomeSpent);
         remaining = (TextView) findViewById(R.id.txtRemainingSpent);
         fuel = (TextView) findViewById(R.id.txtFuel);
@@ -89,26 +101,29 @@ public class MainActivity extends BaseActivity {
         progress = (TextView) findViewById(R.id.text_view_progress);
         progressBar = (ProgressBar) findViewById(R.id.progress_bar);
         addExpense = (Button) findViewById(R.id.btnExpense);
-
-        verifyEmail =(TextView) findViewById(R.id.txtEmailVerify);
-        btnResendVerificationCode =(Button) findViewById(R.id.btnVerifyEmail);
+        txt = findViewById(R.id.txtPiechart);
+        pieChart = findViewById(R.id.pieChart);
+        pieChart.setVisibility(View.GONE);
+        verifyEmail = (TextView) findViewById(R.id.txtEmailVerify);
+        btnResendVerificationCode = (Button) findViewById(R.id.btnVerifyEmail);
+        btnVerifyLogin = (Button) findViewById(R.id.btnVerifyLogin);
 
         navigationView = (BottomNavigationView) findViewById(R.id.navigationView);
         drawerLayout = (DrawerLayout) findViewById(R.id.drawarLayout);
-        verificationLayout =(LinearLayout) findViewById(R.id.emailVerificationLayout);
+        verificationLayout = (LinearLayout) findViewById(R.id.emailVerificationLayout);
         // btnGenerateNotification = (Button) findViewById(R.id.btnSendNotifications);
         firebaseAuth = FirebaseAuth.getInstance();
         final String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
-        if(!firebaseUser.isEmailVerified()){
 
+        FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+        if (!firebaseUser.isEmailVerified()) {
             verificationLayout.setVisibility(View.VISIBLE);
             drawerLayout.setVisibility(View.GONE);
             navigationView.setVisibility(View.GONE);
             btnResendVerificationCode.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                   // FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+                    // FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
                     firebaseUser.sendEmailVerification().addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
@@ -118,16 +133,22 @@ public class MainActivity extends BaseActivity {
                     }).addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
-                            String Tag="";
-                            Log.e(Tag, "on Failure:Email not sent"+ e.getMessage());
+                            String Tag = "";
+                            Log.e(Tag, "on Failure:Email not sent" + e.getMessage());
 
                         }
                     });
                 }
             });
+            btnVerifyLogin.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Save.save(getApplicationContext(),"session","false");
+                    startActivity(new Intent(MainActivity.this , LoginActivity.class));
+                    finish();
+                }
+            });
         }
-
-
 
 
         Thread thread = new Thread(new Runnable() {
@@ -155,8 +176,8 @@ public class MainActivity extends BaseActivity {
                                                 scheduleNotification(getNotification(msg), 5000);
 
                                             }
+                                        } catch (Exception e) {
                                         }
-                                        catch (Exception e){}
                                     }
 
                                 }
@@ -209,6 +230,7 @@ public class MainActivity extends BaseActivity {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                             if (dataSnapshot.exists()) {
+                                total = 0;
                                 try {
                                     for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
                                         total = total + Integer.parseInt(dataSnapshot1.child("amount").getValue().toString());
@@ -227,9 +249,15 @@ public class MainActivity extends BaseActivity {
                                     }
                                     remaining.setText(String.valueOf(remain));
                                     int result = (int) Math.round((total * 100) / income);
-                                    String p = String.valueOf(result);
-                                    progressBar.setProgress(result);
-                                    progress.setText(p + "%");
+                                    if (result > 100) {
+                                        String p = "100";
+                                        progressBar.setProgress(100);
+                                        progress.setText(p + "%");
+                                    } else {
+                                        String p = String.valueOf(result);
+                                        progressBar.setProgress(result);
+                                        progress.setText(p + "%");
+                                    }
                                 } catch (Exception e) {
                                 }
                             } else {
@@ -279,6 +307,38 @@ public class MainActivity extends BaseActivity {
                             if (dataSnapshot1.child("category").getValue().toString().equals("Food"))
                                 foodT = foodT + Integer.parseInt(dataSnapshot1.child("amount").getValue().toString());
                         }
+                        pieChart.setUsePercentValues(true);
+                        List<PieEntry> pi = new ArrayList<>();
+                        if (!String.valueOf(shoppingT).equals("0"))
+                            pi.add(new PieEntry(Integer.parseInt(String.valueOf(shoppingT)), "Shopping"));
+                        if (!String.valueOf(fuelT).equals("0"))
+                            pi.add(new PieEntry(Integer.parseInt(String.valueOf(fuelT)), "Fuel"));
+                        if (!String.valueOf(kidsT).equals("0"))
+                            pi.add(new PieEntry(Integer.parseInt(String.valueOf(kidsT)), "Kids"));
+                        if (!String.valueOf(clothesT).equals("0"))
+                            pi.add(new PieEntry(Integer.parseInt(String.valueOf(clothesT)), "Clothes"));
+                        if (!String.valueOf(giftT).equals("0"))
+                            pi.add(new PieEntry(Integer.parseInt(String.valueOf(giftT)), "Gift"));
+                        if (!String.valueOf(sportsT).equals("0"))
+                            pi.add(new PieEntry(Integer.parseInt(String.valueOf(sportsT)), "Sports"));
+                        if (!String.valueOf(entertainmentT).equals("0"))
+                            pi.add(new PieEntry(Integer.parseInt(String.valueOf(entertainmentT)), "Entertainment"));
+                        if (!String.valueOf(othersT).equals("0"))
+                            pi.add(new PieEntry(Integer.parseInt(String.valueOf(othersT)), "Other"));
+                        if (!String.valueOf(foodT).equals("0"))
+                            pi.add(new PieEntry(Integer.parseInt(String.valueOf(foodT)), "Food"));
+
+                        PieDataSet pieDataSet = new PieDataSet(pi, "");
+                        pieDataSet.setColors(ColorTemplate.COLORFUL_COLORS);
+                        pieDataSet.setValueTextColor(Color.BLACK);
+                        pieDataSet.setValueTextSize(10f);
+                        PieData pieData = new PieData(pieDataSet);
+                        pieChart.setData(pieData);
+                        pieChart.getDescription().setEnabled(false);
+                        pieChart.setCenterText("Total");
+                        pieChart.animate();
+                        pieChart.setVisibility(View.VISIBLE);
+                        txt.setVisibility(View.GONE);
                     } catch (Exception e) {
                     }
 
@@ -292,6 +352,7 @@ public class MainActivity extends BaseActivity {
                     other.setText(String.valueOf(othersT));
                     food.setText(String.valueOf(foodT));
                     progressDialog.dismiss();
+
                 } else {
                     shopping.setText("0");
                     fuel.setText("0");
@@ -303,8 +364,13 @@ public class MainActivity extends BaseActivity {
                     other.setText("0");
                     food.setText("0");
                     progressDialog.dismiss();
+                    txt.setVisibility(View.VISIBLE);
+                    pieChart.setVisibility(View.GONE);
                 }
             }
+
+
+
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
@@ -349,4 +415,9 @@ public class MainActivity extends BaseActivity {
         return R.id.nav_spending;
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        //recreate();
+    }
 }
