@@ -48,7 +48,8 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:hint="Enter Password"
                 android:textColorHint="@color/white"
-                app:boxStrokeColor="@color/white"
+                app:passwordToggleTint="@color/white"
+                app:endIconTint="@color/white"
                 app:passwordToggleEnabled="true">
 
                 <com.google.android.material.textfield.TextInputEditText

@@ -53,6 +53,7 @@
                 android:layout_marginRight="40dp"
                 android:hint="Enter Password"
                 app:passwordToggleEnabled="true"
+                app:passwordToggleTint="@color/white"
                 android:textColorHint="@color/white"
                 app:boxStrokeColor="@color/white">
 
