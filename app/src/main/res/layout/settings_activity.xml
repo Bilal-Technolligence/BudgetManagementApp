@@ -13,6 +13,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:padding="15dp"
+            android:gravity="center"
             android:layout_marginBottom="60dp"
             android:orientation="vertical">
 
@@ -42,7 +43,7 @@
                 android:id="@+id/btnSelRingtone"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="10dp"
                 app:cardBackgroundColor="@color/white"
                 app:cardCornerRadius="5dp"
                 app:cardElevation="10dp">
@@ -67,7 +68,6 @@
                         android:layout_centerInParent="true"
                         android:layout_weight="2"
                         android:textStyle="bold|italic"
-                        android:textColorHint="@color/black"
                         android:text="Ringtone Path"/>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
@@ -163,7 +163,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="50dp"
                 android:id="@+id/btnLogout"
-                android:visibility="gone"
                 android:textColor="@color/white"
                 android:backgroundTint="@color/colorPurple"
                 android:text="Logout" />
