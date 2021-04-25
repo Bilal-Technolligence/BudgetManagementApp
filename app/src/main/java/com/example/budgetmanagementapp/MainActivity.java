@@ -107,14 +107,15 @@ public class MainActivity extends BaseActivity {
         verifyEmail = (TextView) findViewById(R.id.txtEmailVerify);
         btnResendVerificationCode = (Button) findViewById(R.id.btnVerifyEmail);
         btnVerifyLogin = (Button) findViewById(R.id.btnVerifyLogin);
-
+        verificationLayout = (LinearLayout) findViewById(R.id.emailVerificationLayout);
         navigationView = (BottomNavigationView) findViewById(R.id.navigationView);
         drawerLayout = (DrawerLayout) findViewById(R.id.drawarLayout);
-        verificationLayout = (LinearLayout) findViewById(R.id.emailVerificationLayout);
+
         // btnGenerateNotification = (Button) findViewById(R.id.btnSendNotifications);
+        //Email Verification
         firebaseAuth = FirebaseAuth.getInstance();
         final String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-
+        //Email Verification
         FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
         if (!firebaseUser.isEmailVerified()) {
             verificationLayout.setVisibility(View.VISIBLE);
@@ -149,7 +150,7 @@ public class MainActivity extends BaseActivity {
                 }
             });
         }
-
+        //Check Notifications
 
         Thread thread = new Thread(new Runnable() {
             @Override
