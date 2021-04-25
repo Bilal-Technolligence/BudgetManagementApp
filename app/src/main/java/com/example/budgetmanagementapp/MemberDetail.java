@@ -23,7 +23,7 @@ public class MemberDetail extends BaseActivity {
     DatabaseReference databaseReference = firebaseDatabase.getReference();
     ImageView profile;
     TextView name;
-    Button call,msg;
+    Button call, msg;
     String contact;
 
     @Override
@@ -35,14 +35,17 @@ public class MemberDetail extends BaseActivity {
         name = findViewById(R.id.txtName);
         call = findViewById(R.id.btnCall);
         msg = findViewById(R.id.btnMessage);
-        if(!id.equals("")){
+        if (!id.equals("")) {
             databaseReference.child("Users").child(id).addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    if(dataSnapshot.exists()){
-                        Picasso.get().load(dataSnapshot.child("imageUrl").getValue().toString()).into(profile);
-                        name.setText(dataSnapshot.child("name").getValue().toString());
-                        contact = dataSnapshot.child("contact").getValue().toString();
+                    if (dataSnapshot.exists()) {
+                        try {
+                            Picasso.get().load(dataSnapshot.child("imageUrl").getValue().toString()).into(profile);
+                            name.setText(dataSnapshot.child("name").getValue().toString());
+                            contact = dataSnapshot.child("contact").getValue().toString();
+                        } catch (Exception e) {
+                        }
                     }
                 }
 
@@ -66,7 +69,7 @@ public class MemberDetail extends BaseActivity {
                 Intent smsIntent = new Intent(Intent.ACTION_VIEW);
                 smsIntent.setType("vnd.android-dir/mms-sms");
                 smsIntent.putExtra("address", contact);
-                smsIntent.putExtra("sms_body","");
+                smsIntent.putExtra("sms_body", "");
                 startActivity(smsIntent);
             }
         });
