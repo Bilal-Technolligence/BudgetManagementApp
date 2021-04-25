@@ -136,7 +136,7 @@ public class Trips extends BaseActivity {
                                                                 databaseReference.child("ExpenseNoti").child(id).child("status").setValue("unread");
                                                                 databaseReference.child("ExpenseNoti").child(id).child("title").setValue("Budget Alert");
                                                                 databaseReference.child("ExpenseNoti").child(id).child("senderid").setValue(id);
-                                                                databaseReference.child("ExpenseNoti").child(id).child("id").setValue(push);
+                                                                databaseReference.child("ExpenseNoti").child(id).child("id").setValue(id);
 //
                                                                 //Toast.makeText(getApplicationContext() , "Expense Exceed" , Toast.LENGTH_SHORT).show();
                                                             }

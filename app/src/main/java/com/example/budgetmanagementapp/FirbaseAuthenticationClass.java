@@ -14,6 +14,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -46,15 +47,15 @@ public class FirbaseAuthenticationClass extends AppCompatActivity {
                                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                     //save session
                                     //saving value true for session
-                                   Save.save(activity,"session","true");
-                                 //  SharedPreferences.Editor editor = getSharedPreferences("Log", MODE_PRIVATE).edit();
-                                //   editor.putBoolean("isLoggedIn", true );
-                                 //   editor.putString("id", uid );
-                                  //  editor.commit();
+                                    Save.save(activity, "session", "true");
+                                    //  SharedPreferences.Editor editor = getSharedPreferences("Log", MODE_PRIVATE).edit();
+                                    //   editor.putBoolean("isLoggedIn", true );
+                                    //   editor.putString("id", uid );
+                                    //  editor.commit();
                                     activity.startActivity(new Intent(activity, MainActivity.class));
 
                                     activity.finish();
-                                        progressDialog.dismiss();
+                                    progressDialog.dismiss();
                                 }
 
                                 @Override
@@ -64,7 +65,6 @@ public class FirbaseAuthenticationClass extends AppCompatActivity {
 
 
                         }
-
 
 
                     }
@@ -81,20 +81,20 @@ public class FirbaseAuthenticationClass extends AppCompatActivity {
 
 
     public void RegisterUser(final String userGmail, String userPassword, final String contact, final String name, final String imagePath, final String address, final CompleteProActivity completeProActivity, final ProgressDialog progressDialog) {
-      FirebaseAuth.getInstance().createUserWithEmailAndPassword(userGmail,userPassword)
-              .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                  @Override
-                  public void onComplete(@NonNull Task<AuthResult> task) {
-                      if (task.isSuccessful()) {
-                          final String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        FirebaseAuth.getInstance().createUserWithEmailAndPassword(userGmail, userPassword)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            final String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
-                          StorageReference storageReference = FirebaseStorage.getInstance().getReference().child("images/" + FirebaseDatabase.getInstance().getReference().child("Users").push().getKey());
-                          storageReference.putFile(Uri.parse(imagePath)).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                              @Override
-                              public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                                  Task<Uri> uriTask = taskSnapshot.getStorage().getDownloadUrl();
-                                  while (!uriTask.isSuccessful()) ;
-                                  Uri downloadUri = uriTask.getResult();
+                            StorageReference storageReference = FirebaseStorage.getInstance().getReference().child("images/" + FirebaseDatabase.getInstance().getReference().child("Users").push().getKey());
+                            storageReference.putFile(Uri.parse(imagePath)).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                                @Override
+                                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                    Task<Uri> uriTask = taskSnapshot.getStorage().getDownloadUrl();
+                                    while (!uriTask.isSuccessful()) ;
+                                    Uri downloadUri = uriTask.getResult();
 
 //                                  UserAttr userAttr = new UserAttr();
 //                                  userAttr.setEmail(userGmail);
@@ -108,18 +108,18 @@ public class FirbaseAuthenticationClass extends AppCompatActivity {
 //                                  completeProfileActivity.startActivity(new Intent(completeProfileActivity, MainActivity.class));
 //                                  progressDialog.dismiss();
 
-                              }
-                          });
+                                }
+                            });
 
 
-                      }
-                  }
-              }).addOnFailureListener(new OnFailureListener() {
-          @Override
-          public void onFailure(@NonNull Exception e) {
-              Toast.makeText(completeProActivity, "" + e.getMessage(), Toast.LENGTH_SHORT).show();
-              progressDialog.dismiss();
-          }
-      });
+                        }
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(completeProActivity, "" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                progressDialog.dismiss();
+            }
+        });
     }
 }

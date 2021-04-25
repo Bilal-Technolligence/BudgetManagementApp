@@ -2328,7 +2328,7 @@ public class PredictionActivity extends BaseActivity {
 
             }
         });
-        databaseReference.child("Expense").child(uid).child(String.valueOf(year)).child(String.valueOf(month)).orderByChild("category").equalTo("Other").addValueEventListener(new ValueEventListener() {
+        databaseReference.child("Expense").child(uid).child(String.valueOf(year)).child(String.valueOf(month)).orderByChild("category").equalTo("Others").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
@@ -2434,7 +2434,7 @@ public class PredictionActivity extends BaseActivity {
                             dataVals.add( new Entry(10, o1 ));
                             dataVals.add( new Entry( 20, o2 ) );
                             dataVals.add( new Entry( 30, o3 ) );
-                            databaseReference.child("Expense").child(uid).child(String.valueOf(year)).child(String.valueOf(month+1)).orderByChild("category").equalTo("Other").addValueEventListener(new ValueEventListener() {
+                            databaseReference.child("Expense").child(uid).child(String.valueOf(year)).child(String.valueOf(month+1)).orderByChild("category").equalTo("Others").addValueEventListener(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                     if (dataSnapshot.exists()) {
@@ -2671,7 +2671,7 @@ public class PredictionActivity extends BaseActivity {
                         for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
                             fo = fo + Integer.parseInt(dataSnapshot1.child("amount").getValue().toString());
                         }
-                        fuel.setText(String.valueOf(fo));
+                        food.setText(String.valueOf(fo));
                         // abc =total;
                     }
                     catch (Exception e){}
@@ -2809,7 +2809,8 @@ public class PredictionActivity extends BaseActivity {
 
             }
         });
-        databaseReference.child("Expense").child(uid).child(String.valueOf(year)).child(String.valueOf(month+1)).orderByChild("category").equalTo("kids").addValueEventListener(new ValueEventListener() {
+
+        databaseReference.child("Expense").child(uid).child(String.valueOf(year)).child(String.valueOf(month+1)).orderByChild("category").equalTo("Kids").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
@@ -2956,7 +2957,7 @@ public class PredictionActivity extends BaseActivity {
 
             }
         });
-        databaseReference.child("Expense").child(uid).child(String.valueOf(year)).child(String.valueOf(month)).orderByChild("category").equalTo("Other").addValueEventListener(new ValueEventListener() {
+        databaseReference.child("Expense").child(uid).child(String.valueOf(year)).child(String.valueOf(month)).orderByChild("category").equalTo("Others").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
@@ -2977,7 +2978,7 @@ public class PredictionActivity extends BaseActivity {
 
             }
         });
-        databaseReference.child("Expense").child(uid).child(String.valueOf(year)).child(String.valueOf(month+1)).orderByChild("category").equalTo("Other").addValueEventListener(new ValueEventListener() {
+        databaseReference.child("Expense").child(uid).child(String.valueOf(year)).child(String.valueOf(month+1)).orderByChild("category").equalTo("Others").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
